@@ -6,11 +6,13 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
-  min-height: 100svh;
+  justify-content: flex-start;
   padding: 80px;
   gap: 64px;
   font-family: var(--font-geist-sans);
@@ -34,7 +36,7 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  grid-row-start: 2;
+  align-items: center;
 }
 
 .main ol {
@@ -177,13 +179,19 @@ a.secondary {
 }
 
 .title {
-  font-size: 2.5rem;
-  color: #333;
+  font-size: 2.8rem;
+  color: #2563eb;
   margin-bottom: 1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
 }
 
 .welcome {
-  font-size: 1.2rem;
-  color: #666;
+  font-size: 1.3rem;
+  color: #0e7490;
   line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
 }
