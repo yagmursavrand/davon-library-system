@@ -17,6 +17,7 @@ interface FormErrors {
   confirmPassword?: string;
 }
 
+
 const UserRegistrationForm = () => {
   // State management
   const [formData, setFormData] = useState<FormData>({
