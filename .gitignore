@@ -3,8 +3,4 @@ node_modules/
 dist/
 __pycache__/
 *.log
-node_modules/
-.env
-dist/
-__pycache__/
-*.log
+.next/
