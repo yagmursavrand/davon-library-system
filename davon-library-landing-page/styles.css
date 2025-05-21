@@ -85,6 +85,35 @@ header {
     display: flex;
     list-style: none;
     gap: clamp(1rem, 2vw, 2rem);
+    align-items: center;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+}
+
+.nav-button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-button:first-child {
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}
+
+.nav-button:last-child {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.nav-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .nav-links a {
@@ -131,23 +160,25 @@ header {
     margin-bottom: clamp(1.5rem, 3vw, 2rem);
 }
 
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
 .cta-button {
-    background-color: var(--accent-color);
-    color: var(--white);
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #2563eb;
+    color: white;
     text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s;
 }
 
 .cta-button:hover {
-    background-color: #c0392b;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    background-color: #1d4ed8;
 }
 
 /* Search Container Styles */
