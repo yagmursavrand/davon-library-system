@@ -1,16 +1,21 @@
 'use client';
 
-import styles from './page.module.css';
-import UserRegistrationForm from '@/components/UserRegistrationForm';
+import { useEffect } from 'react';
 
 export default function Home() {
+  useEffect(() => {
+    window.location.href = '/davon-library-landing-page/index.html';
+  }, []);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>Davon Library System</h1>
-        <p className={styles.welcome}>Welcome to our library management system</p>
-        <UserRegistrationForm />
-      </main>
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh',
+      background: 'linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%)'
+    }}>
+      <h1>Yönlendiriliyor...</h1>
     </div>
   );
 } 

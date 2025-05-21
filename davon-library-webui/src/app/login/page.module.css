@@ -1,0 +1,50 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 80px;
+  gap: 64px;
+  font-family: var(--font-geist-sans);
+}
+
+.main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+}
+
+.title {
+  font-size: 2.8rem;
+  color: #2563eb;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
+
+.welcome {
+  font-size: 1.3rem;
+  color: #0e7490;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px;
+  }
+} 
