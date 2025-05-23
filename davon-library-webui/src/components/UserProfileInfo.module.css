@@ -1,0 +1,30 @@
+.profileBox {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 2rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.title {
+    text-align: center;
+    color: #2563eb;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.infoRow {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+.infoRow span {
+    font-weight: 600;
+    color: #333;
+    margin-right: 0.5rem;
+}
+.loading, .error, .empty {
+    text-align: center;
+    margin: 2rem 0;
+    color: #c62828;
+    font-size: 1.1rem;
+} 

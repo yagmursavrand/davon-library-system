@@ -1,185 +1,157 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '../contexts/AuthContext';
 import styles from './UserRegistrationForm.module.css';
 
-interface FormData {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  username?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
-
-const UserRegistrationForm = () => {
-  // State management
-  const [formData, setFormData] = useState<FormData>({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
-
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  // Form validation
-  const validateForm = (): FormErrors => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    return newErrors;
-  };
-
-  // Event handling
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Simulate API call
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setIsSuccess(true);
-      setFormData({
-        username: '',
+export default function UserRegistrationForm() {
+    const router = useRouter();
+    const { register } = useAuth();
+    const [formData, setFormData] = useState({
+        name: '',
         email: '',
         password: '',
         confirmPassword: ''
-      });
-      setErrors({});
-    } catch (error) {
-      console.error('Registration failed:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    });
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-  // Reset success message after 3 seconds
-  useEffect(() => {
-    if (isSuccess) {
-      const timer = setTimeout(() => {
-        setIsSuccess(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [isSuccess]);
+    const validateForm = () => {
+        if (!formData.name.trim()) {
+            setError('Name is required');
+            return false;
+        }
 
-  return (
-    <div className={styles.formContainer}>
-      <h2 className={styles.title}>User Registration</h2>
-      
-      {isSuccess && (
-        <div className={styles.successMessage}>
-          Registration successful! Welcome to our library system.
+        if (formData.name.length < 2) {
+            setError('Name must be at least 2 characters long');
+            return false;
+        }
+
+        if (!formData.email.trim()) {
+            setError('Email is required');
+            return false;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            setError('Invalid email format');
+            return false;
+        }
+
+        if (!formData.password) {
+            setError('Password is required');
+            return false;
+        }
+
+        if (formData.password.length < 6) {
+            setError('Password must be at least 6 characters long');
+            return false;
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            setError('Passwords do not match');
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        setError(''); // Clear error when user types
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+
+        if (!validateForm()) {
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            await register(formData);
+            router.push('/home');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Registration failed');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className={styles.formContainer}>
+            {error && <div className={styles.error}>{error}</div>}
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.formGroup}>
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className={styles.input}
+                        placeholder="Enter your name"
+                    />
+                </div>
+                <div className={styles.formGroup}>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={styles.input}
+                        placeholder="Enter your email"
+                    />
+                </div>
+                <div className={styles.formGroup}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className={styles.input}
+                        placeholder="Enter your password"
+                    />
+                </div>
+                <div className={styles.formGroup}>
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        className={styles.input}
+                        placeholder="Confirm your password"
+                    />
+                </div>
+                <button 
+                    type="submit" 
+                    className={styles.submitButton}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Registering...' : 'Register'}
+                </button>
+            </form>
+            <p className={styles.loginLink}>
+                Already have an account?{' '}
+                <Link href="/login" className={styles.link}>
+                    Login here
+                </Link>
+            </p>
         </div>
-      )}
-
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formGroup}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            className={errors.username ? styles.error : ''}
-          />
-          {errors.username && <span className={styles.errorText}>{errors.username}</span>}
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={errors.email ? styles.error : ''}
-          />
-          {errors.email && <span className={styles.errorText}>{errors.email}</span>}
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className={errors.password ? styles.error : ''}
-          />
-          {errors.password && <span className={styles.errorText}>{errors.password}</span>}
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className={errors.confirmPassword ? styles.error : ''}
-          />
-          {errors.confirmPassword && (
-            <span className={styles.errorText}>{errors.confirmPassword}</span>
-          )}
-        </div>
-
-        <button 
-          type="submit" 
-          className={styles.submitButton}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Registering...' : 'Register'}
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default UserRegistrationForm; 
+    );
+} 
