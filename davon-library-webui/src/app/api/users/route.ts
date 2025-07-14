@@ -1,18 +1,48 @@
 import { NextResponse } from 'next/server';
 import { User, LoginCredentials, RegisterData } from '../../../types/user';
+import { promises as fs } from 'fs';
+import path from 'path';
 
-// In-memory database (server-side)
-let users: User[] = [
-  {
-    id: '1',
-    name: 'Admin User',
-    email: 'admin@example.com',
-    password: 'admin123', // Gerçek uygulamada hash'lenmeli!
-    role: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  }
-];
+// File path for storing users data
+const USERS_FILE_PATH = path.join(process.cwd(), 'data', 'users.json');
+
+// Helper function to ensure data directory exists
+const ensureDataDirectory = async () => {
+    const dataDir = path.dirname(USERS_FILE_PATH);
+    try {
+        await fs.access(dataDir);
+    } catch {
+        await fs.mkdir(dataDir, { recursive: true });
+    }
+};
+
+// Helper function to load users from file
+const loadUsers = async (): Promise<User[]> => {
+    try {
+        await ensureDataDirectory();
+        const data = await fs.readFile(USERS_FILE_PATH, 'utf-8');
+        return JSON.parse(data);
+    } catch (error) {
+        // If file doesn't exist, return default admin user
+        return [
+            {
+                id: '1',
+                name: 'Admin User',
+                email: 'admin@example.com',
+                password: 'admin123',
+                role: 'admin',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            }
+        ];
+    }
+};
+
+// Helper function to save users to file
+const saveUsers = async (users: User[]): Promise<void> => {
+    await ensureDataDirectory();
+    await fs.writeFile(USERS_FILE_PATH, JSON.stringify(users, null, 2));
+};
 
 // Helper function to generate ID
 const generateId = (): string => {
@@ -21,13 +51,22 @@ const generateId = (): string => {
 
 // GET /api/users
 export async function GET() {
-    return NextResponse.json(users);
+    try {
+        const users = await loadUsers();
+        return NextResponse.json(users);
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Failed to load users' },
+            { status: 500 }
+        );
+    }
 }
 
 // POST /api/users/register
 export async function POST(request: Request) {
     try {
         const data: RegisterData = await request.json();
+        const users = await loadUsers();
 
         // Validation
         if (!data.name.trim()) {
@@ -90,6 +129,8 @@ export async function POST(request: Request) {
         };
 
         users.push(newUser);
+        await saveUsers(users);
+        
         return NextResponse.json(newUser);
     } catch (error) {
         return NextResponse.json(
@@ -103,6 +144,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
     try {
         const credentials: LoginCredentials = await request.json();
+        const users = await loadUsers();
         const user = users.find(u => u.email === credentials.email);
 
         if (!user) {
@@ -120,6 +162,54 @@ export async function PUT(request: Request) {
         }
 
         return NextResponse.json(user);
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        );
+    }
+}
+
+// DELETE /api/users/[id]
+export async function DELETE(request: Request) {
+    try {
+        const url = new URL(request.url);
+        const id = url.searchParams.get('id');
+        
+        if (!id) {
+            return NextResponse.json(
+                { error: 'User ID is required' },
+                { status: 400 }
+            );
+        }
+
+        const users = await loadUsers();
+        const userIndex = users.findIndex(u => u.id === id);
+        
+        if (userIndex === -1) {
+            return NextResponse.json(
+                { error: 'User not found' },
+                { status: 404 }
+            );
+        }
+
+        const userToDelete = users[userIndex];
+        
+        // Prevent deletion of admin users
+        if (userToDelete.role === 'admin') {
+            return NextResponse.json(
+                { error: 'Cannot delete admin users' },
+                { status: 403 }
+            );
+        }
+
+        users.splice(userIndex, 1);
+        await saveUsers(users);
+        
+        return NextResponse.json(
+            { message: 'User deleted successfully' },
+            { status: 200 }
+        );
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal server error' },

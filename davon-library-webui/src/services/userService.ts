@@ -72,7 +72,7 @@ class UserService {
     }
 
     async deleteUser(id: string): Promise<void> {
-        const response = await fetch(`${this.API_URL}/${id}`, {
+        const response = await fetch(`${this.API_URL}?id=${id}`, {
             method: 'DELETE',
         });
 

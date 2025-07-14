@@ -4,6 +4,7 @@ import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import UserProfileInfo from '../../components/UserProfileInfo';
 import { useRouter } from 'next/navigation';
+import styles from './page.module.css';
 
 export default function HomePage() {
     const { user, isLoading, error, logout } = useAuth();
@@ -11,33 +12,34 @@ export default function HomePage() {
 
     const handleLogout = () => {
         logout();
-        router.push('/davon-library-landing-page/index.html');
+        window.location.href = 'http://127.0.0.1:5500/davon-library-landing-page/index.html';
     };
 
     return (
-        <main style={{ maxWidth: 600, margin: '2rem auto', padding: '1rem', position: 'relative' }}>
-            <button
-                onClick={handleLogout}
-                style={{
-                    position: 'absolute',
-                    top: 20,
-                    right: 20,
-                    padding: '0.5rem 1.2rem',
-                    background: '#c62828',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: 6,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
-                }}
-            >
-                Log out
-            </button>
-            <h1>Welcome to the Library System!</h1>
-            <UserProfileInfo user={user} isLoading={isLoading} error={error} />
-            {/* Diğer bölümler (BookLending, EventRegistration) buraya eklenecek */}
-        </main>
+        <div className={styles.container}>
+            <div className={styles.headerRow}>
+                <span className={styles.headerText}>Welcome to the Library System!</span>
+                {user?.role === 'admin' && (
+                    <button
+                        onClick={() => router.push('/admin')}
+                        className={styles.logoutButton}
+                        style={{ background: '#2196f3', marginRight: '1rem' }}
+                    >
+                        Admin Dashboard
+                    </button>
+                )}
+                <button
+                    onClick={handleLogout}
+                    className={styles.logoutButton}
+                >
+                    Log out
+                </button>
+            </div>
+            <div className={styles.profileBoxWrapper}>
+                <div className={styles.profileBox}>
+                    <UserProfileInfo user={user} isLoading={isLoading} error={error} />
+                </div>
+            </div>
+        </div>
     );
 } 

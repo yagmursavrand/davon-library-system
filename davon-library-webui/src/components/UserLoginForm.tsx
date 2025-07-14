@@ -107,7 +107,7 @@ export default function UserLoginForm() {
             </form>
             <p className={styles.registerLink}>
                 Don&apos;t have an account?{' '}
-                <Link href="/register" className={styles.link}>
+                <Link href="/registration" className={styles.link}>
                     Register here
                 </Link>
             </p>
