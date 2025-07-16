@@ -140,28 +140,51 @@ export async function POST(request: Request) {
     }
 }
 
-// POST /api/users/login
+// PUT /api/users (login or update)
 export async function PUT(request: Request) {
     try {
-        const credentials: LoginCredentials = await request.json();
-        const users = await loadUsers();
-        const user = users.find(u => u.email === credentials.email);
+        const url = new URL(request.url);
+        const id = url.searchParams.get('id');
+        if (id) {
+            // Update user by id
+            const data = await request.json();
+            const users = await loadUsers();
+            const userIndex = users.findIndex(u => u.id === id);
+            if (userIndex === -1) {
+                return NextResponse.json(
+                    { error: 'User not found' },
+                    { status: 404 }
+                );
+            }
+            users[userIndex] = {
+                ...users[userIndex],
+                ...data,
+                updatedAt: new Date().toISOString(),
+            };
+            await saveUsers(users);
+            return NextResponse.json(users[userIndex]);
+        } else {
+            // Login logic (existing)
+            const credentials: LoginCredentials = await request.json();
+            const users = await loadUsers();
+            const user = users.find(u => u.email === credentials.email);
 
-        if (!user) {
-            return NextResponse.json(
-                { error: 'User not found' },
-                { status: 404 }
-            );
+            if (!user) {
+                return NextResponse.json(
+                    { error: 'User not found' },
+                    { status: 404 }
+                );
+            }
+
+            if (user.password !== credentials.password) {
+                return NextResponse.json(
+                    { error: 'Invalid password' },
+                    { status: 401 }
+                );
+            }
+
+            return NextResponse.json(user);
         }
-
-        if (user.password !== credentials.password) {
-            return NextResponse.json(
-                { error: 'Invalid password' },
-                { status: 401 }
-            );
-        }
-
-        return NextResponse.json(user);
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal server error' },
@@ -210,6 +233,47 @@ export async function DELETE(request: Request) {
             { message: 'User deleted successfully' },
             { status: 200 }
         );
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        );
+    }
+} 
+
+// PATCH /api/users/[id]
+export async function PATCH(request: Request) {
+    try {
+        const url = new URL(request.url);
+        const id = url.pathname.split('/').pop(); // get id from URL
+        if (!id) {
+            return NextResponse.json(
+                { error: 'User ID is required' },
+                { status: 400 }
+            );
+        }
+
+        const data = await request.json();
+        const users = await loadUsers();
+        const userIndex = users.findIndex(u => u.id === id);
+
+        if (userIndex === -1) {
+            return NextResponse.json(
+                { error: 'User not found' },
+                { status: 404 }
+            );
+        }
+
+        // Update user fields
+        users[userIndex] = {
+            ...users[userIndex],
+            ...data,
+            updatedAt: new Date().toISOString(),
+        };
+
+        await saveUsers(users);
+
+        return NextResponse.json(users[userIndex]);
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal server error' },

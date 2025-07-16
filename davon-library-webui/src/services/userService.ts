@@ -55,8 +55,8 @@ class UserService {
     }
 
     async updateUser(id: string, data: Partial<User>): Promise<User> {
-        const response = await fetch(`${this.API_URL}/${id}`, {
-            method: 'PATCH',
+        const response = await fetch(`${this.API_URL}?id=${id}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
