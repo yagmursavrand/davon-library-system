@@ -1,0 +1,3973 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.davon.library.resource.BookResourceTest" time="0.472" tests="34" errors="1" skipped="0" failures="8">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="test.url" value="http://localhost:8081"/>
+    <property name="java.class.path" value="/Users/canansavran/davon-library-system/library-backend/target/test-classes:/Users/canansavran/davon-library-system/library-backend/target/classes:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive/3.6.4/quarkus-resteasy-reactive-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive-common/3.6.4/quarkus-resteasy-reactive-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-common/3.6.4/resteasy-reactive-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-common-types/3.6.4/resteasy-reactive-common-types-3.6.4.jar:/Users/canansavran/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-annotation/2.1.2/smallrye-common-annotation-2.1.2.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx/3.6.4/quarkus-vertx-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-netty/3.6.4/quarkus-netty-3.6.4.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec/4.1.100.Final/netty-codec-4.1.100.Final.jar:/Users/canansavran/.m2/repository/com/aayushatharva/brotli4j/brotli4j/1.12.0/brotli4j-1.12.0.jar:/Users/canansavran/.m2/repository/com/aayushatharva/brotli4j/service/1.12.0/service-1.12.0.jar:/Users/canansavran/.m2/repository/com/aayushatharva/brotli4j/native-osx-aarch64/1.12.0/native-osx-aarch64-1.12.0.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-haproxy/4.1.100.Final/netty-codec-haproxy-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx-latebound-mdc-provider/3.6.4/quarkus-vertx-latebound-mdc-provider-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-fault-tolerance-vertx/6.2.6/smallrye-fault-tolerance-vertx-6.2.6.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-vertx/3.6.4/resteasy-reactive-vertx-3.6.4.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-web/4.4.6/vertx-web-4.4.6.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-web-common/4.4.6/vertx-web-common-4.4.6.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-auth-common/4.4.6/vertx-auth-common-4.4.6.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-bridge-common/4.4.6/vertx-bridge-common-4.4.6.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-core/3.7.2/smallrye-mutiny-vertx-core-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-runtime/3.7.2/smallrye-mutiny-vertx-runtime-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/vertx-mutiny-generator/3.7.2/vertx-mutiny-generator-3.7.2.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-codegen/4.4.6/vertx-codegen-4.4.6.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive/3.6.4/resteasy-reactive-3.6.4.jar:/Users/canansavran/.m2/repository/jakarta/enterprise/jakarta.enterprise.cdi-api/4.0.1/jakarta.enterprise.cdi-api-4.0.1.jar:/Users/canansavran/.m2/repository/jakarta/enterprise/jakarta.enterprise.lang-model/4.0.1/jakarta.enterprise.lang-model-4.0.1.jar:/Users/canansavran/.m2/repository/jakarta/el/jakarta.el-api/5.0.1/jakarta.el-api-5.0.1.jar:/Users/canansavran/.m2/repository/jakarta/interceptor/jakarta.interceptor-api/2.1.0/jakarta.interceptor-api-2.1.0.jar:/Users/canansavran/.m2/repository/jakarta/ws/rs/jakarta.ws.rs-api/3.1.0/jakarta.ws.rs-api-3.1.0.jar:/Users/canansavran/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/canansavran/.m2/repository/org/jboss/logging/commons-logging-jboss-logging/1.0.0.Final/commons-logging-jboss-logging-1.0.0.Final.jar:/Users/canansavran/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx-http/3.6.4/quarkus-vertx-http-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-security-runtime-spi/3.6.4/quarkus-security-runtime-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-credentials/3.6.4/quarkus-credentials-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-vertx-context/2.1.2/smallrye-common-vertx-context-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-constraint/2.1.2/smallrye-common-constraint-2.1.2.jar:/Users/canansavran/.m2/repository/io/quarkus/security/quarkus-security/2.0.2.Final/quarkus-security-2.0.2.Final.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-web/3.7.2/smallrye-mutiny-vertx-web-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-web-common/3.7.2/smallrye-mutiny-vertx-web-common-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-auth-common/3.7.2/smallrye-mutiny-vertx-auth-common-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-bridge-common/3.7.2/smallrye-mutiny-vertx-bridge-common-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-uri-template/3.7.2/smallrye-mutiny-vertx-uri-template-3.7.2.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-uri-template/4.4.6/vertx-uri-template-4.4.6.jar:/Users/canansavran/.m2/repository/io/github/crac/org-crac/0.1.3/org-crac-0.1.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-jsonp/3.6.4/quarkus-jsonp-3.6.4.jar:/Users/canansavran/.m2/repository/org/eclipse/parsson/parsson/1.1.5/parsson-1.1.5.jar:/Users/canansavran/.m2/repository/jakarta/json/jakarta.json-api/2.1.3/jakarta.json-api-2.1.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-virtual-threads/3.6.4/quarkus-virtual-threads-3.6.4.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-core/4.4.6/vertx-core-4.4.6.jar:/Users/canansavran/.m2/repository/io/netty/netty-common/4.1.100.Final/netty-common-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-buffer/4.1.100.Final/netty-buffer-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-transport/4.1.100.Final/netty-transport-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-handler/4.1.100.Final/netty-handler-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-transport-native-unix-common/4.1.100.Final/netty-transport-native-unix-common-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-handler-proxy/4.1.100.Final/netty-handler-proxy-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-socks/4.1.100.Final/netty-codec-socks-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-http/4.1.100.Final/netty-codec-http-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-http2/4.1.100.Final/netty-codec-http2-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-resolver/4.1.100.Final/netty-resolver-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-resolver-dns/4.1.100.Final/netty-resolver-dns-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-dns/4.1.100.Final/netty-codec-dns-4.1.100.Final.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.3/jackson-core-2.15.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive-jackson/3.6.4/quarkus-resteasy-reactive-jackson-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive-jackson-common/3.6.4/quarkus-resteasy-reactive-jackson-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-jackson/3.6.4/resteasy-reactive-jackson-3.6.4.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.3/jackson-databind-2.15.3.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.3/jackson-annotations-2.15.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-jackson/3.6.4/quarkus-jackson-3.6.4.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.3/jackson-datatype-jsr310-2.15.3.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.3/jackson-datatype-jdk8-2.15.3.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.3/jackson-module-parameter-names-2.15.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-arc/3.6.4/quarkus-arc-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/arc/arc/3.6.4/arc-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/mutiny/2.5.1/mutiny-2.5.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-core/3.6.4/quarkus-core-3.6.4.jar:/Users/canansavran/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-os/2.1.2/smallrye-common-os-2.1.2.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-ide-launcher/3.6.4/quarkus-ide-launcher-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-development-mode-spi/3.6.4/quarkus-development-mode-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/config/smallrye-config/3.4.4/smallrye-config-3.4.4.jar:/Users/canansavran/.m2/repository/io/smallrye/config/smallrye-config-core/3.4.4/smallrye-config-core-3.4.4.jar:/Users/canansavran/.m2/repository/org/eclipse/microprofile/config/microprofile-config-api/3.0.3/microprofile-config-api-3.0.3.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-classloader/2.1.2/smallrye-common-classloader-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/config/smallrye-config-common/3.4.4/smallrye-config-common-3.4.4.jar:/Users/canansavran/.m2/repository/org/jboss/logmanager/jboss-logmanager/3.0.2.Final/jboss-logmanager-3.0.2.Final.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-cpu/2.1.2/smallrye-common-cpu-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-expression/2.1.2/smallrye-common-expression-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-function/2.1.2/smallrye-common-function-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-net/2.1.2/smallrye-common-net-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-ref/2.1.2/smallrye-common-ref-2.1.2.jar:/Users/canansavran/.m2/repository/org/jboss/logging/jboss-logging-annotations/2.2.1.Final/jboss-logging-annotations-2.2.1.Final.jar:/Users/canansavran/.m2/repository/org/jboss/threads/jboss-threads/3.5.1.Final/jboss-threads-3.5.1.Final.jar:/Users/canansavran/.m2/repository/org/slf4j/slf4j-api/2.0.6/slf4j-api-2.0.6.jar:/Users/canansavran/.m2/repository/org/jboss/slf4j/slf4j-jboss-logmanager/2.0.0.Final/slf4j-jboss-logmanager-2.0.0.Final.jar:/Users/canansavran/.m2/repository/org/wildfly/common/wildfly-common/1.7.0.Final/wildfly-common-1.7.0.Final.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-runner/3.6.4/quarkus-bootstrap-runner-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-fs-util/0.0.9/quarkus-fs-util-0.0.9.jar:/Users/canansavran/.m2/repository/org/eclipse/microprofile/context-propagation/microprofile-context-propagation-api/1.3/microprofile-context-propagation-api-1.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-hibernate-orm/3.6.4/quarkus-hibernate-orm-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-agroal/3.6.4/quarkus-agroal-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-datasource/3.6.4/quarkus-datasource-3.6.4.jar:/Users/canansavran/.m2/repository/io/agroal/agroal-api/2.1/agroal-api-2.1.jar:/Users/canansavran/.m2/repository/io/agroal/agroal-narayana/2.1/agroal-narayana-2.1.jar:/Users/canansavran/.m2/repository/org/jboss/jboss-transaction-spi/8.0.0.Final/jboss-transaction-spi-8.0.0.Final.jar:/Users/canansavran/.m2/repository/io/agroal/agroal-pool/2.1/agroal-pool-2.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-narayana-jta/3.6.4/quarkus-narayana-jta-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-transaction-annotations/3.6.4/quarkus-transaction-annotations-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-datasource-common/3.6.4/quarkus-datasource-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation-jta/2.1.0/smallrye-context-propagation-jta-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-reactive-converter-api/3.0.1/smallrye-reactive-converter-api-3.0.1.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-reactive-converter-mutiny/3.0.1/smallrye-reactive-converter-mutiny-3.0.1.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/mutiny-zero-flow-adapters/1.0.0/mutiny-zero-flow-adapters-1.0.0.jar:/Users/canansavran/.m2/repository/org/jboss/narayana/jta/narayana-jta/7.0.0.Final/narayana-jta-7.0.0.Final.jar:/Users/canansavran/.m2/repository/jakarta/resource/jakarta.resource-api/2.1.0/jakarta.resource-api-2.1.0.jar:/Users/canansavran/.m2/repository/org/jboss/invocation/jboss-invocation/2.0.0.Final/jboss-invocation-2.0.0.Final.jar:/Users/canansavran/.m2/repository/org/eclipse/microprofile/reactive-streams-operators/microprofile-reactive-streams-operators-api/3.0/microprofile-reactive-streams-operators-api-3.0.jar:/Users/canansavran/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/7.0.0.Final/narayana-jts-integration-7.0.0.Final.jar:/Users/canansavran/.m2/repository/org/hibernate/orm/hibernate-core/6.2.13.Final/hibernate-core-6.2.13.Final.jar:/Users/canansavran/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/Users/canansavran/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar:/Users/canansavran/.m2/repository/net/bytebuddy/byte-buddy/1.14.7/byte-buddy-1.14.7.jar:/Users/canansavran/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/canansavran/.m2/repository/org/hibernate/orm/hibernate-graalvm/6.2.13.Final/hibernate-graalvm-6.2.13.Final.jar:/Users/canansavran/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.4/jaxb-runtime-4.0.4.jar:/Users/canansavran/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.4/jaxb-core-4.0.4.jar:/Users/canansavran/.m2/repository/org/eclipse/angus/angus-activation/2.0.1/angus-activation-2.0.1.jar:/Users/canansavran/.m2/repository/org/glassfish/jaxb/txw2/4.0.4/txw2-4.0.4.jar:/Users/canansavran/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/canansavran/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.1/jakarta.xml.bind-api-4.0.1.jar:/Users/canansavran/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.2/jakarta.activation-api-2.1.2.jar:/Users/canansavran/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/canansavran/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/canansavran/.m2/repository/org/hibernate/quarkus-local-cache/0.2.1/quarkus-local-cache-0.2.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-caffeine/3.6.4/quarkus-caffeine-3.6.4.jar:/Users/canansavran/.m2/repository/com/github/ben-manes/caffeine/caffeine/3.1.5/caffeine-3.1.5.jar:/Users/canansavran/.m2/repository/com/google/errorprone/error_prone_annotations/2.22.0/error_prone_annotations-2.22.0.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-hibernate-orm-panache/3.6.4/quarkus-hibernate-orm-panache-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-hibernate-orm-panache-common/3.6.4/quarkus-hibernate-orm-panache-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-panache-hibernate-common/3.6.4/quarkus-panache-hibernate-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-panache-common/3.6.4/quarkus-panache-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-jdbc-h2/3.6.4/quarkus-jdbc-h2-3.6.4.jar:/Users/canansavran/.m2/repository/com/h2database/h2/2.2.224/h2-2.2.224.jar:/Users/canansavran/.m2/repository/org/locationtech/jts/jts-core/1.17.0/jts-core-1.17.0.jar:/Users/canansavran/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5/3.6.4/quarkus-junit5-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-core/3.6.4/quarkus-bootstrap-core-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-app-model/3.6.4/quarkus-bootstrap-app-model-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-io/2.1.2/smallrye-common-io-2.1.2.jar:/Users/canansavran/.m2/repository/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M2/org.eclipse.sisu.inject-0.9.0.M2.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-test-common/3.6.4/quarkus-test-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-core-deployment/3.6.4/quarkus-core-deployment-3.6.4.jar:/Users/canansavran/.m2/repository/org/aesh/readline/2.4/readline-2.4.jar:/Users/canansavran/.m2/repository/org/fusesource/jansi/jansi/2.4.0/jansi-2.4.0.jar:/Users/canansavran/.m2/repository/org/aesh/aesh/2.7/aesh-2.7.jar:/Users/canansavran/.m2/repository/io/quarkus/gizmo/gizmo/1.7.0/gizmo-1.7.0.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-util/9.6/asm-util-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-analysis/9.6/asm-analysis-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm/9.6/asm-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-commons/9.6/asm-commons-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-tree/9.6/asm-tree-9.6.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-class-change-agent/3.6.4/quarkus-class-change-agent-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-devtools-utilities/3.6.4/quarkus-devtools-utilities-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-builder/3.6.4/quarkus-builder-3.6.4.jar:/Users/canansavran/.m2/repository/org/graalvm/sdk/graal-sdk/23.0.1/graal-sdk-23.0.1.jar:/Users/canansavran/.m2/repository/org/junit/platform/junit-platform-launcher/1.10.1/junit-platform-launcher-1.10.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-maven-resolver/3.6.4/quarkus-bootstrap-maven-resolver-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/beanbag/smallrye-beanbag-maven/1.3.2/smallrye-beanbag-maven-1.3.2.jar:/Users/canansavran/.m2/repository/io/smallrye/beanbag/smallrye-beanbag-sisu/1.3.2/smallrye-beanbag-sisu-1.3.2.jar:/Users/canansavran/.m2/repository/io/smallrye/beanbag/smallrye-beanbag/1.3.2/smallrye-beanbag-1.3.2.jar:/Users/canansavran/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-artifact/3.9.6/maven-artifact-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-builder-support/3.9.6/maven-builder-support-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-model/3.9.6/maven-model-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-model-builder/3.9.6/maven-model-builder-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-repository-metadata/3.9.6/maven-repository-metadata-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-settings/3.9.6/maven-settings-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.9.18/maven-resolver-api-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.9.18/maven-resolver-impl-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-named-locks/1.9.18/maven-resolver-named-locks-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.9.18/maven-resolver-spi-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.9.18/maven-resolver-util-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.9.10/maven-resolver-transport-http-1.9.10.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.5.3/wagon-provider-api-3.5.3.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.5.3/wagon-http-shared-3.5.3.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.26/plexus-interpolation-1.26.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-utils/3.5.1/plexus-utils-3.5.1.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-xml/4.0.0/plexus-xml-4.0.0.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-xml-impl/4.0.0-alpha-5/maven-xml-impl-4.0.0-alpha-5.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-api-xml/4.0.0-alpha-5/maven-api-xml-4.0.0-alpha-5.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-api-meta/4.0.0-alpha-5/maven-api-meta-4.0.0-alpha-5.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-cipher/2.0/plexus-cipher-2.0.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-sec-dispatcher/2.0/plexus-sec-dispatcher-2.0.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-embedder/3.9.6/maven-embedder-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-core/3.9.6/maven-core-3.9.6.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-component-annotations/2.1.0/plexus-component-annotations-2.1.0.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-plugin-api/3.9.6/maven-plugin-api-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/shared/maven-shared-utils/3.3.4/maven-shared-utils-3.3.4.jar:/Users/canansavran/.m2/repository/com/google/inject/guice/5.1.0/guice-5.1.0.jar:/Users/canansavran/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/canansavran/.m2/repository/com/google/guava/guava/32.1.3-jre/guava-32.1.3-jre.jar:/Users/canansavran/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/canansavran/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar:/Users/canansavran/.m2/repository/commons-cli/commons-cli/1.5.0/commons-cli-1.5.0.jar:/Users/canansavran/.m2/repository/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M2/org.eclipse.sisu.plexus-0.9.0.M2.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-settings-builder/3.9.6/maven-settings-builder-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-resolver-provider/3.9.6/maven-resolver-provider-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.9.18/maven-resolver-connector-basic-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.9.18/maven-resolver-transport-wagon-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-http/3.5.3/wagon-http-3.5.3.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-file/3.5.3/wagon-file-3.5.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-gradle-resolver/3.6.4/quarkus-bootstrap-gradle-resolver-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/jandex/3.1.6/jandex-3.1.6.jar:/Users/canansavran/.m2/repository/commons-io/commons-io/2.15.1/commons-io-2.15.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5-properties/3.6.4/quarkus-junit5-properties-3.6.4.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.1/junit-jupiter-5.10.1.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.1/junit-jupiter-api-5.10.1.jar:/Users/canansavran/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/canansavran/.m2/repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar:/Users/canansavran/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.1/junit-jupiter-params-5.10.1.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.1/junit-jupiter-engine-5.10.1.jar:/Users/canansavran/.m2/repository/org/junit/platform/junit-platform-engine/1.10.1/junit-platform-engine-1.10.1.jar:/Users/canansavran/.m2/repository/com/thoughtworks/xstream/xstream/1.4.20/xstream-1.4.20.jar:/Users/canansavran/.m2/repository/io/github/x-stream/mxparser/1.2.2/mxparser-1.2.2.jar:/Users/canansavran/.m2/repository/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.jar:/Users/canansavran/.m2/repository/io/rest-assured/rest-assured/5.3.2/rest-assured-5.3.2.jar:/Users/canansavran/.m2/repository/org/apache/groovy/groovy/4.0.11/groovy-4.0.11.jar:/Users/canansavran/.m2/repository/org/apache/groovy/groovy-xml/4.0.11/groovy-xml-4.0.11.jar:/Users/canansavran/.m2/repository/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar:/Users/canansavran/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar:/Users/canansavran/.m2/repository/commons-codec/commons-codec/1.16.0/commons-codec-1.16.0.jar:/Users/canansavran/.m2/repository/org/apache/httpcomponents/httpmime/4.5.14/httpmime-4.5.14.jar:/Users/canansavran/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/canansavran/.m2/repository/org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.jar:/Users/canansavran/.m2/repository/io/rest-assured/json-path/5.3.2/json-path-5.3.2.jar:/Users/canansavran/.m2/repository/org/apache/groovy/groovy-json/4.0.11/groovy-json-4.0.11.jar:/Users/canansavran/.m2/repository/io/rest-assured/rest-assured-common/5.3.2/rest-assured-common-5.3.2.jar:/Users/canansavran/.m2/repository/io/rest-assured/xml-path/5.3.2/xml-path-5.3.2.jar:/Users/canansavran/.m2/repository/org/apache/commons/commons-lang3/3.13.0/commons-lang3-3.13.0.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5-mockito/3.6.4/quarkus-junit5-mockito-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5-mockito-config/3.6.4/quarkus-junit5-mockito-config-3.6.4.jar:/Users/canansavran/.m2/repository/org/mockito/mockito-core/5.3.1/mockito-core-5.3.1.jar:/Users/canansavran/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.4/byte-buddy-agent-1.14.4.jar:/Users/canansavran/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-arc-deployment/3.6.4/quarkus-arc-deployment-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-smallrye-context-propagation-spi/3.6.4/quarkus-smallrye-context-propagation-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx-http-dev-ui-spi/3.6.4/quarkus-vertx-http-dev-ui-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/arc/arc-processor/3.6.4/arc-processor-3.6.4.jar:/Users/canansavran/.m2/repository/org/mockito/mockito-subclass/5.3.1/mockito-subclass-5.3.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-mutiny/3.6.4/quarkus-mutiny-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-smallrye-context-propagation/3.6.4/quarkus-smallrye-context-propagation-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation/2.1.0/smallrye-context-propagation-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation-api/2.1.0/smallrye-context-propagation-api-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation-storage/2.1.0/smallrye-context-propagation-storage-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/mutiny-smallrye-context-propagation/2.5.1/mutiny-smallrye-context-propagation-2.5.1.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="user.timezone" value="Europe/Istanbul"/>
+    <property name="logging.initial-configurator.min-level" value="500"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="TR"/>
+    <property name="groovy.use.classvalue" value="false"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk@21/21.0.8/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/canansavran/davon-library-system/library-backend/target/surefire/surefirebooter-20250724153632800_3.jar /Users/canansavran/davon-library-system/library-backend/target/surefire 2025-07-24T15-36-32_769-jvmRun1 surefire-20250724153632800_1tmp surefire_0-20250724153632800_2tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/canansavran/davon-library-system/library-backend/target/test-classes:/Users/canansavran/davon-library-system/library-backend/target/classes:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive/3.6.4/quarkus-resteasy-reactive-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive-common/3.6.4/quarkus-resteasy-reactive-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-common/3.6.4/resteasy-reactive-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-common-types/3.6.4/resteasy-reactive-common-types-3.6.4.jar:/Users/canansavran/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-annotation/2.1.2/smallrye-common-annotation-2.1.2.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx/3.6.4/quarkus-vertx-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-netty/3.6.4/quarkus-netty-3.6.4.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec/4.1.100.Final/netty-codec-4.1.100.Final.jar:/Users/canansavran/.m2/repository/com/aayushatharva/brotli4j/brotli4j/1.12.0/brotli4j-1.12.0.jar:/Users/canansavran/.m2/repository/com/aayushatharva/brotli4j/service/1.12.0/service-1.12.0.jar:/Users/canansavran/.m2/repository/com/aayushatharva/brotli4j/native-osx-aarch64/1.12.0/native-osx-aarch64-1.12.0.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-haproxy/4.1.100.Final/netty-codec-haproxy-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx-latebound-mdc-provider/3.6.4/quarkus-vertx-latebound-mdc-provider-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-fault-tolerance-vertx/6.2.6/smallrye-fault-tolerance-vertx-6.2.6.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-vertx/3.6.4/resteasy-reactive-vertx-3.6.4.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-web/4.4.6/vertx-web-4.4.6.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-web-common/4.4.6/vertx-web-common-4.4.6.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-auth-common/4.4.6/vertx-auth-common-4.4.6.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-bridge-common/4.4.6/vertx-bridge-common-4.4.6.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-core/3.7.2/smallrye-mutiny-vertx-core-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-runtime/3.7.2/smallrye-mutiny-vertx-runtime-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/vertx-mutiny-generator/3.7.2/vertx-mutiny-generator-3.7.2.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-codegen/4.4.6/vertx-codegen-4.4.6.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive/3.6.4/resteasy-reactive-3.6.4.jar:/Users/canansavran/.m2/repository/jakarta/enterprise/jakarta.enterprise.cdi-api/4.0.1/jakarta.enterprise.cdi-api-4.0.1.jar:/Users/canansavran/.m2/repository/jakarta/enterprise/jakarta.enterprise.lang-model/4.0.1/jakarta.enterprise.lang-model-4.0.1.jar:/Users/canansavran/.m2/repository/jakarta/el/jakarta.el-api/5.0.1/jakarta.el-api-5.0.1.jar:/Users/canansavran/.m2/repository/jakarta/interceptor/jakarta.interceptor-api/2.1.0/jakarta.interceptor-api-2.1.0.jar:/Users/canansavran/.m2/repository/jakarta/ws/rs/jakarta.ws.rs-api/3.1.0/jakarta.ws.rs-api-3.1.0.jar:/Users/canansavran/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/canansavran/.m2/repository/org/jboss/logging/commons-logging-jboss-logging/1.0.0.Final/commons-logging-jboss-logging-1.0.0.Final.jar:/Users/canansavran/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx-http/3.6.4/quarkus-vertx-http-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-security-runtime-spi/3.6.4/quarkus-security-runtime-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-credentials/3.6.4/quarkus-credentials-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-vertx-context/2.1.2/smallrye-common-vertx-context-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-constraint/2.1.2/smallrye-common-constraint-2.1.2.jar:/Users/canansavran/.m2/repository/io/quarkus/security/quarkus-security/2.0.2.Final/quarkus-security-2.0.2.Final.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-web/3.7.2/smallrye-mutiny-vertx-web-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-web-common/3.7.2/smallrye-mutiny-vertx-web-common-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-auth-common/3.7.2/smallrye-mutiny-vertx-auth-common-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-bridge-common/3.7.2/smallrye-mutiny-vertx-bridge-common-3.7.2.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-mutiny-vertx-uri-template/3.7.2/smallrye-mutiny-vertx-uri-template-3.7.2.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-uri-template/4.4.6/vertx-uri-template-4.4.6.jar:/Users/canansavran/.m2/repository/io/github/crac/org-crac/0.1.3/org-crac-0.1.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-jsonp/3.6.4/quarkus-jsonp-3.6.4.jar:/Users/canansavran/.m2/repository/org/eclipse/parsson/parsson/1.1.5/parsson-1.1.5.jar:/Users/canansavran/.m2/repository/jakarta/json/jakarta.json-api/2.1.3/jakarta.json-api-2.1.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-virtual-threads/3.6.4/quarkus-virtual-threads-3.6.4.jar:/Users/canansavran/.m2/repository/io/vertx/vertx-core/4.4.6/vertx-core-4.4.6.jar:/Users/canansavran/.m2/repository/io/netty/netty-common/4.1.100.Final/netty-common-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-buffer/4.1.100.Final/netty-buffer-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-transport/4.1.100.Final/netty-transport-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-handler/4.1.100.Final/netty-handler-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-transport-native-unix-common/4.1.100.Final/netty-transport-native-unix-common-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-handler-proxy/4.1.100.Final/netty-handler-proxy-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-socks/4.1.100.Final/netty-codec-socks-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-http/4.1.100.Final/netty-codec-http-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-http2/4.1.100.Final/netty-codec-http2-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-resolver/4.1.100.Final/netty-resolver-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-resolver-dns/4.1.100.Final/netty-resolver-dns-4.1.100.Final.jar:/Users/canansavran/.m2/repository/io/netty/netty-codec-dns/4.1.100.Final/netty-codec-dns-4.1.100.Final.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.3/jackson-core-2.15.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive-jackson/3.6.4/quarkus-resteasy-reactive-jackson-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-resteasy-reactive-jackson-common/3.6.4/quarkus-resteasy-reactive-jackson-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/resteasy/reactive/resteasy-reactive-jackson/3.6.4/resteasy-reactive-jackson-3.6.4.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.3/jackson-databind-2.15.3.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.3/jackson-annotations-2.15.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-jackson/3.6.4/quarkus-jackson-3.6.4.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.3/jackson-datatype-jsr310-2.15.3.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.3/jackson-datatype-jdk8-2.15.3.jar:/Users/canansavran/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.3/jackson-module-parameter-names-2.15.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-arc/3.6.4/quarkus-arc-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/arc/arc/3.6.4/arc-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/mutiny/2.5.1/mutiny-2.5.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-core/3.6.4/quarkus-core-3.6.4.jar:/Users/canansavran/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-os/2.1.2/smallrye-common-os-2.1.2.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-ide-launcher/3.6.4/quarkus-ide-launcher-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-development-mode-spi/3.6.4/quarkus-development-mode-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/config/smallrye-config/3.4.4/smallrye-config-3.4.4.jar:/Users/canansavran/.m2/repository/io/smallrye/config/smallrye-config-core/3.4.4/smallrye-config-core-3.4.4.jar:/Users/canansavran/.m2/repository/org/eclipse/microprofile/config/microprofile-config-api/3.0.3/microprofile-config-api-3.0.3.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-classloader/2.1.2/smallrye-common-classloader-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/config/smallrye-config-common/3.4.4/smallrye-config-common-3.4.4.jar:/Users/canansavran/.m2/repository/org/jboss/logmanager/jboss-logmanager/3.0.2.Final/jboss-logmanager-3.0.2.Final.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-cpu/2.1.2/smallrye-common-cpu-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-expression/2.1.2/smallrye-common-expression-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-function/2.1.2/smallrye-common-function-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-net/2.1.2/smallrye-common-net-2.1.2.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-ref/2.1.2/smallrye-common-ref-2.1.2.jar:/Users/canansavran/.m2/repository/org/jboss/logging/jboss-logging-annotations/2.2.1.Final/jboss-logging-annotations-2.2.1.Final.jar:/Users/canansavran/.m2/repository/org/jboss/threads/jboss-threads/3.5.1.Final/jboss-threads-3.5.1.Final.jar:/Users/canansavran/.m2/repository/org/slf4j/slf4j-api/2.0.6/slf4j-api-2.0.6.jar:/Users/canansavran/.m2/repository/org/jboss/slf4j/slf4j-jboss-logmanager/2.0.0.Final/slf4j-jboss-logmanager-2.0.0.Final.jar:/Users/canansavran/.m2/repository/org/wildfly/common/wildfly-common/1.7.0.Final/wildfly-common-1.7.0.Final.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-runner/3.6.4/quarkus-bootstrap-runner-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-fs-util/0.0.9/quarkus-fs-util-0.0.9.jar:/Users/canansavran/.m2/repository/org/eclipse/microprofile/context-propagation/microprofile-context-propagation-api/1.3/microprofile-context-propagation-api-1.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-hibernate-orm/3.6.4/quarkus-hibernate-orm-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-agroal/3.6.4/quarkus-agroal-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-datasource/3.6.4/quarkus-datasource-3.6.4.jar:/Users/canansavran/.m2/repository/io/agroal/agroal-api/2.1/agroal-api-2.1.jar:/Users/canansavran/.m2/repository/io/agroal/agroal-narayana/2.1/agroal-narayana-2.1.jar:/Users/canansavran/.m2/repository/org/jboss/jboss-transaction-spi/8.0.0.Final/jboss-transaction-spi-8.0.0.Final.jar:/Users/canansavran/.m2/repository/io/agroal/agroal-pool/2.1/agroal-pool-2.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-narayana-jta/3.6.4/quarkus-narayana-jta-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-transaction-annotations/3.6.4/quarkus-transaction-annotations-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-datasource-common/3.6.4/quarkus-datasource-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation-jta/2.1.0/smallrye-context-propagation-jta-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-reactive-converter-api/3.0.1/smallrye-reactive-converter-api-3.0.1.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/smallrye-reactive-converter-mutiny/3.0.1/smallrye-reactive-converter-mutiny-3.0.1.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/mutiny-zero-flow-adapters/1.0.0/mutiny-zero-flow-adapters-1.0.0.jar:/Users/canansavran/.m2/repository/org/jboss/narayana/jta/narayana-jta/7.0.0.Final/narayana-jta-7.0.0.Final.jar:/Users/canansavran/.m2/repository/jakarta/resource/jakarta.resource-api/2.1.0/jakarta.resource-api-2.1.0.jar:/Users/canansavran/.m2/repository/org/jboss/invocation/jboss-invocation/2.0.0.Final/jboss-invocation-2.0.0.Final.jar:/Users/canansavran/.m2/repository/org/eclipse/microprofile/reactive-streams-operators/microprofile-reactive-streams-operators-api/3.0/microprofile-reactive-streams-operators-api-3.0.jar:/Users/canansavran/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/7.0.0.Final/narayana-jts-integration-7.0.0.Final.jar:/Users/canansavran/.m2/repository/org/hibernate/orm/hibernate-core/6.2.13.Final/hibernate-core-6.2.13.Final.jar:/Users/canansavran/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/Users/canansavran/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar:/Users/canansavran/.m2/repository/net/bytebuddy/byte-buddy/1.14.7/byte-buddy-1.14.7.jar:/Users/canansavran/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/canansavran/.m2/repository/org/hibernate/orm/hibernate-graalvm/6.2.13.Final/hibernate-graalvm-6.2.13.Final.jar:/Users/canansavran/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.4/jaxb-runtime-4.0.4.jar:/Users/canansavran/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.4/jaxb-core-4.0.4.jar:/Users/canansavran/.m2/repository/org/eclipse/angus/angus-activation/2.0.1/angus-activation-2.0.1.jar:/Users/canansavran/.m2/repository/org/glassfish/jaxb/txw2/4.0.4/txw2-4.0.4.jar:/Users/canansavran/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/canansavran/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.1/jakarta.xml.bind-api-4.0.1.jar:/Users/canansavran/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.2/jakarta.activation-api-2.1.2.jar:/Users/canansavran/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/canansavran/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/canansavran/.m2/repository/org/hibernate/quarkus-local-cache/0.2.1/quarkus-local-cache-0.2.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-caffeine/3.6.4/quarkus-caffeine-3.6.4.jar:/Users/canansavran/.m2/repository/com/github/ben-manes/caffeine/caffeine/3.1.5/caffeine-3.1.5.jar:/Users/canansavran/.m2/repository/com/google/errorprone/error_prone_annotations/2.22.0/error_prone_annotations-2.22.0.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-hibernate-orm-panache/3.6.4/quarkus-hibernate-orm-panache-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-hibernate-orm-panache-common/3.6.4/quarkus-hibernate-orm-panache-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-panache-hibernate-common/3.6.4/quarkus-panache-hibernate-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-panache-common/3.6.4/quarkus-panache-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-jdbc-h2/3.6.4/quarkus-jdbc-h2-3.6.4.jar:/Users/canansavran/.m2/repository/com/h2database/h2/2.2.224/h2-2.2.224.jar:/Users/canansavran/.m2/repository/org/locationtech/jts/jts-core/1.17.0/jts-core-1.17.0.jar:/Users/canansavran/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5/3.6.4/quarkus-junit5-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-core/3.6.4/quarkus-bootstrap-core-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-app-model/3.6.4/quarkus-bootstrap-app-model-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/common/smallrye-common-io/2.1.2/smallrye-common-io-2.1.2.jar:/Users/canansavran/.m2/repository/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M2/org.eclipse.sisu.inject-0.9.0.M2.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-test-common/3.6.4/quarkus-test-common-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-core-deployment/3.6.4/quarkus-core-deployment-3.6.4.jar:/Users/canansavran/.m2/repository/org/aesh/readline/2.4/readline-2.4.jar:/Users/canansavran/.m2/repository/org/fusesource/jansi/jansi/2.4.0/jansi-2.4.0.jar:/Users/canansavran/.m2/repository/org/aesh/aesh/2.7/aesh-2.7.jar:/Users/canansavran/.m2/repository/io/quarkus/gizmo/gizmo/1.7.0/gizmo-1.7.0.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-util/9.6/asm-util-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-analysis/9.6/asm-analysis-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm/9.6/asm-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-commons/9.6/asm-commons-9.6.jar:/Users/canansavran/.m2/repository/org/ow2/asm/asm-tree/9.6/asm-tree-9.6.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-class-change-agent/3.6.4/quarkus-class-change-agent-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-devtools-utilities/3.6.4/quarkus-devtools-utilities-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-builder/3.6.4/quarkus-builder-3.6.4.jar:/Users/canansavran/.m2/repository/org/graalvm/sdk/graal-sdk/23.0.1/graal-sdk-23.0.1.jar:/Users/canansavran/.m2/repository/org/junit/platform/junit-platform-launcher/1.10.1/junit-platform-launcher-1.10.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-maven-resolver/3.6.4/quarkus-bootstrap-maven-resolver-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/beanbag/smallrye-beanbag-maven/1.3.2/smallrye-beanbag-maven-1.3.2.jar:/Users/canansavran/.m2/repository/io/smallrye/beanbag/smallrye-beanbag-sisu/1.3.2/smallrye-beanbag-sisu-1.3.2.jar:/Users/canansavran/.m2/repository/io/smallrye/beanbag/smallrye-beanbag/1.3.2/smallrye-beanbag-1.3.2.jar:/Users/canansavran/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-artifact/3.9.6/maven-artifact-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-builder-support/3.9.6/maven-builder-support-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-model/3.9.6/maven-model-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-model-builder/3.9.6/maven-model-builder-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-repository-metadata/3.9.6/maven-repository-metadata-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-settings/3.9.6/maven-settings-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.9.18/maven-resolver-api-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-impl/1.9.18/maven-resolver-impl-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-named-locks/1.9.18/maven-resolver-named-locks-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-spi/1.9.18/maven-resolver-spi-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.9.18/maven-resolver-util-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-http/1.9.10/maven-resolver-transport-http-1.9.10.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.5.3/wagon-provider-api-3.5.3.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-http-shared/3.5.3/wagon-http-shared-3.5.3.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.26/plexus-interpolation-1.26.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-utils/3.5.1/plexus-utils-3.5.1.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-xml/4.0.0/plexus-xml-4.0.0.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-xml-impl/4.0.0-alpha-5/maven-xml-impl-4.0.0-alpha-5.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-api-xml/4.0.0-alpha-5/maven-api-xml-4.0.0-alpha-5.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-api-meta/4.0.0-alpha-5/maven-api-meta-4.0.0-alpha-5.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-cipher/2.0/plexus-cipher-2.0.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-sec-dispatcher/2.0/plexus-sec-dispatcher-2.0.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-embedder/3.9.6/maven-embedder-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-core/3.9.6/maven-core-3.9.6.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-component-annotations/2.1.0/plexus-component-annotations-2.1.0.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-plugin-api/3.9.6/maven-plugin-api-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/shared/maven-shared-utils/3.3.4/maven-shared-utils-3.3.4.jar:/Users/canansavran/.m2/repository/com/google/inject/guice/5.1.0/guice-5.1.0.jar:/Users/canansavran/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/canansavran/.m2/repository/com/google/guava/guava/32.1.3-jre/guava-32.1.3-jre.jar:/Users/canansavran/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/canansavran/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/Users/canansavran/.m2/repository/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar:/Users/canansavran/.m2/repository/commons-cli/commons-cli/1.5.0/commons-cli-1.5.0.jar:/Users/canansavran/.m2/repository/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M2/org.eclipse.sisu.plexus-0.9.0.M2.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-settings-builder/3.9.6/maven-settings-builder-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/maven-resolver-provider/3.9.6/maven-resolver-provider-3.9.6.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-connector-basic/1.9.18/maven-resolver-connector-basic-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/resolver/maven-resolver-transport-wagon/1.9.18/maven-resolver-transport-wagon-1.9.18.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-http/3.5.3/wagon-http-3.5.3.jar:/Users/canansavran/.m2/repository/org/apache/maven/wagon/wagon-file/3.5.3/wagon-file-3.5.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-bootstrap-gradle-resolver/3.6.4/quarkus-bootstrap-gradle-resolver-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/jandex/3.1.6/jandex-3.1.6.jar:/Users/canansavran/.m2/repository/commons-io/commons-io/2.15.1/commons-io-2.15.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5-properties/3.6.4/quarkus-junit5-properties-3.6.4.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.1/junit-jupiter-5.10.1.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.1/junit-jupiter-api-5.10.1.jar:/Users/canansavran/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/canansavran/.m2/repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar:/Users/canansavran/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.1/junit-jupiter-params-5.10.1.jar:/Users/canansavran/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.1/junit-jupiter-engine-5.10.1.jar:/Users/canansavran/.m2/repository/org/junit/platform/junit-platform-engine/1.10.1/junit-platform-engine-1.10.1.jar:/Users/canansavran/.m2/repository/com/thoughtworks/xstream/xstream/1.4.20/xstream-1.4.20.jar:/Users/canansavran/.m2/repository/io/github/x-stream/mxparser/1.2.2/mxparser-1.2.2.jar:/Users/canansavran/.m2/repository/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.jar:/Users/canansavran/.m2/repository/io/rest-assured/rest-assured/5.3.2/rest-assured-5.3.2.jar:/Users/canansavran/.m2/repository/org/apache/groovy/groovy/4.0.11/groovy-4.0.11.jar:/Users/canansavran/.m2/repository/org/apache/groovy/groovy-xml/4.0.11/groovy-xml-4.0.11.jar:/Users/canansavran/.m2/repository/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar:/Users/canansavran/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar:/Users/canansavran/.m2/repository/commons-codec/commons-codec/1.16.0/commons-codec-1.16.0.jar:/Users/canansavran/.m2/repository/org/apache/httpcomponents/httpmime/4.5.14/httpmime-4.5.14.jar:/Users/canansavran/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/canansavran/.m2/repository/org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.jar:/Users/canansavran/.m2/repository/io/rest-assured/json-path/5.3.2/json-path-5.3.2.jar:/Users/canansavran/.m2/repository/org/apache/groovy/groovy-json/4.0.11/groovy-json-4.0.11.jar:/Users/canansavran/.m2/repository/io/rest-assured/rest-assured-common/5.3.2/rest-assured-common-5.3.2.jar:/Users/canansavran/.m2/repository/io/rest-assured/xml-path/5.3.2/xml-path-5.3.2.jar:/Users/canansavran/.m2/repository/org/apache/commons/commons-lang3/3.13.0/commons-lang3-3.13.0.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5-mockito/3.6.4/quarkus-junit5-mockito-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-junit5-mockito-config/3.6.4/quarkus-junit5-mockito-config-3.6.4.jar:/Users/canansavran/.m2/repository/org/mockito/mockito-core/5.3.1/mockito-core-5.3.1.jar:/Users/canansavran/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.4/byte-buddy-agent-1.14.4.jar:/Users/canansavran/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-arc-deployment/3.6.4/quarkus-arc-deployment-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-smallrye-context-propagation-spi/3.6.4/quarkus-smallrye-context-propagation-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-vertx-http-dev-ui-spi/3.6.4/quarkus-vertx-http-dev-ui-spi-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/arc/arc-processor/3.6.4/arc-processor-3.6.4.jar:/Users/canansavran/.m2/repository/org/mockito/mockito-subclass/5.3.1/mockito-subclass-5.3.1.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-mutiny/3.6.4/quarkus-mutiny-3.6.4.jar:/Users/canansavran/.m2/repository/io/quarkus/quarkus-smallrye-context-propagation/3.6.4/quarkus-smallrye-context-propagation-3.6.4.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation/2.1.0/smallrye-context-propagation-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation-api/2.1.0/smallrye-context-propagation-api-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/smallrye-context-propagation-storage/2.1.0/smallrye-context-propagation-storage-2.1.0.jar:/Users/canansavran/.m2/repository/io/smallrye/reactive/mutiny-smallrye-context-propagation/2.5.1/mutiny-smallrye-context-propagation-2.5.1.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="vertx.disableWebsockets" value="true"/>
+    <property name="user.home" value="/Users/canansavran"/>
+    <property name="user.language" value="en"/>
+    <property name="jboss.log-version" value="false"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="io.netty.allocator.maxOrder" value="3"/>
+    <property name="java.version.date" value="2025-07-15"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk@21/21.0.8/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/canansavran/davon-library-system/library-backend"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/canansavran/davon-library-system/library-backend/target/surefire/surefirebooter-20250724153632800_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="21.0.8"/>
+    <property name="user.name" value="canansavran"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="15.2"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/canansavran/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/_1/fctz6yb929gcrqb9x4_y23tr0000gn/T/"/>
+    <property name="quarkus.log.file.path" value="target/quarkus.log"/>
+    <property name="java.version" value="21.0.8"/>
+    <property name="java.util.concurrent.ForkJoinPool.common.threadFactory" value="io.quarkus.bootstrap.forkjoin.QuarkusForkJoinWorkerThreadFactory"/>
+    <property name="user.dir" value="/Users/canansavran/davon-library-system/library-backend"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="vertx.disableDnsResolver" value="true"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.util.logging.manager" value="org.jboss.logmanager.LogManager"/>
+    <property name="java.library.path" value="/Users/canansavran/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="vertx.disableTCCL" value="true"/>
+    <property name="java.vm.version" value="21.0.8"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="io.netty.machineId" value="04:a5:4f:7f:b2:18:19:a9"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="testGetAllBooks_Success" classname="com.davon.library.resource.BookResourceTest" time="0.054">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testGetAvailableBooks_Success" classname="com.davon.library.resource.BookResourceTest" time="0.015">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.status=?
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testGetBookById_Success" classname="com.davon.library.resource.BookResourceTest" time="0.021">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testGetBookById_InvalidId" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testAddAuthorToBook_AsAdmin_Success" classname="com.davon.library.resource.BookResourceTest" time="0.009">
+    <failure message="1 expectation failed.&#10;Expected status code &lt;200&gt; but was &lt;415&gt;.&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <200> but was <415>.
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at com.davon.library.resource.BookResourceTest.testAddAuthorToBook_AsAdmin_Success(BookResourceTest.java:471)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testGetBooksByGenre_Success" classname="com.davon.library.resource.BookResourceTest" time="0.016">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.genre=?
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testSearchFunctionality" classname="com.davon.library.resource.BookResourceTest" time="0.024">
+    <failure message="1 expectation failed.&#10;JSON path size() doesn&apos;t match.&#10;Expected: &lt;1&gt;&#10;  Actual: &lt;0&gt;&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+JSON path size() doesn't match.
+Expected: <1>
+  Actual: <0>
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.body(ResponseSpecificationImpl.groovy:270)
+	at io.restassured.specification.ResponseSpecification$body$1.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.body(ResponseSpecificationImpl.groovy:117)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.body(ValidatableResponseOptionsImpl.java:244)
+	at com.davon.library.resource.BookResourceTest.testSearchFunctionality(BookResourceTest.java:741)
+	at com.davon.library.resource.BookResourceTest_Subclass.testSearchFunctionality$$superforward(Unknown Source)
+	at com.davon.library.resource.BookResourceTest_Subclass$$function$$7.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at com.davon.library.resource.BookResourceTest_Subclass.testSearchFunctionality(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        lower(b1_0.title) like lower(?) escape ''
+]]></system-out>
+  </testcase>
+  <testcase name="testAddBook_AsAdmin_Success" classname="com.davon.library.resource.BookResourceTest" time="0.02">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testRemoveAuthorFromBook_AsAdmin_Success" classname="com.davon.library.resource.BookResourceTest" time="0.013">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        a1_0.author_id,
+        a1_0.bio,
+        a1_0.name 
+    from
+        authors a1_0 
+    where
+        a1_0.author_id=?
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Author 'Test Author' added to book 'Test Book'
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        a1_0.author_id,
+        a1_0.bio,
+        a1_0.name 
+    from
+        authors a1_0 
+    where
+        a1_0.author_id=?
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Author is not associated with this book
+Hibernate: 
+    insert 
+    into
+        book_authors
+        (book_id,author_id) 
+    values
+        (?,?)
+]]></system-out>
+  </testcase>
+  <testcase name="testAddBook_AcceptJSON" classname="com.davon.library.resource.BookResourceTest" time="0.011">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testUpdateBook_AsAdmin_Success" classname="com.davon.library.resource.BookResourceTest" time="0.017">
+    <failure message="1 expectation failed.&#10;Expected status code &lt;200&gt; but was &lt;500&gt;.&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <200> but was <500>.
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at com.davon.library.resource.BookResourceTest.testUpdateBook_AsAdmin_Success(BookResourceTest.java:355)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    update
+        books 
+    set
+        genre=?,
+        isbn=?,
+        publication_year=?,
+        status=?,
+        title=? 
+    where
+        book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testAddBook_AsRegularUser_Forbidden" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testUpdateBook_AsRegularUser_Forbidden" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testAddBook_MalformedJSON" classname="com.davon.library.resource.BookResourceTest" time="0.006">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testDeleteBook_AsAdmin_Success" classname="com.davon.library.resource.BookResourceTest" time="0.01">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+Hibernate: 
+    delete 
+    from
+        book_authors 
+    where
+        book_id=?
+Hibernate: 
+    delete 
+    from
+        books 
+    where
+        book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testSearchBooks_NoQuery_ReturnsAll" classname="com.davon.library.resource.BookResourceTest" time="0.011">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testDeleteBook_AsRegularUser_Forbidden" classname="com.davon.library.resource.BookResourceTest" time="0.006">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testBookLifecycle" classname="com.davon.library.resource.BookResourceTest" time="0.016">
+    <error message="class java.lang.Integer cannot be cast to class java.lang.Long (java.lang.Integer and java.lang.Long are in module java.base of loader &apos;bootstrap&apos;)" type="java.lang.ClassCastException"><![CDATA[java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Long (java.lang.Integer and java.lang.Long are in module java.base of loader 'bootstrap')
+	at com.davon.library.resource.BookResourceTest.testBookLifecycle(BookResourceTest.java:671)
+	at com.davon.library.resource.BookResourceTest_Subclass.testBookLifecycle$$superforward(Unknown Source)
+	at com.davon.library.resource.BookResourceTest_Subclass$$function$$3.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at com.davon.library.resource.BookResourceTest_Subclass.testBookLifecycle(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></error>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testSearchBooksByTitle_Success" classname="com.davon.library.resource.BookResourceTest" time="0.014">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        lower(b1_0.title) like lower(?) escape ''
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testDeleteBook_NotFound" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testAddBook_InvalidAuth_Forbidden" classname="com.davon.library.resource.BookResourceTest" time="0.005">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testAddAuthorToBook_AsRegularUser_Forbidden" classname="com.davon.library.resource.BookResourceTest" time="0.006">
+    <failure message="1 expectation failed.&#10;Expected status code &lt;403&gt; but was &lt;415&gt;.&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <403> but was <415>.
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at com.davon.library.resource.BookResourceTest.testAddAuthorToBook_AsRegularUser_Forbidden(BookResourceTest.java:485)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testUpdateBook_NotFound" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testGetBookByIsbn_NotFound" classname="com.davon.library.resource.BookResourceTest" time="0.006">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.isbn=? 
+    fetch
+        first ? rows only
+]]></system-out>
+  </testcase>
+  <testcase name="testSearchBooks_EmptyQuery_ReturnsAll" classname="com.davon.library.resource.BookResourceTest" time="0.012">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testContentType_JSON" classname="com.davon.library.resource.BookResourceTest" time="0.006">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testDataConsistency" classname="com.davon.library.resource.BookResourceTest" time="0.015">
+    <failure message="1 expectation failed.&#10;Expected status code &lt;200&gt; but was &lt;500&gt;.&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <200> but was <500>.
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at com.davon.library.resource.BookResourceTest.testDataConsistency(BookResourceTest.java:636)
+	at com.davon.library.resource.BookResourceTest_Subclass.testDataConsistency$$superforward(Unknown Source)
+	at com.davon.library.resource.BookResourceTest_Subclass$$function$$4.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at com.davon.library.resource.BookResourceTest_Subclass.testDataConsistency(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    update
+        books 
+    set
+        genre=?,
+        isbn=?,
+        publication_year=?,
+        status=?,
+        title=? 
+    where
+        book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testUpdateBook_MalformedJSON" classname="com.davon.library.resource.BookResourceTest" time="0.005">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testAddBook_NoAuth_Forbidden" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testAddBook_WithAuthors_Success" classname="com.davon.library.resource.BookResourceTest" time="0.009">
+    <failure message="1 expectation failed.&#10;Expected status code &lt;201&gt; but was &lt;500&gt;.&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <201> but was <500>.
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at com.davon.library.resource.BookResourceTest.testAddBook_WithAuthors_Success(BookResourceTest.java:332)
+	at com.davon.library.resource.BookResourceTest_Subclass.testAddBook_WithAuthors_Success$$superforward(Unknown Source)
+	at com.davon.library.resource.BookResourceTest_Subclass$$function$$2.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at com.davon.library.resource.BookResourceTest_Subclass.testAddBook_WithAuthors_Success(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        a1_0.author_id,
+        a1_0.bio,
+        a1_0.name 
+    from
+        authors a1_0 
+    where
+        a1_0.author_id=?
+Author 'Test Author' added to book 'Book with Author'
+Hibernate: 
+    insert 
+    into
+        book_authors
+        (book_id,author_id) 
+    values
+        (?,?)
+]]></system-out>
+  </testcase>
+  <testcase name="testGetBookById_NotFound" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testDeleteBook_BorrowedBook_BadRequest" classname="com.davon.library.resource.BookResourceTest" time="0.007">
+    <failure message="1 expectation failed.&#10;Expected status code &lt;400&gt; but was &lt;200&gt;.&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <400> but was <200>.
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at com.davon.library.resource.BookResourceTest.testDeleteBook_BorrowedBook_BadRequest(BookResourceTest.java:455)
+	at com.davon.library.resource.BookResourceTest_Subclass.testDeleteBook_BorrowedBook_BadRequest$$superforward(Unknown Source)
+	at com.davon.library.resource.BookResourceTest_Subclass$$function$$5.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at com.davon.library.resource.BookResourceTest_Subclass.testDeleteBook_BorrowedBook_BadRequest(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        u1_0.user_id,
+        case 
+            when u1_1.user_id is not null then 1 
+            when u1_2.user_id is not null then 2 
+            when u1_0.user_id is not null then 0 
+        end,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.is_logged_in,
+        u1_0.last_login_date,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.role_id,
+        u1_2.admin_level,
+        u1_2.department,
+        u1_2.last_admin_action,
+        u1_1.library_id,
+        u1_1.membership_end,
+        u1_1.membership_number,
+        u1_1.membership_start,
+        u1_1.total_fines,
+        u1_1.user_id 
+    from
+        users u1_0 
+    left join
+        members u1_1 
+            on u1_0.user_id=u1_1.user_id 
+    left join
+        admins u1_2 
+            on u1_0.user_id=u1_2.user_id 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+Hibernate: 
+    delete 
+    from
+        book_authors 
+    where
+        book_id=?
+Hibernate: 
+    delete 
+    from
+        books 
+    where
+        book_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="testSearchBooks_WithQuery_Success" classname="com.davon.library.resource.BookResourceTest" time="0.057">
+    <failure message="1 expectation failed.&#10;Expected status code &lt;200&gt; but was &lt;500&gt;.&#10;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <200> but was <500>.
+
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
+	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
+	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
+	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
+	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
+	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
+	at com.davon.library.resource.BookResourceTest.testSearchBooks_WithQuery_Success(BookResourceTest.java:182)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at io.quarkus.test.junit.QuarkusTestExtension.runExtensionMethod(QuarkusTestExtension.java:1013)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestMethod(QuarkusTestExtension.java:827)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></failure>
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+]]></system-out>
+    <system-err><![CDATA[Jul 24, 2025 3:36:36 PM io.quarkus.vertx.http.runtime.QuarkusErrorHandler handle
+ERROR: HTTP Request to /api/books/search?q=Test failed, error id: 284fb4ca-07d6-460c-96d6-e646a82ee4f9-4
+java.lang.IllegalArgumentException: org.hibernate.query.sqm.InterpretationException: Error interpreting query [FROM com.davon.library.model.Book WHERE LOWER(title) LIKE LOWER(?1) OR EXISTS (SELECT 1 FROM Author a JOIN a.books b WHERE b.id = id AND LOWER(a.name) LIKE LOWER(?1))]; this may indicate a semantic (user query) problem or a bug in the parser [FROM com.davon.library.model.Book WHERE LOWER(title) LIKE LOWER(?1) OR EXISTS (SELECT 1 FROM Author a JOIN a.books b WHERE b.id = id AND LOWER(a.name) LIKE LOWER(?1))]
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:138)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:162)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:168)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:795)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:704)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:120)
+	at io.quarkus.hibernate.orm.runtime.session.TransactionScopedSession.createQuery(TransactionScopedSession.java:367)
+	at org.hibernate.engine.spi.SessionLazyDelegator.createQuery(SessionLazyDelegator.java:548)
+	at org.hibernate.engine.spi.SessionLazyDelegator.createQuery(SessionLazyDelegator.java:66)
+	at org.hibernate.Session_OpdLahisOZ9nWRPXMsEFQmQU03A_Synthetic_ClientProxy.createQuery(Unknown Source)
+	at io.quarkus.hibernate.orm.panache.common.runtime.CommonPanacheQueryImpl.createBaseQuery(CommonPanacheQueryImpl.java:366)
+	at io.quarkus.hibernate.orm.panache.common.runtime.CommonPanacheQueryImpl.createQuery(CommonPanacheQueryImpl.java:327)
+	at io.quarkus.hibernate.orm.panache.common.runtime.CommonPanacheQueryImpl.list(CommonPanacheQueryImpl.java:278)
+	at io.quarkus.hibernate.orm.panache.runtime.PanacheQueryImpl.list(PanacheQueryImpl.java:149)
+	at com.davon.library.repository.BookRepository.searchBooks(BookRepository.java:61)
+	at com.davon.library.repository.BookRepository_ClientProxy.searchBooks(Unknown Source)
+	at com.davon.library.resource.BookResource.searchBooks(BookResource.java:99)
+	at com.davon.library.resource.BookResource$quarkusrestinvoker$searchBooks_9b635d4902d678eaf417c678155e7eb34f7f9537.invoke(Unknown Source)
+	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
+	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:141)
+	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
+	at io.quarkus.vertx.core.runtime.VertxCoreRecorder$14.runWith(VertxCoreRecorder.java:582)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2513)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1538)
+	at org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:29)
+	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:29)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.hibernate.query.sqm.InterpretationException: Error interpreting query [FROM com.davon.library.model.Book WHERE LOWER(title) LIKE LOWER(?1) OR EXISTS (SELECT 1 FROM Author a JOIN a.books b WHERE b.id = id AND LOWER(a.name) LIKE LOWER(?1))]; this may indicate a semantic (user query) problem or a bug in the parser [FROM com.davon.library.model.Book WHERE LOWER(title) LIKE LOWER(?1) OR EXISTS (SELECT 1 FROM Author a JOIN a.books b WHERE b.id = id AND LOWER(a.name) LIKE LOWER(?1))]
+	at org.hibernate.query.hql.internal.StandardHqlTranslator.translate(StandardHqlTranslator.java:97)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.createHqlInterpretation(QueryInterpretationCacheStandardImpl.java:165)
+	at org.hibernate.query.internal.QueryInterpretationCacheStandardImpl.resolveHqlInterpretation(QueryInterpretationCacheStandardImpl.java:147)
+	at org.hibernate.internal.AbstractSharedSessionContract.interpretHql(AbstractSharedSessionContract.java:741)
+	at org.hibernate.internal.AbstractSharedSessionContract.createQuery(AbstractSharedSessionContract.java:786)
+	... 24 more
+Caused by: java.lang.IllegalStateException: Multiple from-elements expose unqualified attribute : id
+	at org.hibernate.query.hql.internal.SqmPathRegistryImpl.findFromExposing(SqmPathRegistryImpl.java:193)
+	at org.hibernate.query.hql.internal.BasicDotIdentifierConsumer$BaseLocalSequencePart.resolvePathPart(BasicDotIdentifierConsumer.java:146)
+	at org.hibernate.query.hql.internal.BasicDotIdentifierConsumer.consumeIdentifier(BasicDotIdentifierConsumer.java:91)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimplePath(SemanticQueryBuilder.java:5197)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitIndexedPathAccessFragment(SemanticQueryBuilder.java:5155)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitGeneralPathFragment(SemanticQueryBuilder.java:5124)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitGeneralPathExpression(SemanticQueryBuilder.java:1749)
+	at org.hibernate.grammars.hql.HqlParser$GeneralPathExpressionContext.accept(HqlParser.java:7590)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visitChildren(AbstractParseTreeVisitor.java:46)
+	at org.hibernate.grammars.hql.HqlParserBaseVisitor.visitBarePrimaryExpression(HqlParserBaseVisitor.java:720)
+	at org.hibernate.grammars.hql.HqlParser$BarePrimaryExpressionContext.accept(HqlParser.java:7064)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:2454)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitComparisonPredicate(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$ComparisonPredicateContext.accept(HqlParser.java:6111)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitAndPredicate(SemanticQueryBuilder.java:2313)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitAndPredicate(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$AndPredicateContext.accept(HqlParser.java:6013)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitWhereClause(SemanticQueryBuilder.java:2297)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitWhereClause(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$WhereClauseContext.accept(HqlParser.java:5910)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuery(SemanticQueryBuilder.java:1161)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:937)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$QuerySpecExpressionContext.accept(HqlParser.java:1818)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:931)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$SimpleQueryGroupContext.accept(HqlParser.java:1711)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSubquery(SemanticQueryBuilder.java:5075)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSubqueryExpression(SemanticQueryBuilder.java:5055)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSubqueryExpression(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$SubqueryExpressionContext.accept(HqlParser.java:7226)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitExistsPredicate(SemanticQueryBuilder.java:2731)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitExistsPredicate(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$ExistsPredicateContext.accept(HqlParser.java:5990)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitOrPredicate(SemanticQueryBuilder.java:2323)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitOrPredicate(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$OrPredicateContext.accept(HqlParser.java:6197)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitWhereClause(SemanticQueryBuilder.java:2297)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitWhereClause(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$WhereClauseContext.accept(HqlParser.java:5910)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuery(SemanticQueryBuilder.java:1161)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:937)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitQuerySpecExpression(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$QuerySpecExpressionContext.accept(HqlParser.java:1818)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:931)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSimpleQueryGroup(SemanticQueryBuilder.java:253)
+	at org.hibernate.grammars.hql.HqlParser$SimpleQueryGroupContext.accept(HqlParser.java:1711)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitSelectStatement(SemanticQueryBuilder.java:418)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.visitStatement(SemanticQueryBuilder.java:377)
+	at org.hibernate.query.hql.internal.SemanticQueryBuilder.buildSemanticModel(SemanticQueryBuilder.java:295)
+	at org.hibernate.query.hql.internal.StandardHqlTranslator.translate(StandardHqlTranslator.java:81)
+	... 28 more
+
+]]></system-err>
+  </testcase>
+  <testcase name="testGetBookByIsbn_Success" classname="com.davon.library.resource.BookResourceTest" time="0.012">
+    <system-out><![CDATA[Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        books
+Hibernate: 
+    delete 
+    from
+        book_authors
+Hibernate: 
+    delete 
+    from
+        authors
+Hibernate: 
+    delete 
+    from
+        admins
+Hibernate: 
+    delete 
+    from
+        members
+Hibernate: 
+    delete 
+    from
+        users
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at,email,is_logged_in,last_login_date,name,password,role,updated_at,role_id,user_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        authors
+        (bio,name,author_id) 
+    values
+        (?,?,default)
+Hibernate: 
+    insert 
+    into
+        books
+        (genre,isbn,publication_year,status,title,book_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title 
+    from
+        books b1_0 
+    where
+        b1_0.isbn=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        a1_0.book_id,
+        a1_1.author_id,
+        a1_1.bio,
+        a1_1.name 
+    from
+        book_authors a1_0 
+    join
+        authors a1_1 
+            on a1_1.author_id=a1_0.author_id 
+    where
+        a1_0.book_id=?
+Hibernate: 
+    select
+        i1_0.inventory_id,
+        i1_0.available_copies,
+        i1_0.book_id,
+        b1_0.book_id,
+        b1_0.genre,
+        b1_0.isbn,
+        b1_0.publication_year,
+        b1_0.status,
+        b1_0.title,
+        i1_0.damaged_copies,
+        i1_0.library_id,
+        i1_0.reserved_copies,
+        i1_0.total_copies 
+    from
+        books b1_0 
+    left join
+        inventories i1_0 
+            on b1_0.book_id=i1_0.book_id 
+    where
+        b1_0.book_id=?
+Hibernate: 
+    select
+        l1_0.book_id,
+        l1_0.loan_id,
+        l1_0.due_date,
+        l1_0.fine_amount,
+        l1_0.loan_date,
+        l1_0.member_id,
+        l1_0.return_date,
+        l1_0.status 
+    from
+        loans l1_0 
+    where
+        l1_0.book_id=?
+]]></system-out>
+  </testcase>
+</testsuite>
