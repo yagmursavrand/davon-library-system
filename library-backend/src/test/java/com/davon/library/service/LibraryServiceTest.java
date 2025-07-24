@@ -313,7 +313,6 @@ class LibraryServiceTest {
     @DisplayName("Should register member to library successfully")
     void testRegisterMemberToLibrary_Success() {
         // Given
-        testMember.setId(null); // Member should not have ID to trigger persist
         when(memberRepository.findByEmail(testMember.getEmail())).thenReturn(Optional.empty());
         doNothing().when(memberRepository).persist(testMember);
 
