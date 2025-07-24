@@ -165,25 +165,25 @@ export async function PUT(request: Request) {
             return NextResponse.json(users[userIndex]);
         } else {
             // Login logic (existing)
-            const credentials: LoginCredentials = await request.json();
-            const users = await loadUsers();
-            const user = users.find(u => u.email === credentials.email);
+        const credentials: LoginCredentials = await request.json();
+        const users = await loadUsers();
+        const user = users.find(u => u.email === credentials.email);
 
-            if (!user) {
-                return NextResponse.json(
-                    { error: 'User not found' },
-                    { status: 404 }
-                );
-            }
+        if (!user) {
+            return NextResponse.json(
+                { error: 'User not found' },
+                { status: 404 }
+            );
+        }
 
-            if (user.password !== credentials.password) {
-                return NextResponse.json(
-                    { error: 'Invalid password' },
-                    { status: 401 }
-                );
-            }
+        if (user.password !== credentials.password) {
+            return NextResponse.json(
+                { error: 'Invalid password' },
+                { status: 401 }
+            );
+        }
 
-            return NextResponse.json(user);
+        return NextResponse.json(user);
         }
     } catch (error) {
         return NextResponse.json(
