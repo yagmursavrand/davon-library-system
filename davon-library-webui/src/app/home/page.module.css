@@ -1,0 +1,70 @@
+/* src/app/home/page.module.css */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(180deg, #e0e7ff 0%, #f0fdfa 100%);
+  padding-top: 60px;
+}
+
+.header {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.profileBox {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 2rem 2.5rem;
+  min-width: 320px;
+  max-width: 400px;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.profileBoxWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 2rem auto;
+  position: relative;
+}
+
+.logoutButton {
+  padding: 0.5rem 1.2rem;
+  background: #c62828;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 2;
+  min-width: 90px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  position: relative;
+}
+
+.headerText {
+  flex: 1;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-right: 2rem; /* Butonun üstüne binmesini engeller */
+}
