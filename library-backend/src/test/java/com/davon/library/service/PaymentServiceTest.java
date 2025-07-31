@@ -5,13 +5,12 @@ import com.davon.library.model.User;
 import com.davon.library.model.Fine;
 import com.davon.library.repository.PaymentRepository;
 import com.davon.library.repository.FineRepository;
+import com.davon.library.service.PaymentService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.InjectMock;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.*;
 @DisplayName("PaymentService Unit Tests")
 public class PaymentServiceTest {
 
-    @Inject
+    @InjectMock
     PaymentService paymentService;
 
     @InjectMock
