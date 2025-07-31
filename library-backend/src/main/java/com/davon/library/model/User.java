@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import java.util.Date;
@@ -25,8 +26,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"profile", "userRole"}) // Exclude to prevent circular references
-@EqualsAndHashCode(exclude = {"profile", "userRole"}) // Exclude to prevent circular references
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,11 +61,13 @@ public class User {
     
     // One-to-One relationship with Profile
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Profile profile;
     
     // Many-to-One relationship with Role
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
+    @JsonIgnore
     private Role userRole;
     
     @PrePersist

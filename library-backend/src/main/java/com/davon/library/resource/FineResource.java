@@ -5,13 +5,13 @@ import com.davon.library.model.Member;
 import com.davon.library.model.Payment;
 import com.davon.library.repository.FineRepository;
 import com.davon.library.repository.MemberRepository;
-import com.davon.library.service.FineService;
 import com.davon.library.service.PaymentService;
 import com.davon.library.service.TransactionService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +25,6 @@ public class FineResource {
     
     @Inject
     MemberRepository memberRepository;
-    
-    @Inject
-    FineService fineService;
     
     @Inject
     PaymentService paymentService;
@@ -152,7 +149,7 @@ public class FineResource {
                           .build();
         }
         
-        double totalFines = fineRepository.calculateTotalUnpaidFines(member.get());
+        BigDecimal totalFines = fineRepository.calculateTotalUnpaidFines(member.get());
         return Response.ok(new TotalFinesResponse(totalFines)).build();
     }
     
@@ -167,14 +164,14 @@ public class FineResource {
     
     // Request/Response DTOs
     public static class PaymentRequest {
-        public double amount;
+        public BigDecimal amount;
         public String paymentMethod; // CASH, CREDIT_CARD, etc.
     }
     
     public static class TotalFinesResponse {
-        public double totalAmount;
+        public BigDecimal totalAmount;
         
-        public TotalFinesResponse(double totalAmount) {
+        public TotalFinesResponse(BigDecimal totalAmount) {
             this.totalAmount = totalAmount;
         }
     }

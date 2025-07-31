@@ -142,28 +142,6 @@ public class LoanResource {
     }
     
     /**
-     * Renew a loan
-     */
-    @PUT
-    @Path("/{loanId}/renew")
-    public Response renewLoan(@PathParam("loanId") Long loanId, RenewRequest request) {
-        try {
-            boolean success = loanService.renewLoan(loanId, request.additionalDays);
-            if (success) {
-                return Response.ok("Loan renewed successfully").build();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST)
-                              .entity("Failed to renew loan")
-                              .build();
-            }
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Error: " + e.getMessage())
-                          .build();
-        }
-    }
-    
-    /**
      * Get overdue loans
      */
     @GET
@@ -176,9 +154,5 @@ public class LoanResource {
     public static class BorrowRequest {
         public Long memberId;
         public Long bookId;
-    }
-    
-    public static class RenewRequest {
-        public int additionalDays;
     }
 } 

@@ -2,10 +2,13 @@ package com.davon.library.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +29,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true, exclude = {"library", "loans"}) // Exclude to prevent circular references
-@ToString(exclude = {"library", "loans"}, callSuper = true) // Exclude to prevent circular references
 public class Member extends User {
     
     @Column(name = "membership_number", unique = true, length = 50)
@@ -43,6 +44,7 @@ public class Member extends User {
     
     // One-to-Many relationship with Loan
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Loan> loans = new ArrayList<>();
     
     @ElementCollection(fetch = FetchType.LAZY)
@@ -50,8 +52,8 @@ public class Member extends User {
     @Column(name = "book_id")
     private List<Long> borrowedBookIds = new ArrayList<>();
     
-    @Column(name = "total_fines")
-    private double totalFines = 0.0;
+    @Column(name = "total_fines", precision = 10, scale = 2)
+    private BigDecimal totalFines = BigDecimal.ZERO;
     
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "member_fine_history", joinColumns = @JoinColumn(name = "member_id"))
@@ -61,5 +63,6 @@ public class Member extends User {
     // Many-to-One relationship with Library
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "library_id")
+    @JsonIgnore
     private Library library;
 } 

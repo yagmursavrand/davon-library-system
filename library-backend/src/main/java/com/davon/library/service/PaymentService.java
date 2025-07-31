@@ -8,13 +8,12 @@ import com.davon.library.repository.FineRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Date;
 
-/**
- * PaymentService - handles all payment-related business operations
- */
 @ApplicationScoped
 public class PaymentService {
 
@@ -24,26 +23,17 @@ public class PaymentService {
     @Inject
     FineRepository fineRepository;
 
-    /**
-     * Get payments by user
-     */
     public List<Payment> getPaymentsByUser(User user) {
         return paymentRepository.findByUser(user);
     }
 
-    /**
-     * Get payment by ID
-     */
     public Optional<Payment> getPaymentById(Long id) {
         return paymentRepository.findByIdOptional(id);
     }
 
-    /**
-     * Create new payment
-     */
     @Transactional
-    public Payment createPayment(User user, double amount, Payment.PaymentMethod method, Fine fine) {
-        if (user == null || amount <= 0 || method == null) {
+    public Payment createPayment(User user, BigDecimal amount, Payment.PaymentMethod method, Fine fine) {
+        if (user == null || amount == null || amount.compareTo(BigDecimal.ZERO) <= 0 || method == null) {
             System.out.println("Invalid payment parameters");
             return null;
         }
@@ -66,9 +56,6 @@ public class PaymentService {
         return payment;
     }
 
-    /**
-     * Process payment
-     */
     @Transactional
     public boolean processPayment(Long paymentId) {
         if (paymentId == null) {
@@ -84,20 +71,18 @@ public class PaymentService {
 
         Payment payment = paymentOpt.get();
 
-        if (payment.getAmount() <= 0) {
+        if (payment.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             System.out.println("Invalid payment amount");
             payment.setStatus(Payment.TransactionStatus.FAILED);
             return false;
         }
 
         try {
-            // Simulate payment processing
-            Thread.sleep(100); // Simulate processing time
+            Thread.sleep(100);
             
             payment.setConfirmationNumber("CONF" + System.currentTimeMillis());
             payment.setStatus(Payment.TransactionStatus.COMPLETED);
             
-            // If this payment is for a fine, mark the fine as paid
             if (payment.getFine() != null) {
                 Fine fine = payment.getFine();
                 fine.setPaid(true);
@@ -115,9 +100,6 @@ public class PaymentService {
         }
     }
 
-    /**
-     * Refund payment
-     */
     @Transactional
     public boolean refundPayment(Long paymentId, String reason) {
         if (paymentId == null) {
@@ -150,16 +132,10 @@ public class PaymentService {
         return true;
     }
 
-    /**
-     * Validate payment method
-     */
     public boolean isValidPaymentMethod(Payment.PaymentMethod method) {
         return method != null;
     }
 
-    /**
-     * Check if payment is electronic
-     */
     public boolean isElectronicPayment(Payment payment) {
         if (payment == null || payment.getPaymentMethod() == null) {
             return false;
@@ -171,9 +147,6 @@ public class PaymentService {
                payment.getPaymentMethod() == Payment.PaymentMethod.PAYPAL;
     }
 
-    /**
-     * Get payment status summary
-     */
     public String getPaymentStatus(Long paymentId) {
         if (paymentId == null) {
             return "INVALID";
@@ -197,9 +170,6 @@ public class PaymentService {
         }
     }
 
-    /**
-     * Display payment details
-     */
     public void displayPaymentDetails(Long paymentId) {
         if (paymentId == null) {
             System.out.println("Payment ID cannot be null");
@@ -229,33 +199,27 @@ public class PaymentService {
         System.out.println("=====================");
     }
 
-    /**
-     * Get processing fee based on payment method
-     */
-    public double getProcessingFee(Payment payment) {
-        if (payment == null || payment.getPaymentMethod() == null) {
-            return 0.0;
+    public BigDecimal getProcessingFee(Payment payment) {
+        if (payment == null || payment.getPaymentMethod() == null || payment.getAmount() == null) {
+            return BigDecimal.ZERO;
         }
         
         switch (payment.getPaymentMethod()) {
             case CREDIT_CARD:
-                return payment.getAmount() * 0.025; // 2.5% fee
+                return payment.getAmount().multiply(new BigDecimal("0.025")); // 2.5% fee
             case DEBIT_CARD:
-                return 0.50; // Fixed $0.50 fee
+                return new BigDecimal("0.50"); // Fixed $0.50 fee
             case PAYPAL:
-                return payment.getAmount() * 0.029 + 0.30; // 2.9% + $0.30
+                return payment.getAmount().multiply(new BigDecimal("0.029")).add(new BigDecimal("0.30")); // 2.9% + $0.30
             case BANK_TRANSFER:
-                return 1.00; // Fixed $1.00 fee
+                return new BigDecimal("1.00"); // Fixed $1.00 fee
             case CASH:
             case OTHER:
             default:
-                return 0.0; // No fee
+                return BigDecimal.ZERO; // No fee
         }
     }
 
-    /**
-     * Delete payment
-     */
     @Transactional
     public boolean deletePayment(Long paymentId) {
         if (paymentId == null) {
@@ -280,4 +244,4 @@ public class PaymentService {
         System.out.println("Payment deleted successfully: " + paymentId);
         return true;
     }
-} 
+}

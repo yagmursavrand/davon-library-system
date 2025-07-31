@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Optional;
@@ -51,6 +52,9 @@ class MemberServiceTest {
 
     @InjectMock
     LoanService loanService;
+    
+    @InjectMock
+    FineCalculationService fineCalculationService;
 
     private Member testMember;
     private Book testBook;
@@ -76,7 +80,7 @@ class MemberServiceTest {
         
         testMember.setBorrowedBookIds(new ArrayList<>());
         testMember.setFineHistory(new ArrayList<>());
-        testMember.setTotalFines(0.0);
+        testMember.setTotalFines(BigDecimal.ZERO);
 
         // Setup test book
         testBook = new Book();
@@ -99,7 +103,7 @@ class MemberServiceTest {
         // Setup test fine
         testFine = new Fine();
         testFine.setId(1L);
-        testFine.setAmount(25.0);
+        testFine.setAmount(new BigDecimal("25.0"));
         testFine.setUser(testMember);
         testFine.setLoan(testLoan);
         testFine.setFineType(Fine.FineType.OVERDUE);
@@ -134,7 +138,7 @@ class MemberServiceTest {
         assertTrue(result.getMembershipNumber().startsWith("MEM"));
         assertNotNull(result.getMembershipStart());
         assertNotNull(result.getMembershipEnd());
-        assertEquals(0.0, result.getTotalFines());
+        assertEquals(0, BigDecimal.ZERO.compareTo(result.getTotalFines()));
         
         verify(memberRepository).findByEmail(email);
         verify(memberRepository).persist(any(Member.class));
@@ -221,7 +225,7 @@ class MemberServiceTest {
         Long bookId = 1L;
         
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.of(testBook));
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(25.0);
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(loanRepository.findActiveLoanByMemberAndBook(testMember, testBook)).thenReturn(Optional.empty());
         when(inventoryService.borrowCopy(anyLong())).thenReturn(true);
@@ -296,7 +300,7 @@ class MemberServiceTest {
         // Given
         Long bookId = 1L;
         
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(75.0);
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("75.0"));
 
         // When
         boolean result = memberService.borrowBook(testMember, bookId);
@@ -313,7 +317,7 @@ class MemberServiceTest {
         // Given
         Long bookId = 1L;
         
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(25.0);
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(5L);
 
         // When
@@ -332,7 +336,7 @@ class MemberServiceTest {
         // Given
         Long bookId = 999L;
         
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(25.0);
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.empty());
 
@@ -351,7 +355,7 @@ class MemberServiceTest {
         Long bookId = 1L;
         testBook.setStatus(Book.BookStatus.BORROWED);
         
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(25.0);
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.of(testBook));
 
@@ -369,7 +373,7 @@ class MemberServiceTest {
         // Given
         Long bookId = 1L;
         
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(25.0);
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.of(testBook));
         when(loanRepository.findActiveLoanByMemberAndBook(testMember, testBook)).thenReturn(Optional.of(testLoan));
@@ -417,15 +421,24 @@ class MemberServiceTest {
         // Given
         Long bookId = 1L;
         testMember.getBorrowedBookIds().add(bookId);
-        double fineAmount = 15.0;
+        BigDecimal fineAmount = new BigDecimal("15.0");
+        
+        // Mock the fine that FineCalculationService would return
+        Fine calculatedFine = new Fine();
+        calculatedFine.setAmount(fineAmount);
+        calculatedFine.setUser(testMember);
+        calculatedFine.setLoan(testLoan);
+        calculatedFine.setFineType(Fine.FineType.OVERDUE);
+        calculatedFine.setIssuedDate(new Date());
+        calculatedFine.setPaid(false);
+        calculatedFine.setStatus(Transaction.TransactionStatus.PENDING);
         
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.of(testBook));
         when(loanRepository.findActiveLoanByMemberAndBook(testMember, testBook)).thenReturn(Optional.of(testLoan));
         when(loanService.markAsReturned(testLoan.getId())).thenReturn(true);
         when(loanService.isOverdue(testLoan.getId())).thenReturn(true);
-        when(loanService.calculateFine(testLoan.getId())).thenReturn(fineAmount);
+        when(fineCalculationService.calculateOverdueFine(testLoan)).thenReturn(calculatedFine);
         when(inventoryService.returnCopy(anyLong())).thenReturn(true);
-        doNothing().when(fineRepository).persist(any(Fine.class));
 
         // When
         boolean result = memberService.returnBook(testMember, bookId);
@@ -434,11 +447,10 @@ class MemberServiceTest {
         assertTrue(result);
         assertEquals(Book.BookStatus.AVAILABLE, testBook.getStatus());
         assertFalse(testMember.getBorrowedBookIds().contains(bookId));
-        assertEquals(fineAmount, testMember.getTotalFines());
+        assertEquals(0, fineAmount.compareTo(testMember.getTotalFines()));
         assertTrue(testMember.getFineHistory().size() > 0);
         
-        verify(loanService).calculateFine(testLoan.getId());
-        verify(fineRepository).persist(any(Fine.class));
+        verify(fineCalculationService).calculateOverdueFine(testLoan);
     }
 
     @Test
@@ -496,9 +508,9 @@ class MemberServiceTest {
     void testPayFine_FullPayment() {
         // Given
         Long fineId = 1L;
-        double paymentAmount = 25.0;
+        BigDecimal paymentAmount = new BigDecimal("25.0");
         String description = "Full payment";
-        testMember.setTotalFines(25.0);
+        testMember.setTotalFines(new BigDecimal("25.0"));
         
         when(fineRepository.findByIdOptional(fineId)).thenReturn(Optional.of(testFine));
         when(transactionService.markAsCompleted(fineId)).thenReturn(true);
@@ -508,7 +520,7 @@ class MemberServiceTest {
 
         // Then
         assertTrue(result);
-        assertEquals(0.0, testMember.getTotalFines());
+        assertEquals(0, BigDecimal.ZERO.compareTo(testMember.getTotalFines()));
         assertTrue(testFine.isPaid());
         assertNotNull(testFine.getPaidDate());
         assertTrue(testMember.getFineHistory().size() > 0);
@@ -522,9 +534,9 @@ class MemberServiceTest {
     void testPayFine_PartialPayment() {
         // Given
         Long fineId = 1L;
-        double paymentAmount = 15.0;
+        BigDecimal paymentAmount = new BigDecimal("15.0");
         String description = "Partial payment";
-        testMember.setTotalFines(25.0);
+        testMember.setTotalFines(new BigDecimal("25.0"));
         
         when(fineRepository.findByIdOptional(fineId)).thenReturn(Optional.of(testFine));
 
@@ -533,8 +545,8 @@ class MemberServiceTest {
 
         // Then
         assertTrue(result);
-        assertEquals(10.0, testMember.getTotalFines());
-        assertEquals(10.0, testFine.getAmount());
+        assertEquals(0, new BigDecimal("10.0").compareTo(testMember.getTotalFines()));
+        assertEquals(0, new BigDecimal("10.0").compareTo(testFine.getAmount()));
         assertFalse(testFine.isPaid());
         assertTrue(testMember.getFineHistory().size() > 0);
         
@@ -548,7 +560,7 @@ class MemberServiceTest {
         // Given
         Member nullMember = null;
         Long fineId = 1L;
-        double amount = 25.0;
+        BigDecimal amount = new BigDecimal("25.0");
         String description = "Payment";
 
         // When
@@ -564,7 +576,7 @@ class MemberServiceTest {
     void testPayFine_FineNotFound() {
         // Given
         Long fineId = 999L;
-        double amount = 25.0;
+        BigDecimal amount = new BigDecimal("25.0");
         String description = "Payment";
         
         when(fineRepository.findByIdOptional(fineId)).thenReturn(Optional.empty());
@@ -582,7 +594,7 @@ class MemberServiceTest {
     void testPayFine_WrongMember() {
         // Given
         Long fineId = 1L;
-        double amount = 25.0;
+        BigDecimal amount = new BigDecimal("25.0");
         String description = "Payment";
         
         Member otherMember = new Member();
@@ -604,7 +616,7 @@ class MemberServiceTest {
     void testPayFine_AlreadyPaid() {
         // Given
         Long fineId = 1L;
-        double amount = 25.0;
+        BigDecimal amount = new BigDecimal("25.0");
         String description = "Payment";
         testFine.setPaid(true);
         testFine.setStatus(Transaction.TransactionStatus.COMPLETED);
@@ -624,7 +636,7 @@ class MemberServiceTest {
     void testPayFine_ExcessivePayment() {
         // Given
         Long fineId = 1L;
-        double amount = 50.0; // Fine amount is 25.0
+        BigDecimal amount = new BigDecimal("50.0"); // Fine amount is 25.0
         String description = "Payment";
         
         when(fineRepository.findByIdOptional(fineId)).thenReturn(Optional.of(testFine));
@@ -720,7 +732,7 @@ class MemberServiceTest {
     void testGetMemberStatistics_Success() {
         // Given
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(3L);
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(45.0);
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("45.0"));
         when(fineRepository.countUnpaidFinesByMember(testMember)).thenReturn(2L);
 
         // When & Then (method prints to console, so we just verify it doesn't throw)

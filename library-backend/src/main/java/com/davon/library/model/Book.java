@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import java.util.List;
@@ -25,8 +26,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"authors", "inventory", "loans"}) // Exclude to prevent circular references
-@EqualsAndHashCode(exclude = {"authors", "inventory", "loans"}) // Exclude to prevent circular references
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,14 +55,17 @@ public class Book {
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+    @JsonIgnore
     private List<Author> authors = new ArrayList<>();
     
     // One-to-One relationship with Inventory
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Inventory inventory;
     
     // One-to-Many relationship with Loan
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Loan> loans = new ArrayList<>();
     
     // Book status enum

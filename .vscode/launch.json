@@ -1,0 +1,165 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+      {
+        "type": "java",
+        "name": "Debug TestDebug",
+        "request": "launch",
+        "mainClass": "com.davon.library.debug.TestDebug",
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false
+      },
+      {
+        "type": "java",
+        "name": "Debug VerySimpleDebugTest",
+        "request": "launch",
+        "mainClass": "com.davon.library.debug.VerySimpleDebugTest",
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false
+      },
+      {
+        "type": "java",
+        "name": "Debug BasicDebugTest",
+        "request": "launch",
+        "mainClass": "com.davon.library.debug.BasicDebugTest",
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false
+      },
+      {
+        "type": "java",
+        "name": "Debug SimpleDebuggingTest",
+        "request": "launch",
+        "mainClass": "com.davon.library.debug.SimpleDebuggingTest",
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false
+      },
+        {
+            "type": "java",
+        "name": "Debug SimpleTest",
+            "request": "launch",
+        "mainClass": "com.davon.library.debug.SimpleTest",
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false
+        },
+        {
+            "type": "java",
+        "name": "Debug Library Backend (Quarkus)",
+            "request": "launch",
+            "mainClass": "com.davon.library.App",
+        "projectName": "library-backend",
+        "vmArgs": [
+          "-Dquarkus.http.port=8080",
+          "-Dquarkus.datasource.db-kind=h2",
+          "-Dquarkus.datasource.jdbc.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1",
+          "-Dquarkus.hibernate-orm.database.generation=drop-and-create"
+        ],
+        "env": {
+          "QUARKUS_PROFILE": "dev"
+        },
+        "console": "internalConsole",
+        "stopOnEntry": false
+        },
+        {
+            "type": "java",
+        "name": "Debug Any Class",
+            "request": "launch",
+        "mainClass": "${input:mainClass}",
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false
+      },
+      {
+        "type": "java",
+        "name": "Attach to Quarkus (Dev Mode)",
+        "request": "attach",
+        "hostName": "localhost",
+        "port": 5005,
+        "projectName": "library-backend"
+      },
+      {
+        "type": "java",
+        "name": "Attach to Quarkus (Test Mode)",
+        "request": "attach",
+        "hostName": "localhost",
+        "port": 5006,
+            "projectName": "library-backend"
+      },
+      {
+        "type": "java",
+        "name": "Debug SimpleFineCalculationDebugTest (JUnit)",
+        "request": "launch",
+        "mainClass": "org.junit.platform.console.ConsoleLauncher",
+        "args": [
+          "--class-path",
+          "${workspaceFolder}/library-backend/target/test-classes",
+          "--select-class",
+          "com.davon.library.debug.SimpleFineCalculationDebugTest"
+        ],
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false
+      },
+                  {
+                "type": "java",
+                "name": "Debug FineCalculationServiceDebugTest (JUnit) - CONSTANTS",
+                "request": "launch",
+                "mainClass": "org.junit.platform.console.ConsoleLauncher",
+                "args": [
+                    "--class-path",
+                    "${workspaceFolder}/library-backend/target/test-classes",
+                    "--select-class",
+                    "com.davon.library.debug.FineCalculationServiceDebugTest"
+                ],
+                "projectName": "library-backend",
+                "console": "internalConsole",
+                "stopOnEntry": false,
+                "preLaunchTask": "mvn test-compile"
+            },
+            {
+                "type": "java",
+                "name": "Debug FineCalculationLogicDebugTest (JUnit) - LOGIC",
+                "request": "launch",
+                "mainClass": "org.junit.platform.console.ConsoleLauncher",
+                "args": [
+                    "--class-path",
+                    "${workspaceFolder}/library-backend/target/test-classes",
+                    "--select-class",
+                    "com.davon.library.debug.FineCalculationLogicDebugTest"
+                ],
+                "projectName": "library-backend",
+                "console": "internalConsole",
+                "stopOnEntry": false,
+                "preLaunchTask": "mvn test-compile"
+            },
+            {
+                "type": "java",
+                "name": "Debug FineCalculationServiceMockTest (JUnit) - MOCK",
+                "request": "launch",
+                "mainClass": "org.junit.platform.console.ConsoleLauncher",
+                "args": [
+                    "--class-path",
+                    "${workspaceFolder}/library-backend/target/test-classes",
+                    "--select-class",
+                    "com.davon.library.debug.FineCalculationServiceMockTest"
+                ],
+                "projectName": "library-backend",
+                "console": "internalConsole",
+                "stopOnEntry": false,
+                "preLaunchTask": "mvn test-compile"
+            }
+    ],
+    "inputs": [
+      {
+        "id": "mainClass",
+        "type": "promptString",
+        "description": "Enter the main class to debug (e.g., com.davon.library.debug.VerySimpleDebugTest)"
+      }
+    ]
+  }
+  

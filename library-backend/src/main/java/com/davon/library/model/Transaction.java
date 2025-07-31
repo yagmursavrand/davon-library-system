@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -20,13 +22,12 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name = "transactions")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "transaction_type", discriminatorType = DiscriminatorType.STRING)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"user"}) // Exclude to prevent circular references
-@EqualsAndHashCode(exclude = {"user"}) // Exclude to prevent circular references
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +41,8 @@ public class Transaction {
     @Column(name = "type", nullable = false, length = 50)
     private String type;
     
-    @Column(name = "amount", nullable = false)
-    private double amount;
+    @Column(name = "amount", nullable = false, precision = 10, scale = 2)
+    private BigDecimal amount;
     
     @Column(name = "description", length = 500)
     private String description;
@@ -53,6 +54,7 @@ public class Transaction {
     // Many-to-One relationship with User (who initiated the transaction)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
     
     public enum TransactionStatus {

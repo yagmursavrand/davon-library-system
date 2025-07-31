@@ -7,48 +7,20 @@ import com.davon.library.repository.LoanRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Optional;
 
 /**
- * LoanService - handles all loan-related business operations
+ * LoanService - handles essential loan operations
+ * Simplified to focus only on core loan business logic
  */
 @ApplicationScoped
 public class LoanService {
     
     @Inject
     LoanRepository loanRepository;
-    
-    /**
-     * Calculate fine for loan
-     */
-    public double calculateFine(Long loanId) {
-        if (loanId == null) {
-            return 0.0;
-        }
-        
-        Optional<Loan> loanOpt = loanRepository.findByIdOptional(loanId);
-        if (loanOpt.isEmpty()) {
-            return 0.0;
-        }
-        
-        Loan loan = loanOpt.get();
-        
-        if (loan.getReturnDate() != null || !isOverdue(loanId)) {
-            return 0.0;
-        }
-        
-        // Calculate days overdue
-        long diffInMillies = new Date().getTime() - loan.getDueDate().getTime();
-        long daysOverdue = diffInMillies / (24 * 60 * 60 * 1000);
-        
-        // Fine rate: $1 per day overdue
-        double calculatedFine = daysOverdue * 1.0;
-        
-        // Maximum fine: $50
-        return Math.min(calculatedFine, 50.0);
-    }
     
     /**
      * Check if loan is overdue
@@ -66,9 +38,6 @@ public class LoanService {
         Loan loan = loanOpt.get();
         
         if (loan.getDueDate() != null && loan.getReturnDate() == null) {
-            // Use Calendar to compare dates properly
-            // A loan is overdue only if current date is AFTER the due date
-            // If due date is today but later in the day, it's not overdue yet
             Calendar now = Calendar.getInstance();
             Calendar dueDate = Calendar.getInstance();
             dueDate.setTime(loan.getDueDate());
@@ -79,84 +48,62 @@ public class LoanService {
     }
     
     /**
-     * Mark loan as returned
+     * Mark loan as returned - simplified
      */
     @Transactional
     public boolean markAsReturned(Long loanId) {
         if (loanId == null) {
-            System.out.println("Loan ID cannot be null");
             return false;
         }
         
         Optional<Loan> loanOpt = loanRepository.findByIdOptional(loanId);
         if (loanOpt.isEmpty()) {
-            System.out.println("Loan not found");
             return false;
         }
         
         Loan loan = loanOpt.get();
         
         if (loan.getReturnDate() != null) {
-            System.out.println("Loan already returned");
-            return false;
+            return false; // Already returned
         }
         
-        // Calculate final fine if overdue BEFORE setting return date
-        boolean wasOverdue = isOverdue(loanId);
-        if (wasOverdue) {
-            double fine = calculateFine(loanId);
-            loan.setFineAmount(fine);
-        }
-        
-        // Now set return date and status
+        // Simply mark as returned
         loan.setReturnDate(new Date());
         loan.setStatus(Loan.LoanStatus.RETURNED);
         
-        System.out.println("Loan marked as returned. Fine amount: $" + loan.getFineAmount());
         return true;
     }
     
     /**
-     * Renew loan
+     * Create new loan
      */
     @Transactional
-    public boolean renewLoan(Long loanId, int additionalDays) {
-        if (loanId == null) {
-            System.out.println("Loan ID cannot be null");
-            return false;
+    public Loan createLoan(Member member, Book book, int loanPeriodDays) {
+        if (member == null || book == null) {
+            return null;
         }
         
-        Optional<Loan> loanOpt = loanRepository.findByIdOptional(loanId);
-        if (loanOpt.isEmpty()) {
-            System.out.println("Loan not found");
-            return false;
+        if (loanPeriodDays <= 0) {
+            loanPeriodDays = 14; // Default 14 days
         }
         
-        if (additionalDays <= 0 || additionalDays > 14) {
-            System.out.println("Invalid renewal period: Must be 1-14 days");
-            return false;
-        }
+        Loan loan = new Loan();
+        loan.setMember(member);
+        loan.setBook(book);
+        loan.setLoanDate(new Date());
         
-        Loan loan = loanOpt.get();
-        
-        if (loan.getReturnDate() != null) {
-            System.out.println("Cannot renew: Book already returned");
-            return false;
-        }
-        
-        if (isOverdue(loanId)) {
-            System.out.println("Cannot renew: Loan is overdue");
-            return false;
-        }
-        
+        // Set due date
         Calendar cal = Calendar.getInstance();
-        cal.setTime(loan.getDueDate());
-        cal.add(Calendar.DAY_OF_MONTH, additionalDays);
+        cal.setTime(loan.getLoanDate());
+        cal.add(Calendar.DAY_OF_MONTH, loanPeriodDays);
         loan.setDueDate(cal.getTime());
-        loan.setStatus(Loan.LoanStatus.RENEWED);
         
-        System.out.println("Loan renewed. New due date: " + loan.getDueDate());
-        return true;
+        loan.setStatus(Loan.LoanStatus.ACTIVE);
+        loan.setFineAmount(BigDecimal.ZERO);
+        
+        loanRepository.persist(loan);
+        
+        return loan;
     }
     
     /**
@@ -199,40 +146,6 @@ public class LoanService {
         
         long diffInMillies = new Date().getTime() - loan.getDueDate().getTime();
         return diffInMillies / (24 * 60 * 60 * 1000);
-    }
-    
-    /**
-     * Create new loan
-     */
-    @Transactional
-    public Loan createLoan(Member member, Book book, int loanPeriodDays) {
-        if (member == null || book == null) {
-            System.out.println("Member and book cannot be null");
-            return null;
-        }
-        
-        if (loanPeriodDays <= 0) {
-            loanPeriodDays = 14; // Default 14 days
-        }
-        
-        Loan loan = new Loan();
-        loan.setMember(member);
-        loan.setBook(book);
-        loan.setLoanDate(new Date());
-        
-        // Set due date
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(loan.getLoanDate());
-        cal.add(Calendar.DAY_OF_MONTH, loanPeriodDays);
-        loan.setDueDate(cal.getTime());
-        
-        loan.setStatus(Loan.LoanStatus.ACTIVE);
-        loan.setFineAmount(0.0);
-        
-        loanRepository.persist(loan);
-        
-        System.out.println("Loan created for book '" + book.getTitle() + "' to member '" + member.getName() + "'. Due: " + loan.getDueDate());
-        return loan;
     }
 } 
  
