@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import java.util.Date;
@@ -19,13 +20,11 @@ import jakarta.persistence.*;
  * @see com.davon.library.service.TransactionService for business operations
  */
 @Entity
-@Table(name = "fines")
+@DiscriminatorValue("FINE")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true, exclude = {"loan"}) // Exclude to prevent circular references
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"loan"}, callSuper = true) // Exclude to prevent circular references
 public class Fine extends Transaction {
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,6 +48,7 @@ public class Fine extends Transaction {
     // Many-to-One relationship with Loan (the loan that caused this fine)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "loan_id")
+    @JsonIgnore
     private Loan loan;
     
     public enum FineType {

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class TransactionServiceTest {
         testTransaction = new Transaction();
         testTransaction.setId(1L);
         testTransaction.setUser(testUser);
-        testTransaction.setAmount(25.0);
+        testTransaction.setAmount(new BigDecimal("25.0"));
         testTransaction.setType("FINE");
         testTransaction.setDescription("Test transaction");
         testTransaction.setDate(new Date());
@@ -425,12 +426,12 @@ public class TransactionServiceTest {
         }).when(fineRepository).persist(any(Fine.class));
 
         // When
-        Fine result = transactionService.createFine(testUser, 25.0, "Overdue book", Fine.FineType.OVERDUE);
+        Fine result = transactionService.createFine(testUser, new BigDecimal("25.0"), "Overdue book", Fine.FineType.OVERDUE);
 
         // Then
         assertNotNull(result);
         assertEquals(testUser, result.getUser());
-        assertEquals(25.0, result.getAmount());
+        assertEquals(0, new BigDecimal("25.0").compareTo(result.getAmount()));
         assertEquals("FINE", result.getType());
         assertEquals("Overdue book", result.getDescription());
         assertEquals("Overdue book", result.getReason());
@@ -454,7 +455,7 @@ public class TransactionServiceTest {
         }).when(fineRepository).persist(any(Fine.class));
 
         // When
-        Fine result = transactionService.createFine(testUser, 25.0, "Test fine", null);
+        Fine result = transactionService.createFine(testUser, new BigDecimal("25.0"), "Test fine", null);
 
         // Then
         assertNotNull(result);
@@ -466,7 +467,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create fine when user is null")
     void testCreateFine_NullUser_Fails() {
         // When
-        Fine result = transactionService.createFine(null, 25.0, "Test fine", Fine.FineType.OVERDUE);
+        Fine result = transactionService.createFine(null, new BigDecimal("25.0"), "Test fine", Fine.FineType.OVERDUE);
 
         // Then
         assertNull(result);
@@ -477,7 +478,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create fine when amount is zero")
     void testCreateFine_ZeroAmount_Fails() {
         // When
-        Fine result = transactionService.createFine(testUser, 0.0, "Test fine", Fine.FineType.OVERDUE);
+        Fine result = transactionService.createFine(testUser, BigDecimal.ZERO, "Test fine", Fine.FineType.OVERDUE);
 
         // Then
         assertNull(result);
@@ -488,7 +489,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create fine when amount is negative")
     void testCreateFine_NegativeAmount_Fails() {
         // When
-        Fine result = transactionService.createFine(testUser, -10.0, "Test fine", Fine.FineType.OVERDUE);
+        Fine result = transactionService.createFine(testUser, new BigDecimal("-10.0"), "Test fine", Fine.FineType.OVERDUE);
 
         // Then
         assertNull(result);
@@ -499,7 +500,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create fine when reason is null")
     void testCreateFine_NullReason_Fails() {
         // When
-        Fine result = transactionService.createFine(testUser, 25.0, null, Fine.FineType.OVERDUE);
+        Fine result = transactionService.createFine(testUser, new BigDecimal("25.0"), null, Fine.FineType.OVERDUE);
 
         // Then
         assertNull(result);
@@ -519,12 +520,12 @@ public class TransactionServiceTest {
         }).when(transactionRepository).persist(any(Payment.class));
 
         // When
-        Payment result = transactionService.createPayment(testUser, 25.0, "Fine payment", Payment.PaymentMethod.CREDIT_CARD);
+        Payment result = transactionService.createPayment(testUser, new BigDecimal("25.0"), "Fine payment", Payment.PaymentMethod.CREDIT_CARD);
 
         // Then
         assertNotNull(result);
         assertEquals(testUser, result.getUser());
-        assertEquals(25.0, result.getAmount());
+        assertEquals(0, new BigDecimal("25.0").compareTo(result.getAmount()));
         assertEquals("PAYMENT", result.getType());
         assertEquals("Fine payment", result.getDescription());
         assertEquals(Payment.PaymentMethod.CREDIT_CARD, result.getPaymentMethod());
@@ -548,7 +549,7 @@ public class TransactionServiceTest {
         }).when(transactionRepository).persist(any(Payment.class));
 
         // When
-        Payment result = transactionService.createPayment(testUser, 25.0, "Test payment", null);
+        Payment result = transactionService.createPayment(testUser, new BigDecimal("25.0"), "Test payment", null);
 
         // Then
         assertNotNull(result);
@@ -560,7 +561,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create payment when user is null")
     void testCreatePayment_NullUser_Fails() {
         // When
-        Payment result = transactionService.createPayment(null, 25.0, "Test payment", Payment.PaymentMethod.CASH);
+        Payment result = transactionService.createPayment(null, new BigDecimal("25.0"), "Test payment", Payment.PaymentMethod.CASH);
 
         // Then
         assertNull(result);
@@ -571,7 +572,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create payment when amount is zero")
     void testCreatePayment_ZeroAmount_Fails() {
         // When
-        Payment result = transactionService.createPayment(testUser, 0.0, "Test payment", Payment.PaymentMethod.CASH);
+        Payment result = transactionService.createPayment(testUser, BigDecimal.ZERO, "Test payment", Payment.PaymentMethod.CASH);
 
         // Then
         assertNull(result);
@@ -582,7 +583,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create payment when amount is negative")
     void testCreatePayment_NegativeAmount_Fails() {
         // When
-        Payment result = transactionService.createPayment(testUser, -10.0, "Test payment", Payment.PaymentMethod.CASH);
+        Payment result = transactionService.createPayment(testUser, new BigDecimal("-10.0"), "Test payment", Payment.PaymentMethod.CASH);
 
         // Then
         assertNull(result);
@@ -593,7 +594,7 @@ public class TransactionServiceTest {
     @DisplayName("Should fail to create payment when description is null")
     void testCreatePayment_NullDescription_Fails() {
         // When
-        Payment result = transactionService.createPayment(testUser, 25.0, null, Payment.PaymentMethod.CASH);
+        Payment result = transactionService.createPayment(testUser, new BigDecimal("25.0"), null, Payment.PaymentMethod.CASH);
 
         // Then
         assertNull(result);
@@ -672,7 +673,7 @@ public class TransactionServiceTest {
         Fine.FineType[] fineTypes = Fine.FineType.values();
         for (Fine.FineType fineType : fineTypes) {
             // When
-            Fine result = transactionService.createFine(testUser, 25.0, "Test fine", fineType);
+            Fine result = transactionService.createFine(testUser, new BigDecimal("25.0"), "Test fine", fineType);
 
             // Then
             assertNotNull(result, "Fine creation failed for type: " + fineType);
@@ -696,7 +697,7 @@ public class TransactionServiceTest {
         Payment.PaymentMethod[] paymentMethods = Payment.PaymentMethod.values();
         for (Payment.PaymentMethod method : paymentMethods) {
             // When
-            Payment result = transactionService.createPayment(testUser, 25.0, "Test payment", method);
+            Payment result = transactionService.createPayment(testUser, new BigDecimal("25.0"), "Test payment", method);
 
             // Then
             assertNotNull(result, "Payment creation failed for method: " + method);
@@ -717,9 +718,9 @@ public class TransactionServiceTest {
         }).when(transactionRepository).persist(any(Payment.class));
 
         // When
-        Payment payment1 = transactionService.createPayment(testUser, 25.0, "Payment 1", Payment.PaymentMethod.CASH);
+        Payment payment1 = transactionService.createPayment(testUser, new BigDecimal("25.0"), "Payment 1", Payment.PaymentMethod.CASH);
         Thread.sleep(1); // Ensure different timestamps
-        Payment payment2 = transactionService.createPayment(testUser, 30.0, "Payment 2", Payment.PaymentMethod.CASH);
+        Payment payment2 = transactionService.createPayment(testUser, new BigDecimal("30.0"), "Payment 2", Payment.PaymentMethod.CASH);
 
         // Then
         assertNotNull(payment1);

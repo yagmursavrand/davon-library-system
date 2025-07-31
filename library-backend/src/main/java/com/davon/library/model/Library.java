@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import java.util.List;
@@ -25,8 +26,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"inventories", "members"}) // Exclude to prevent circular references
-@EqualsAndHashCode(exclude = {"inventories", "members"}) // Exclude to prevent circular references
 public class Library {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,9 +49,11 @@ public class Library {
     
     // One-to-Many relationship with Inventory (Library manages inventories)
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Inventory> inventories = new ArrayList<>();
     
     // One-to-Many relationship with Member (Library registers members)
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Member> members = new ArrayList<>();
 } 

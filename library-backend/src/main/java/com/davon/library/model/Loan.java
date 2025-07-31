@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
+import java.math.BigDecimal;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -25,8 +28,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"book", "member"}) // Exclude to prevent circular references
-@EqualsAndHashCode(exclude = {"book", "member"}) // Exclude to prevent circular references
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +46,8 @@ public class Loan {
     @Column(name = "return_date")
     private Date returnDate;
     
-    @Column(name = "fine_amount")
-    private double fineAmount = 0.0;
+    @Column(name = "fine_amount", precision = 10, scale = 2)
+    private BigDecimal fineAmount = BigDecimal.ZERO;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -55,11 +56,13 @@ public class Loan {
     // Many-to-One relationship with Book
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
+    @JsonIgnore
     private Book book;
     
     // Many-to-One relationship with Member
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
+    @JsonIgnore
     private Member member;
     
     // Loan status enum

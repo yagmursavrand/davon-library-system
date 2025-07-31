@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Path("/api/books")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class BookResource {
     
     @Inject
@@ -119,6 +118,7 @@ public class BookResource {
      * Add new book (admin only)
      */
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public Response addBook(@HeaderParam("Authorization") String authHeader, 
                            BookCreateRequest request) {
@@ -146,7 +146,9 @@ public class BookResource {
                 for (Long authorId : request.authorIds) {
                     Optional<Author> authorOpt = authorRepository.findByIdOptional(authorId);
                     if (authorOpt.isPresent()) {
-                        bookService.addAuthorToBook(book.getId(), authorId);
+                        Author author = authorOpt.get();
+                        book.getAuthors().add(author);
+                        author.getBooks().add(book);
                     }
                 }
             }
@@ -165,6 +167,7 @@ public class BookResource {
      */
     @PUT
     @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public Response updateBook(@PathParam("id") Long id,
                               @HeaderParam("Authorization") String authHeader,

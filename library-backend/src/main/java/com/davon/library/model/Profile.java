@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import java.util.Date;
@@ -24,8 +25,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"user"}) // Exclude to prevent circular references
-@EqualsAndHashCode(exclude = {"user"}) // Exclude to prevent circular references
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +48,7 @@ public class Profile {
     // One-to-One relationship with User
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
     
     @PreUpdate

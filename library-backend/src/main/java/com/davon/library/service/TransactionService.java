@@ -9,6 +9,7 @@ import com.davon.library.repository.FineRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Optional;
 
@@ -161,8 +162,8 @@ public class TransactionService {
      * Create new fine transaction
      */
     @Transactional
-    public Fine createFine(User user, double amount, String reason, Fine.FineType fineType) {
-        if (user == null || amount <= 0 || reason == null) {
+    public Fine createFine(User user, BigDecimal amount, String reason, Fine.FineType fineType) {
+        if (user == null || amount == null || amount.compareTo(BigDecimal.ZERO) <= 0 || reason == null) {
             System.out.println("Invalid fine parameters");
             return null;
         }
@@ -189,8 +190,8 @@ public class TransactionService {
      * Create new payment transaction
      */
     @Transactional
-    public Payment createPayment(User user, double amount, String description, Payment.PaymentMethod method) {
-        if (user == null || amount <= 0 || description == null) {
+    public Payment createPayment(User user, BigDecimal amount, String description, Payment.PaymentMethod method) {
+        if (user == null || amount == null || amount.compareTo(BigDecimal.ZERO) <= 0 || description == null) {
             System.out.println("Invalid payment parameters");
             return null;
         }

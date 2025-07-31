@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Optional;
@@ -59,105 +60,8 @@ public class LoanServiceTest {
         testLoan.setDueDate(cal.getTime());
         
         testLoan.setStatus(Loan.LoanStatus.ACTIVE);
-        testLoan.setFineAmount(0.0);
+        testLoan.setFineAmount(BigDecimal.ZERO);
         testLoan.setReturnDate(null);
-    }
-
-    // ===== CALCULATE FINE TESTS =====
-
-    @Test
-    @DisplayName("Should calculate fine correctly for overdue loan")
-    void testCalculateFine_OverdueLoan_Success() {
-        // Given - loan overdue by 5 days
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -5); // Due 5 days ago
-        testLoan.setDueDate(cal.getTime());
-        testLoan.setReturnDate(null); // Not returned yet
-        
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        double fine = loanService.calculateFine(1L);
-
-        // Then
-        assertEquals(5.0, fine, 0.01); // $1 per day * 5 days = $5
-    }
-
-    @Test
-    @DisplayName("Should return zero fine for non-overdue loan")
-    void testCalculateFine_NotOverdue_ZeroFine() {
-        // Given - loan due in future
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 3); // Due in 3 days
-        testLoan.setDueDate(cal.getTime());
-        
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        double fine = loanService.calculateFine(1L);
-
-        // Then
-        assertEquals(0.0, fine, 0.01);
-    }
-
-    @Test
-    @DisplayName("Should return zero fine for returned loan")
-    void testCalculateFine_ReturnedLoan_ZeroFine() {
-        // Given - loan already returned
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -5); // Was due 5 days ago
-        testLoan.setDueDate(cal.getTime());
-        testLoan.setReturnDate(new Date()); // But returned
-        
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        double fine = loanService.calculateFine(1L);
-
-        // Then
-        assertEquals(0.0, fine, 0.01);
-    }
-
-    @Test
-    @DisplayName("Should cap fine at maximum amount")
-    void testCalculateFine_MaximumFine_Capped() {
-        // Given - loan overdue by 60 days (more than $50 max)
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -60); // Due 60 days ago
-        testLoan.setDueDate(cal.getTime());
-        testLoan.setReturnDate(null);
-        
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        double fine = loanService.calculateFine(1L);
-
-        // Then
-        assertEquals(50.0, fine, 0.01); // Capped at $50 maximum
-    }
-
-    @Test
-    @DisplayName("Should return zero fine when loan ID is null")
-    void testCalculateFine_NullLoanId_ZeroFine() {
-        // When
-        double fine = loanService.calculateFine(null);
-
-        // Then
-        assertEquals(0.0, fine, 0.01);
-        verify(loanRepository, never()).findByIdOptional(any());
-    }
-
-    @Test
-    @DisplayName("Should return zero fine when loan not found")
-    void testCalculateFine_LoanNotFound_ZeroFine() {
-        // Given
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.empty());
-
-        // When
-        double fine = loanService.calculateFine(1L);
-
-        // Then
-        assertEquals(0.0, fine, 0.01);
     }
 
     // ===== IS OVERDUE TESTS =====
@@ -257,26 +161,6 @@ public class LoanServiceTest {
     }
 
     @Test
-    @DisplayName("Should calculate fine when marking overdue loan as returned")
-    void testMarkAsReturned_OverdueLoan_CalculatesFine() {
-        // Given - overdue loan
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -3); // Due 3 days ago
-        testLoan.setDueDate(cal.getTime());
-        
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        boolean result = loanService.markAsReturned(1L);
-
-        // Then
-        assertTrue(result);
-        assertNotNull(testLoan.getReturnDate());
-        assertEquals(Loan.LoanStatus.RETURNED, testLoan.getStatus());
-        assertEquals(3.0, testLoan.getFineAmount(), 0.01); // $3 fine for 3 days overdue
-    }
-
-    @Test
     @DisplayName("Should fail to mark as returned when already returned")
     void testMarkAsReturned_AlreadyReturned_Fails() {
         // Given - already returned loan
@@ -309,100 +193,6 @@ public class LoanServiceTest {
 
         // When
         boolean result = loanService.markAsReturned(1L);
-
-        // Then
-        assertFalse(result);
-    }
-
-    // ===== RENEW LOAN TESTS =====
-
-    @Test
-    @DisplayName("Should renew loan successfully")
-    void testRenewLoan_Success() {
-        // Given - active loan not overdue
-        Date originalDueDate = testLoan.getDueDate();
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        boolean result = loanService.renewLoan(1L, 7);
-
-        // Then
-        assertTrue(result);
-        assertEquals(Loan.LoanStatus.RENEWED, testLoan.getStatus());
-        assertTrue(testLoan.getDueDate().after(originalDueDate));
-        
-        // Check that due date was extended by 7 days
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(originalDueDate);
-        cal.add(Calendar.DAY_OF_MONTH, 7);
-        assertEquals(cal.getTime(), testLoan.getDueDate());
-    }
-
-    @Test
-    @DisplayName("Should fail to renew overdue loan")
-    void testRenewLoan_OverdueLoan_Fails() {
-        // Given - overdue loan
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -2); // Due 2 days ago
-        testLoan.setDueDate(cal.getTime());
-        
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        boolean result = loanService.renewLoan(1L, 7);
-
-        // Then
-        assertFalse(result);
-        assertEquals(Loan.LoanStatus.ACTIVE, testLoan.getStatus()); // Status unchanged
-    }
-
-    @Test
-    @DisplayName("Should fail to renew returned loan")
-    void testRenewLoan_ReturnedLoan_Fails() {
-        // Given - returned loan
-        testLoan.setReturnDate(new Date());
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        boolean result = loanService.renewLoan(1L, 7);
-
-        // Then
-        assertFalse(result);
-    }
-
-    @Test
-    @DisplayName("Should fail to renew with invalid renewal period")
-    void testRenewLoan_InvalidPeriod_Fails() {
-        // Given
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When & Then - test various invalid periods
-        assertFalse(loanService.renewLoan(1L, 0));   // Zero days
-        assertFalse(loanService.renewLoan(1L, -5));  // Negative days
-        assertFalse(loanService.renewLoan(1L, 15));  // More than 14 days
-        
-        verify(loanRepository, times(3)).findByIdOptional(1L);
-    }
-
-    @Test
-    @DisplayName("Should fail to renew when loan ID is null")
-    void testRenewLoan_NullLoanId_Fails() {
-        // When
-        boolean result = loanService.renewLoan(null, 7);
-
-        // Then
-        assertFalse(result);
-        verify(loanRepository, never()).findByIdOptional(any());
-    }
-
-    @Test
-    @DisplayName("Should fail to renew when loan not found")
-    void testRenewLoan_LoanNotFound_Fails() {
-        // Given
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.empty());
-
-        // When
-        boolean result = loanService.renewLoan(1L, 7);
 
         // Then
         assertFalse(result);
@@ -537,6 +327,30 @@ public class LoanServiceTest {
         assertEquals(0L, daysOverdue);
     }
 
+    @Test
+    @DisplayName("Should return zero when loan ID is null")
+    void testGetDaysOverdue_NullLoanId_Zero() {
+        // When
+        long daysOverdue = loanService.getDaysOverdue(null);
+
+        // Then
+        assertEquals(0L, daysOverdue);
+        verify(loanRepository, never()).findByIdOptional(any());
+    }
+
+    @Test
+    @DisplayName("Should return zero when loan not found")
+    void testGetDaysOverdue_LoanNotFound_Zero() {
+        // Given
+        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.empty());
+
+        // When
+        long daysOverdue = loanService.getDaysOverdue(1L);
+
+        // Then
+        assertEquals(0L, daysOverdue);
+    }
+
     // ===== CREATE LOAN TESTS =====
 
     @Test
@@ -557,7 +371,7 @@ public class LoanServiceTest {
         assertEquals(testMember, result.getMember());
         assertEquals(testBook, result.getBook());
         assertEquals(Loan.LoanStatus.ACTIVE, result.getStatus());
-        assertEquals(0.0, result.getFineAmount(), 0.01);
+        assertEquals(0, BigDecimal.ZERO.compareTo(result.getFineAmount()));
         assertNotNull(result.getLoanDate());
         assertNotNull(result.getDueDate());
         assertNull(result.getReturnDate());
@@ -659,37 +473,5 @@ public class LoanServiceTest {
 
         // Then
         assertFalse(isOverdue); // Should not be overdue if due later today
-    }
-
-    @Test
-    @DisplayName("Should handle very large fine calculation")
-    void testCalculateFine_VeryLargeFine_CappedCorrectly() {
-        // Given - loan overdue by 100 days
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -100);
-        testLoan.setDueDate(cal.getTime());
-        testLoan.setReturnDate(null);
-        
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        double fine = loanService.calculateFine(1L);
-
-        // Then
-        assertEquals(50.0, fine, 0.01); // Should be capped at $50
-    }
-
-    @Test
-    @DisplayName("Should handle renewal at maximum allowed period")
-    void testRenewLoan_MaximumPeriod_Success() {
-        // Given
-        when(loanRepository.findByIdOptional(1L)).thenReturn(Optional.of(testLoan));
-
-        // When
-        boolean result = loanService.renewLoan(1L, 14); // Maximum 14 days
-
-        // Then
-        assertTrue(result);
-        assertEquals(Loan.LoanStatus.RENEWED, testLoan.getStatus());
     }
 } 

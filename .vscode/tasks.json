@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "mvn test-compile",
+            "type": "shell",
+            "command": "mvn",
+            "args": ["test-compile"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/library-backend"
+            },
+            "problemMatcher": []
+        }
+    ]
+} 

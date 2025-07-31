@@ -9,8 +9,8 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <quarkus.platform.version>3.6.4</quarkus.platform.version>
     <junit.version>5.10.1</junit.version>
@@ -55,17 +55,17 @@
       <artifactId>quarkus-hibernate-orm-panache</artifactId>
     </dependency>
     
-    <!-- H2 Database for Development -->
+    <!-- JDBC Driver for Microsoft SQL Server -->
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jdbc-h2</artifactId>
+      <artifactId>quarkus-jdbc-mssql</artifactId>
     </dependency>
 
     <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.34</version>
+      <version>1.18.38</version>
       <scope>provided</scope>
     </dependency>
 
@@ -101,7 +101,7 @@
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>1.18.34</version>
+              <version>1.18.38</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
@@ -122,6 +122,12 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <systemProperties>
+            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+            <maven.home>${maven.home}</maven.home>
+          </systemProperties>
+        </configuration>
       </plugin>
       
       <!-- Surefire Plugin for JUnit 5 -->

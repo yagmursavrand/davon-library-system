@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +53,7 @@ public class PaymentServiceTest {
         testFine = new Fine();
         testFine.setId(1L);
         testFine.setUser(testUser);
-        testFine.setAmount(25.0);
+        testFine.setAmount(new BigDecimal("25.0"));
         testFine.setType("FINE");
         testFine.setDescription("Overdue book fine");
         testFine.setStatus(Fine.TransactionStatus.PENDING);
@@ -62,7 +63,7 @@ public class PaymentServiceTest {
         testPayment = new Payment();
         testPayment.setId(1L);
         testPayment.setUser(testUser);
-        testPayment.setAmount(25.0);
+        testPayment.setAmount(new BigDecimal("25.0"));
         testPayment.setType("PAYMENT");
         testPayment.setDescription("Payment for fine");
         testPayment.setDate(new Date());
@@ -151,12 +152,12 @@ public class PaymentServiceTest {
         }).when(paymentRepository).persist(any(Payment.class));
 
         // When
-        Payment result = paymentService.createPayment(testUser, 25.0, Payment.PaymentMethod.CREDIT_CARD, testFine);
+        Payment result = paymentService.createPayment(testUser, new BigDecimal("25.0"), Payment.PaymentMethod.CREDIT_CARD, testFine);
 
         // Then
         assertNotNull(result);
         assertEquals(testUser, result.getUser());
-        assertEquals(25.0, result.getAmount());
+        assertEquals(0, new BigDecimal("25.0").compareTo(result.getAmount()));
         assertEquals("PAYMENT", result.getType());
         assertEquals("Payment for fine", result.getDescription());
         assertEquals(Payment.PaymentMethod.CREDIT_CARD, result.getPaymentMethod());
@@ -181,7 +182,7 @@ public class PaymentServiceTest {
         }).when(paymentRepository).persist(any(Payment.class));
 
         // When
-        Payment result = paymentService.createPayment(testUser, 25.0, Payment.PaymentMethod.CASH, null);
+        Payment result = paymentService.createPayment(testUser, new BigDecimal("25.0"), Payment.PaymentMethod.CASH, null);
 
         // Then
         assertNotNull(result);
@@ -194,7 +195,7 @@ public class PaymentServiceTest {
     @DisplayName("Should fail to create payment when user is null")
     void testCreatePayment_NullUser_Fails() {
         // When
-        Payment result = paymentService.createPayment(null, 25.0, Payment.PaymentMethod.CASH, testFine);
+        Payment result = paymentService.createPayment(null, new BigDecimal("25.0"), Payment.PaymentMethod.CASH, testFine);
 
         // Then
         assertNull(result);
@@ -205,7 +206,7 @@ public class PaymentServiceTest {
     @DisplayName("Should fail to create payment when amount is zero")
     void testCreatePayment_ZeroAmount_Fails() {
         // When
-        Payment result = paymentService.createPayment(testUser, 0.0, Payment.PaymentMethod.CASH, testFine);
+        Payment result = paymentService.createPayment(testUser, BigDecimal.ZERO, Payment.PaymentMethod.CASH, testFine);
 
         // Then
         assertNull(result);
@@ -216,7 +217,7 @@ public class PaymentServiceTest {
     @DisplayName("Should fail to create payment when amount is negative")
     void testCreatePayment_NegativeAmount_Fails() {
         // When
-        Payment result = paymentService.createPayment(testUser, -10.0, Payment.PaymentMethod.CASH, testFine);
+        Payment result = paymentService.createPayment(testUser, new BigDecimal("-10.0"), Payment.PaymentMethod.CASH, testFine);
 
         // Then
         assertNull(result);
@@ -227,7 +228,7 @@ public class PaymentServiceTest {
     @DisplayName("Should fail to create payment when method is null")
     void testCreatePayment_NullMethod_Fails() {
         // When
-        Payment result = paymentService.createPayment(testUser, 25.0, null, testFine);
+        Payment result = paymentService.createPayment(testUser, new BigDecimal("25.0"), null, testFine);
 
         // Then
         assertNull(result);
@@ -240,7 +241,7 @@ public class PaymentServiceTest {
     @DisplayName("Should process payment successfully")
     void testProcessPayment_Success() {
         // Given
-        testPayment.setAmount(25.0);
+        testPayment.setAmount(new BigDecimal("25.0"));
         testPayment.setStatus(Payment.TransactionStatus.PENDING);
         when(paymentRepository.findByIdOptional(1L)).thenReturn(Optional.of(testPayment));
 
@@ -302,7 +303,7 @@ public class PaymentServiceTest {
     @DisplayName("Should fail to process payment when amount is invalid")
     void testProcessPayment_InvalidAmount_Fails() {
         // Given
-        testPayment.setAmount(0.0);
+        testPayment.setAmount(BigDecimal.ZERO);
         when(paymentRepository.findByIdOptional(1L)).thenReturn(Optional.of(testPayment));
 
         // When
@@ -587,14 +588,14 @@ public class PaymentServiceTest {
     @DisplayName("Should calculate credit card processing fee correctly")
     void testGetProcessingFee_CreditCard() {
         // Given
-        testPayment.setAmount(100.0);
+        testPayment.setAmount(new BigDecimal("100.0"));
         testPayment.setPaymentMethod(Payment.PaymentMethod.CREDIT_CARD);
 
         // When
-        double result = paymentService.getProcessingFee(testPayment);
+        BigDecimal result = paymentService.getProcessingFee(testPayment);
 
         // Then
-        assertEquals(2.50, result, 0.01); // 2.5% of $100 = $2.50
+        assertEquals(0, new BigDecimal("2.50").compareTo(result)); // 2.5% of $100 = $2.50
     }
 
     @Test
@@ -604,24 +605,24 @@ public class PaymentServiceTest {
         testPayment.setPaymentMethod(Payment.PaymentMethod.DEBIT_CARD);
 
         // When
-        double result = paymentService.getProcessingFee(testPayment);
+        BigDecimal result = paymentService.getProcessingFee(testPayment);
 
         // Then
-        assertEquals(0.50, result, 0.01); // Fixed $0.50 fee
+        assertEquals(0, new BigDecimal("0.50").compareTo(result)); // Fixed $0.50 fee
     }
 
     @Test
     @DisplayName("Should calculate PayPal processing fee correctly")
     void testGetProcessingFee_PayPal() {
         // Given
-        testPayment.setAmount(100.0);
+        testPayment.setAmount(new BigDecimal("100.0"));
         testPayment.setPaymentMethod(Payment.PaymentMethod.PAYPAL);
 
         // When
-        double result = paymentService.getProcessingFee(testPayment);
+        BigDecimal result = paymentService.getProcessingFee(testPayment);
 
         // Then
-        assertEquals(3.20, result, 0.01); // 2.9% of $100 + $0.30 = $3.20
+        assertEquals(0, new BigDecimal("3.20").compareTo(result)); // 2.9% of $100 + $0.30 = $3.20
     }
 
     @Test
@@ -631,10 +632,10 @@ public class PaymentServiceTest {
         testPayment.setPaymentMethod(Payment.PaymentMethod.BANK_TRANSFER);
 
         // When
-        double result = paymentService.getProcessingFee(testPayment);
+        BigDecimal result = paymentService.getProcessingFee(testPayment);
 
         // Then
-        assertEquals(1.00, result, 0.01); // Fixed $1.00 fee
+        assertEquals(0, new BigDecimal("1.00").compareTo(result)); // Fixed $1.00 fee
     }
 
     @Test
@@ -644,10 +645,10 @@ public class PaymentServiceTest {
         testPayment.setPaymentMethod(Payment.PaymentMethod.CASH);
 
         // When
-        double result = paymentService.getProcessingFee(testPayment);
+        BigDecimal result = paymentService.getProcessingFee(testPayment);
 
         // Then
-        assertEquals(0.0, result, 0.01); // No fee for cash
+        assertEquals(0, BigDecimal.ZERO.compareTo(result)); // No fee for cash
     }
 
     @Test
@@ -657,20 +658,20 @@ public class PaymentServiceTest {
         testPayment.setPaymentMethod(Payment.PaymentMethod.OTHER);
 
         // When
-        double result = paymentService.getProcessingFee(testPayment);
+        BigDecimal result = paymentService.getProcessingFee(testPayment);
 
         // Then
-        assertEquals(0.0, result, 0.01); // No fee for other
+        assertEquals(0, BigDecimal.ZERO.compareTo(result)); // No fee for other
     }
 
     @Test
     @DisplayName("Should return zero fee when payment is null")
     void testGetProcessingFee_NullPayment() {
         // When
-        double result = paymentService.getProcessingFee(null);
+        BigDecimal result = paymentService.getProcessingFee(null);
 
         // Then
-        assertEquals(0.0, result, 0.01);
+        assertEquals(0, BigDecimal.ZERO.compareTo(result));
     }
 
     @Test
@@ -680,10 +681,10 @@ public class PaymentServiceTest {
         testPayment.setPaymentMethod(null);
 
         // When
-        double result = paymentService.getProcessingFee(testPayment);
+        BigDecimal result = paymentService.getProcessingFee(testPayment);
 
         // Then
-        assertEquals(0.0, result, 0.01);
+        assertEquals(0, BigDecimal.ZERO.compareTo(result));
     }
 
     // ===== DELETE PAYMENT TESTS =====
@@ -763,7 +764,7 @@ public class PaymentServiceTest {
         Payment.PaymentMethod[] paymentMethods = Payment.PaymentMethod.values();
         for (Payment.PaymentMethod method : paymentMethods) {
             // When
-            Payment result = paymentService.createPayment(testUser, 25.0, method, testFine);
+            Payment result = paymentService.createPayment(testUser, new BigDecimal("25.0"), method, testFine);
 
             // Then
             assertNotNull(result, "Payment creation failed for method: " + method);
@@ -784,9 +785,9 @@ public class PaymentServiceTest {
         }).when(paymentRepository).persist(any(Payment.class));
 
         // When
-        Payment payment1 = paymentService.createPayment(testUser, 25.0, Payment.PaymentMethod.CASH, null);
+        Payment payment1 = paymentService.createPayment(testUser, new BigDecimal("25.0"), Payment.PaymentMethod.CASH, null);
         Thread.sleep(1); // Ensure different timestamps
-        Payment payment2 = paymentService.createPayment(testUser, 30.0, Payment.PaymentMethod.CASH, null);
+        Payment payment2 = paymentService.createPayment(testUser, new BigDecimal("30.0"), Payment.PaymentMethod.CASH, null);
 
         // Then
         assertNotNull(payment1);
@@ -826,22 +827,22 @@ public class PaymentServiceTest {
         // Test credit card with different amounts
         testPayment.setPaymentMethod(Payment.PaymentMethod.CREDIT_CARD);
         
-        testPayment.setAmount(10.0);
-        assertEquals(0.25, paymentService.getProcessingFee(testPayment), 0.01);
+        testPayment.setAmount(new BigDecimal("10.0"));
+        assertEquals(0, new BigDecimal("0.25").compareTo(paymentService.getProcessingFee(testPayment)));
         
-        testPayment.setAmount(50.0);
-        assertEquals(1.25, paymentService.getProcessingFee(testPayment), 0.01);
+        testPayment.setAmount(new BigDecimal("50.0"));
+        assertEquals(0, new BigDecimal("1.25").compareTo(paymentService.getProcessingFee(testPayment)));
         
-        testPayment.setAmount(200.0);
-        assertEquals(5.0, paymentService.getProcessingFee(testPayment), 0.01);
+        testPayment.setAmount(new BigDecimal("200.0"));
+        assertEquals(0, new BigDecimal("5.0").compareTo(paymentService.getProcessingFee(testPayment)));
 
         // Test PayPal with different amounts
         testPayment.setPaymentMethod(Payment.PaymentMethod.PAYPAL);
         
-        testPayment.setAmount(10.0);
-        assertEquals(0.59, paymentService.getProcessingFee(testPayment), 0.01); // 2.9% of $10 + $0.30
+        testPayment.setAmount(new BigDecimal("10.0"));
+        assertEquals(0, new BigDecimal("0.59").compareTo(paymentService.getProcessingFee(testPayment))); // 2.9% of $10 + $0.30
         
-        testPayment.setAmount(100.0);
-        assertEquals(3.20, paymentService.getProcessingFee(testPayment), 0.01); // 2.9% of $100 + $0.30
+        testPayment.setAmount(new BigDecimal("100.0"));
+        assertEquals(0, new BigDecimal("3.20").compareTo(paymentService.getProcessingFee(testPayment))); // 2.9% of $100 + $0.30
     }
 } 

@@ -6,7 +6,10 @@ import com.davon.library.model.Member;
 import com.davon.library.model.Loan;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class FineRepository implements PanacheRepository<Fine> {
@@ -21,6 +24,10 @@ public class FineRepository implements PanacheRepository<Fine> {
 
     public List<Fine> findByLoan(Loan loan) {
         return find("loan", loan).list();
+    }
+
+    public Fine findFirstByLoan(Loan loan) {
+        return find("loan", loan).firstResult();
     }
 
     public List<Fine> findByFineType(Fine.FineType fineType) {
@@ -44,16 +51,16 @@ public class FineRepository implements PanacheRepository<Fine> {
                    new java.util.Date(System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000))).list();
     }
 
-    public double calculateTotalUnpaidFines(Member member) {
-        Double result = find("SELECT SUM(amount) FROM Fine WHERE user = ?1 AND paid = false", member)
-                .project(Double.class).firstResult();
-        return result != null ? result : 0.0;
+    public BigDecimal calculateTotalUnpaidFines(Member member) {
+        BigDecimal result = find("SELECT SUM(amount) FROM Fine WHERE user = ?1 AND paid = false", member)
+                .project(BigDecimal.class).firstResult();
+        return result != null ? result : BigDecimal.ZERO;
     }
 
-    public double calculateTotalUnpaidFines(User user) {
-        Double result = find("SELECT SUM(amount) FROM Fine WHERE user = ?1 AND paid = false", user)
-                .project(Double.class).firstResult();
-        return result != null ? result : 0.0;
+    public BigDecimal calculateTotalUnpaidFines(User user) {
+        BigDecimal result = find("SELECT SUM(amount) FROM Fine WHERE user = ?1 AND paid = false", user)
+                .project(BigDecimal.class).firstResult();
+        return result != null ? result : BigDecimal.ZERO;
     }
 
     public long countUnpaidFinesByMember(Member member) {
@@ -64,4 +71,4 @@ public class FineRepository implements PanacheRepository<Fine> {
         java.util.Date cutoffDate = new java.util.Date(System.currentTimeMillis() - (days * 24L * 60 * 60 * 1000));
         return find("issuedDate >= ?1", cutoffDate).list();
     }
-} 
+}

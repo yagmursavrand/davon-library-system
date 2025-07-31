@@ -12,6 +12,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -153,7 +154,7 @@ public class PaymentResource {
                               .build();
             }
             
-            if (request.amount <= 0) {
+            if (request.amount == null || request.amount.compareTo(BigDecimal.ZERO) <= 0) {
                 return Response.status(Response.Status.BAD_REQUEST)
                               .entity("Payment amount must be greater than 0")
                               .build();
@@ -213,7 +214,7 @@ public class PaymentResource {
     
     // Request DTOs
     public static class PaymentCreationRequest {
-        public double amount;
+        public BigDecimal amount;
         public String paymentMethod;
         public Long fineId;
     }

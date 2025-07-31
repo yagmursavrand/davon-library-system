@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -317,7 +318,7 @@ public class MemberResource {
     }
     
     public static class PaymentRequest {
-        public double amount;
+        public BigDecimal amount;
         public String description;
     }
     

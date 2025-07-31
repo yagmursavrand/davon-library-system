@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
@@ -23,8 +24,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"book", "library"}) // Exclude to prevent circular references
-@EqualsAndHashCode(exclude = {"book", "library"}) // Exclude to prevent circular references
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,10 +45,12 @@ public class Inventory {
     // One-to-One relationship with Book
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
+    @JsonIgnore
     private Book book;
     
     // Many-to-One relationship with Library
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "library_id", nullable = false)
+    @JsonIgnore
     private Library library;
 } 

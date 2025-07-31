@@ -24,8 +24,6 @@ import jakarta.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true) // No circular references in Admin
-@ToString(callSuper = true) // No circular references in Admin
 public class Admin extends User {
     
     @Column(name = "admin_level", length = 20)
