@@ -1,10 +1,10 @@
 import { User, LoginCredentials, RegisterData, ValidationError } from '../types/user';
 
 class UserService {
-    private readonly API_URL = '/api/users';
+    private readonly API_BASE_URL = 'http://localhost:8082/api';
 
     async register(data: RegisterData): Promise<User> {
-        const response = await fetch(this.API_URL, {
+        const response = await fetch(`${this.API_BASE_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,8 +21,8 @@ class UserService {
     }
 
     async login(credentials: LoginCredentials): Promise<User> {
-        const response = await fetch(this.API_URL, {
-            method: 'PUT',
+        const response = await fetch(`${this.API_BASE_URL}/users/login`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -38,7 +38,11 @@ class UserService {
     }
 
     async getUserById(id: string): Promise<User | null> {
-        const response = await fetch(`${this.API_URL}/${id}`);
+        const response = await fetch(`${this.API_BASE_URL}/users/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
         if (!response.ok) {
             return null;
         }
@@ -46,7 +50,11 @@ class UserService {
     }
 
     async getUserByEmail(email: string): Promise<User | null> {
-        const response = await fetch(`${this.API_URL}?email=${email}`);
+        const response = await fetch(`${this.API_BASE_URL}/users?email=${email}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
         if (!response.ok) {
             return null;
         }
@@ -55,10 +63,11 @@ class UserService {
     }
 
     async updateUser(id: string, data: Partial<User>): Promise<User> {
-        const response = await fetch(`${this.API_URL}?id=${id}`, {
+        const response = await fetch(`${this.API_BASE_URL}/users/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(data),
         });
@@ -72,8 +81,11 @@ class UserService {
     }
 
     async deleteUser(id: string): Promise<void> {
-        const response = await fetch(`${this.API_URL}?id=${id}`, {
+        const response = await fetch(`${this.API_BASE_URL}/users/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
         });
 
         if (!response.ok) {
@@ -83,7 +95,11 @@ class UserService {
     }
 
     async getAllUsers(): Promise<User[]> {
-        const response = await fetch(this.API_URL);
+        const response = await fetch(`${this.API_BASE_URL}/users`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch users');
         }

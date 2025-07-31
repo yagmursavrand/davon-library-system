@@ -5,8 +5,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(180deg, #e0e7ff 0%, #f0fdfa 100%);
-  padding-top: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .header {
@@ -14,17 +15,20 @@
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: center;
+  color: white;
 }
 
 .profileBox {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  padding: 2rem 2.5rem;
-  min-width: 320px;
-  max-width: 400px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  padding: 2.5rem;
+  min-width: 350px;
+  max-width: 450px;
   margin: 0 auto;
   margin-bottom: 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
 }
 
 .profileBoxWrapper {
@@ -38,17 +42,24 @@
 }
 
 .logoutButton {
-  padding: 0.5rem 1.2rem;
-  background: #c62828;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  font-size: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  z-index: 2;
-  min-width: 90px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+  transition: all 0.3s ease;
+  min-width: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.logoutButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,107,107,0.4);
 }
 
 .headerRow {
@@ -56,15 +67,88 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 700px;
+  max-width: 1200px;
   margin: 0 auto 2rem auto;
   position: relative;
+  background: rgba(255,255,255,0.1);
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 .headerText {
   flex: 1;
   text-align: center;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-right: 2rem; /* Butonun üstüne binmesini engeller */
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  margin-right: 2rem;
+}
+
+/* Tab Navigation Styles */
+.tabContainer {
+  display: flex;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 0.5rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.tabButton {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabButton.active {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tabButton:hover:not(.active) {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+/* Content Area */
+.contentArea {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .headerRow {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .headerText {
+    font-size: 2rem;
+    margin-right: 0;
+  }
+  
+  .profileBox {
+    min-width: 280px;
+    padding: 2rem;
+  }
 }

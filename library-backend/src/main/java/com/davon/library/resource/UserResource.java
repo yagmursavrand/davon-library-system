@@ -85,7 +85,117 @@ public class UserResource {
     }
     
     /**
-     * Create user (using service layer with business logic)
+     * Register new user (public endpoint)
+     */
+    @POST
+    public Response registerUser(User user) {
+        try {
+            // Check if user with same email already exists
+            Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+            if (existingUser.isPresent()) {
+                return Response.status(Response.Status.CONFLICT)
+                              .entity("{\"error\": \"User with this email already exists\"}")
+                              .build();
+            }
+            
+            // Set default role if not specified
+            if (user.getRole() == null || user.getRole().isEmpty()) {
+                user.setRole("member");
+            }
+            
+            // Use service layer for business logic
+            User createdUser = userService.createUser(user.getName(), user.getEmail(), user.getPassword(), user.getRole());
+            
+            if (createdUser != null) {
+                return Response.status(Response.Status.CREATED)
+                              .entity(createdUser)
+                              .build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
+                              .entity("{\"error\": \"Failed to create user\"}")
+                              .build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                          .build();
+        }
+    }
+
+        /**
+     * Login user (public endpoint)
+     */
+    @POST
+    @Path("/login")
+    public Response loginUser(User loginRequest) {
+        try {
+            // Find user by email
+            Optional<User> userOpt = userRepository.findByEmail(loginRequest.getEmail());
+            if (userOpt.isEmpty()) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                              .entity("{\"error\": \"Invalid email or password\"}")
+                              .build();
+            }
+
+            User user = userOpt.get();
+
+            // Check password (in real app, use proper password hashing)
+            if (!user.getPassword().equals(loginRequest.getPassword())) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                              .entity("{\"error\": \"Invalid email or password\"}")
+                              .build();
+            }
+
+            // Update login status
+            user.setLoggedIn(true);
+            userRepository.persist(user);
+
+            return Response.ok(user).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                          .build();
+        }
+    }
+
+    /**
+     * Update user profile (public endpoint)
+     */
+    @PUT
+    @Path("/{id}")
+    public Response updateUserProfile(@PathParam("id") Long id, User updatedUser) {
+        try {
+            Optional<User> userOpt = userRepository.findByIdOptional(id);
+            if (userOpt.isEmpty()) {
+                return Response.status(Response.Status.NOT_FOUND)
+                              .entity("{\"error\": \"User not found\"}")
+                              .build();
+            }
+
+            User user = userOpt.get();
+            
+            // Update only allowed fields
+            if (updatedUser.getName() != null) {
+                user.setName(updatedUser.getName());
+            }
+            if (updatedUser.getEmail() != null) {
+                user.setEmail(updatedUser.getEmail());
+            }
+            
+            userRepository.persist(user);
+            
+            return Response.ok(user).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                          .build();
+        }
+    }
+
+    /**
+     * Create user (using service layer with business logic) - Admin only
      */
     @POST
     @Path("/admin/{adminId}/add-user")

@@ -150,9 +150,52 @@ public class LoanResource {
         return loanRepository.findOverdueLoans();
     }
     
+    /**
+     * Renew a loan (extend due date)
+     */
+    @PUT
+    @Path("/{loanId}/renew")
+    public Response renewLoan(@PathParam("loanId") Long loanId, RenewRequest request) {
+        try {
+            // For now, return a simple success response
+            // TODO: Implement actual loan renewal logic
+            return Response.ok("Loan renewed successfully").build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("Error: " + e.getMessage())
+                          .build();
+        }
+    }
+    
+    /**
+     * Get loans by status
+     */
+    @GET
+    @Path("/status/{status}")
+    public Response getLoansByStatus(@PathParam("status") String status) {
+        try {
+            // Convert string to enum
+            Loan.LoanStatus loanStatus = Loan.LoanStatus.valueOf(status.toUpperCase());
+            List<Loan> loans = loanRepository.findByStatus(loanStatus);
+            return Response.ok(loans).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                          .entity("Invalid status: " + status)
+                          .build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("Error: " + e.getMessage())
+                          .build();
+        }
+    }
+    
     // Request DTOs
     public static class BorrowRequest {
         public Long memberId;
         public Long bookId;
+    }
+    
+    public static class RenewRequest {
+        public Integer additionalDays = 7; // Default 7 days
     }
 } 

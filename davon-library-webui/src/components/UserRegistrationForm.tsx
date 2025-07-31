@@ -78,7 +78,7 @@ export default function UserRegistrationForm() {
 
         try {
             await register(formData);
-            router.push('/home');
+            router.push('/home?tab=profile');
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Registration failed');
         } finally {
