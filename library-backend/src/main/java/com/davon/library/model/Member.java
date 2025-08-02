@@ -17,14 +17,16 @@ import jakarta.persistence.*;
 
 /**
  * Member entity - represents a library member extending User.
- * 
+ *
  * This class is a pure data entity with no business logic.
  * All business operations are handled in MemberService.
- * 
+ *
  * @see com.davon.library.service.MemberService for business operations
  */
 @Entity
 @Table(name = "members")
+@DiscriminatorValue("MEMBER")
+@PrimaryKeyJoinColumn(name = "user_id")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -65,4 +67,4 @@ public class Member extends User {
     @JoinColumn(name = "library_id")
     @JsonIgnore
     private Library library;
-} 
+}

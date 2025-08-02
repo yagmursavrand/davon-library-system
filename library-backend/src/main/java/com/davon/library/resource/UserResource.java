@@ -45,23 +45,96 @@ public class UserResource {
             return Response.ok(user.get()).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND)
-                          .entity("User not found")
+                          .entity("{\"error\": \"User not found\"}")
                           .build();
         }
     }
     
     /**
-     * Find user by email (using repository)
+     * Register new user (public endpoint)
      */
-    @GET
-    @Path("/email/{email}")
-    public Response getUserByEmail(@PathParam("email") String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            return Response.ok(user.get()).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                          .entity("User not found")
+    @POST
+    public Response registerUser(User user) {
+        try {
+            User registeredUser = userService.registerUser(
+                user.getName(),
+                user.getEmail(),
+                user.getPassword()
+            );
+
+            if (registeredUser != null) {
+                return Response.status(Response.Status.CREATED)
+                              .entity(registeredUser)
+                              .build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
+                              .entity("{\"error\": \"Registration failed. Email might already exist or data is invalid.\"}")
+                              .build();
+            }
+        } catch (Exception e) {
+            // Log the exception for debugging
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("{\"error\": \"An unexpected error occurred during registration.\"}")
+                          .build();
+        }
+    }
+
+    /**
+     * Login user (public endpoint)
+     */
+    @POST
+    @Path("/login")
+    public Response loginUser(User loginRequest) {
+        try {
+            boolean loggedIn = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
+
+            if (loggedIn) {
+                // Return the full user object on successful login
+                Optional<User> userOpt = userService.getUserByEmail(loginRequest.getEmail());
+                return userOpt.map(user -> Response.ok(user).build())
+                              .orElse(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                                              .entity("{\"error\": \"Could not retrieve user details after login.\"}")
+                                              .build());
+            } else {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                              .entity("{\"error\": \"Invalid email or password\"}")
+                              .build();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("{\"error\": \"An unexpected error occurred during login.\"}")
+                          .build();
+        }
+    }
+
+    /**
+     * Update user profile (public endpoint)
+     */
+    @PUT
+    @Path("/{id}")
+    public Response updateUserProfile(@PathParam("id") Long id, User updatedUser) {
+        try {
+            boolean success = userService.updateProfile(id, updatedUser.getName(), updatedUser.getEmail(), updatedUser.getPassword());
+            
+            if (success) {
+                Optional<User> userOpt = userRepository.findByIdOptional(id);
+                return userOpt.map(user -> Response.ok(user).build())
+                              .orElse(Response.status(Response.Status.NOT_FOUND)
+                                              .entity("{\"error\": \"User not found after update.\"}")
+                                              .build());
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
+                              .entity("{\"error\": \"Failed to update user profile. Data may be invalid or unchanged.\"}")
+                              .build();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("{\"error\": \"An unexpected error occurred while updating profile.\"}")
                           .build();
         }
     }
@@ -83,116 +156,6 @@ public class UserResource {
     public List<User> getActiveUsers() {
         return userRepository.findActiveUsers();
     }
-    
-    /**
-     * Register new user (public endpoint)
-     */
-    @POST
-    public Response registerUser(User user) {
-        try {
-            // Check if user with same email already exists
-            Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-            if (existingUser.isPresent()) {
-                return Response.status(Response.Status.CONFLICT)
-                              .entity("{\"error\": \"User with this email already exists\"}")
-                              .build();
-            }
-            
-            // Set default role if not specified
-            if (user.getRole() == null || user.getRole().isEmpty()) {
-                user.setRole("member");
-            }
-            
-            // Use service layer for business logic
-            User createdUser = userService.createUser(user.getName(), user.getEmail(), user.getPassword(), user.getRole());
-            
-            if (createdUser != null) {
-                return Response.status(Response.Status.CREATED)
-                              .entity(createdUser)
-                              .build();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST)
-                              .entity("{\"error\": \"Failed to create user\"}")
-                              .build();
-            }
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
-                          .build();
-        }
-    }
-
-        /**
-     * Login user (public endpoint)
-     */
-    @POST
-    @Path("/login")
-    public Response loginUser(User loginRequest) {
-        try {
-            // Find user by email
-            Optional<User> userOpt = userRepository.findByEmail(loginRequest.getEmail());
-            if (userOpt.isEmpty()) {
-                return Response.status(Response.Status.UNAUTHORIZED)
-                              .entity("{\"error\": \"Invalid email or password\"}")
-                              .build();
-            }
-
-            User user = userOpt.get();
-
-            // Check password (in real app, use proper password hashing)
-            if (!user.getPassword().equals(loginRequest.getPassword())) {
-                return Response.status(Response.Status.UNAUTHORIZED)
-                              .entity("{\"error\": \"Invalid email or password\"}")
-                              .build();
-            }
-
-            // Update login status
-            user.setLoggedIn(true);
-            userRepository.persist(user);
-
-            return Response.ok(user).build();
-
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
-                          .build();
-        }
-    }
-
-    /**
-     * Update user profile (public endpoint)
-     */
-    @PUT
-    @Path("/{id}")
-    public Response updateUserProfile(@PathParam("id") Long id, User updatedUser) {
-        try {
-            Optional<User> userOpt = userRepository.findByIdOptional(id);
-            if (userOpt.isEmpty()) {
-                return Response.status(Response.Status.NOT_FOUND)
-                              .entity("{\"error\": \"User not found\"}")
-                              .build();
-            }
-
-            User user = userOpt.get();
-            
-            // Update only allowed fields
-            if (updatedUser.getName() != null) {
-                user.setName(updatedUser.getName());
-            }
-            if (updatedUser.getEmail() != null) {
-                user.setEmail(updatedUser.getEmail());
-            }
-            
-            userRepository.persist(user);
-            
-            return Response.ok(user).build();
-
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
-                          .build();
-        }
-    }
 
     /**
      * Create user (using service layer with business logic) - Admin only
@@ -201,18 +164,13 @@ public class UserResource {
     @Path("/admin/{adminId}/add-user")
     public Response addUser(@PathParam("adminId") Long adminId, User user) {
         try {
-            // Get admin
-            Optional<User> adminOpt = userRepository.findByIdOptional(adminId);
-            if (adminOpt.isEmpty() || !(adminOpt.get() instanceof Admin)) {
-                return Response.status(Response.Status.FORBIDDEN)
-                              .entity("Admin not found or insufficient permissions")
-                              .build();
+            if (!userService.isAdmin(adminId)) {
+                 return Response.status(Response.Status.FORBIDDEN)
+                               .entity("{\"error\": \"Admin permissions required.\"}")
+                               .build();
             }
             
-            Admin admin = (Admin) adminOpt.get();
-            
-            // Use service layer for business logic
-            boolean success = adminService.addUser(admin, user);
+            boolean success = adminService.addUser((Admin)userRepository.findByIdOptional(adminId).get(), user);
             
             if (success) {
                 return Response.status(Response.Status.CREATED)
@@ -220,12 +178,12 @@ public class UserResource {
                               .build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST)
-                              .entity("Failed to add user")
+                              .entity("{\"error\": \"Failed to add user.\"}")
                               .build();
             }
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Error: " + e.getMessage())
+                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
                           .build();
         }
     }
@@ -239,29 +197,24 @@ public class UserResource {
                               @PathParam("userId") Long userId, 
                               User updatedUser) {
         try {
-            // Get admin
-            Optional<User> adminOpt = userRepository.findByIdOptional(adminId);
-            if (adminOpt.isEmpty() || !(adminOpt.get() instanceof Admin)) {
-                return Response.status(Response.Status.FORBIDDEN)
-                              .entity("Admin not found or insufficient permissions")
-                              .build();
+             if (!userService.isAdmin(adminId)) {
+                 return Response.status(Response.Status.FORBIDDEN)
+                               .entity("{\"error\": \"Admin permissions required.\"}")
+                               .build();
             }
             
-            Admin admin = (Admin) adminOpt.get();
-            
-            // Use service layer for business logic
-            boolean success = adminService.updateUser(admin, userId, updatedUser);
+            boolean success = adminService.updateUser((Admin)userRepository.findByIdOptional(adminId).get(), userId, updatedUser);
             
             if (success) {
-                return Response.ok("User updated successfully").build();
+                return Response.ok("{\"message\": \"User updated successfully\"}").build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST)
-                              .entity("Failed to update user")
+                              .entity("{\"error\": \"Failed to update user\"}")
                               .build();
             }
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Error: " + e.getMessage())
+                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
                           .build();
         }
     }
@@ -274,29 +227,24 @@ public class UserResource {
     public Response deleteUser(@PathParam("adminId") Long adminId, 
                               @PathParam("userId") Long userId) {
         try {
-            // Get admin
-            Optional<User> adminOpt = userRepository.findByIdOptional(adminId);
-            if (adminOpt.isEmpty() || !(adminOpt.get() instanceof Admin)) {
-                return Response.status(Response.Status.FORBIDDEN)
-                              .entity("Admin not found or insufficient permissions")
-                              .build();
+            if (!userService.isAdmin(adminId)) {
+                 return Response.status(Response.Status.FORBIDDEN)
+                               .entity("{\"error\": \"Admin permissions required.\"}")
+                               .build();
             }
             
-            Admin admin = (Admin) adminOpt.get();
-            
-            // Use service layer for business logic
-            boolean success = adminService.removeUser(admin, userId);
+            boolean success = adminService.removeUser((Admin)userRepository.findByIdOptional(adminId).get(), userId);
             
             if (success) {
-                return Response.ok("User deleted successfully").build();
+                return Response.ok("{\"message\": \"User deleted successfully\"}").build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST)
-                              .entity("Failed to delete user")
+                              .entity("{\"error\": \"Failed to delete user\"}")
                               .build();
             }
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Error: " + e.getMessage())
+                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
                           .build();
         }
     }
@@ -308,27 +256,21 @@ public class UserResource {
     @Path("/admin/{adminId}/statistics")
     public Response getUserStatistics(@PathParam("adminId") Long adminId) {
         try {
-            // Get admin
-            Optional<User> adminOpt = userRepository.findByIdOptional(adminId);
-            if (adminOpt.isEmpty() || !(adminOpt.get() instanceof Admin)) {
-                return Response.status(Response.Status.FORBIDDEN)
-                              .entity("Admin not found or insufficient permissions")
-                              .build();
+            if (!userService.isAdmin(adminId)) {
+                 return Response.status(Response.Status.FORBIDDEN)
+                               .entity("{\"error\": \"Admin permissions required.\"}")
+                               .build();
             }
             
-            Admin admin = (Admin) adminOpt.get();
+            adminService.getUserStatistics((Admin)userRepository.findByIdOptional(adminId).get());
             
-            // Use service layer - this prints to console for now
-            adminService.getUserStatistics(admin);
-            
-            // Return summary
             long totalUsers = userRepository.count();
-            return Response.ok("Statistics generated. Total users: " + totalUsers).build();
+            return Response.ok("{\"message\": \"Statistics generated. Total users: " + totalUsers + "\"}").build();
             
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Error: " + e.getMessage())
+                          .entity("{\"error\": \"" + e.getMessage() + "\"}")
                           .build();
         }
     }
-} 
+}

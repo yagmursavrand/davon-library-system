@@ -1,12 +1,16 @@
 package com.davon.library.service;
 
 import com.davon.library.model.User;
+import com.davon.library.model.Member;
 import com.davon.library.repository.UserRepository;
+import com.davon.library.repository.MemberRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.util.Date;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * UserService - handles all user-related business operations
@@ -16,7 +20,62 @@ public class UserService {
     
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    MemberRepository memberRepository;
     
+    /**
+     * Register a new user, who will always be a Member.
+     */
+    @Transactional
+    public User registerUser(String name, String email, String password) {
+        if (name == null || name.trim().isEmpty() ||
+            email == null || email.trim().isEmpty() ||
+            password == null || password.length() < 6) {
+            System.out.println("Invalid registration details: Name, email, and password (min 6 chars) are required.");
+            return null;
+        }
+
+        // Check if email already exists
+        if (userRepository.emailExists(email.trim().toLowerCase())) {
+            System.out.println("Email already exists: " + email);
+            return null;
+        }
+
+        // Create a Member object directly, which is also a User
+        Member member = new Member();
+
+        // Set User properties
+        member.setName(name.trim());
+        member.setEmail(email.trim().toLowerCase());
+        member.setPassword(password); // In a real app, hash this!
+        member.setRole("MEMBER"); 
+        member.setCreatedAt(new Date());
+        member.setLoggedIn(false);
+
+        // Set Member-specific properties
+        member.setMembershipStart(new Date());
+
+        // Set membership to expire in one year
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, 1);
+        member.setMembershipEnd(cal.getTime());
+
+        // Initialize collections to avoid issues
+        member.setBorrowedBookIds(new ArrayList<>());
+        member.setFineHistory(new ArrayList<>());
+        
+        // Persist the Member. Hibernate will handle creating both the User and Member records.
+        memberRepository.persist(member);
+        
+        // The membership number can only be set after the ID is generated.
+        member.setMembershipNumber("MEM-" + member.getId());
+
+        System.out.println("User and Member registered successfully: " + member.getName() + " (ID: " + member.getId() + ")");
+
+        return member;
+    }
+
     /**
      * User login
      */
@@ -236,7 +295,7 @@ public class UserService {
         if (isLoggedIn) {
             user.setLastLoginDate(new Date());
         }
-        
+
         return true;
     }
-} 
+}

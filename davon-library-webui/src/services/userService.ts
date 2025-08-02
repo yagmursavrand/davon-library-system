@@ -4,12 +4,19 @@ class UserService {
     private readonly API_BASE_URL = 'http://localhost:8082/api';
 
     async register(data: RegisterData): Promise<User> {
+        // Create a new object for the request body, excluding confirmPassword
+        const requestBody = {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+        };
+
         const response = await fetch(`${this.API_BASE_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(requestBody), // Send the cleaned object
         });
 
         if (!response.ok) {
@@ -107,4 +114,4 @@ class UserService {
     }
 }
 
-export const userService = new UserService(); 
+export const userService = new UserService();

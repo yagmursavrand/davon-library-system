@@ -12,14 +12,16 @@ import jakarta.persistence.*;
 
 /**
  * Admin entity - represents an admin user extending User.
- * 
+ *
  * This class is a pure data entity with no business logic.
  * All business operations are handled in AdminService.
- * 
+ *
  * @see com.davon.library.service.AdminService for business operations
  */
 @Entity
 @Table(name = "admins")
+@DiscriminatorValue("ADMIN")
+@PrimaryKeyJoinColumn(name = "user_id")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -40,4 +42,4 @@ public class Admin extends User {
     public enum AdminLevel {
         STANDARD, SENIOR, SUPER_ADMIN
     }
-} 
+}

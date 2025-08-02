@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import java.util.Date;
@@ -13,15 +14,17 @@ import jakarta.persistence.*;
 
 /**
  * User entity - represents a user in the library system.
- * 
- * This class is a pure data entity with no business logic.
- * All business operations are handled in UserService.
- * 
- * @see com.davon.library.service.UserService for business operations
+ *
+ * This is the base class for both Member and Admin entities.
+ *
+ * @see com.davon.library.model.Member
+ * @see com.davon.library.model.Admin
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+       uniqueConstraints = @UniqueConstraint(name = "uk_user_email", columnNames = "email"))
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,10 +38,11 @@ public class User {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     
-    @Column(name = "email", nullable = false, unique = true, length = 150)
+    @Column(name = "email", nullable = false, length = 150)
     private String email;
     
     @Column(name = "password", nullable = false, length = 255)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
     @Column(name = "role", nullable = false, length = 50)
@@ -46,7 +50,7 @@ public class User {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false)
-    private Date createdAt = new Date();
+    private Date createdAt;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
@@ -81,4 +85,4 @@ public class User {
     protected void onUpdate() {
         updatedAt = new Date();
     }
-} 
+}
