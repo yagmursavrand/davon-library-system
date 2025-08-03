@@ -20,4 +20,5 @@ export interface Book {
   genre: string;
   status: BookStatus;
   authors: Author[];
+  borrowerName?: string; 
 }

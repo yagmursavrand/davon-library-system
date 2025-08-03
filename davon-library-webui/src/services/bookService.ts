@@ -11,6 +11,14 @@ class BookService {
         return response.json();
     }
 
+    async getAllBookDetails(): Promise<Book[]> {
+        const response = await fetch(`${this.API_BASE_URL}/books/details`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch book details');
+        }
+        return response.json();
+    }
+
     async getBookById(id: string): Promise<Book | null> {
         const response = await fetch(`${this.API_BASE_URL}/books/${id}`);
         if (!response.ok) {

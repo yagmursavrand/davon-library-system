@@ -38,7 +38,8 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
     const loadBooks = async () => {
         try {
             setLoading(true);
-            const fetchedBooks = await bookService.getAllBooks();
+            // Use the new service method to get detailed book info
+            const fetchedBooks = await bookService.getAllBookDetails();
             setBooks(fetchedBooks);
             setError(null);
         } catch (err) {
@@ -420,6 +421,13 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
                                 <div className={styles.bookInfoRow}>
                                     <span className={styles.bookLabel}>Author:</span>
                                     <span className={styles.bookValue}>{book.authors[0].name}</span>
+                                </div>
+                            )}
+                            {/* Display borrower info if the book is borrowed */}
+                            {showAdminControls && book.status === BookStatus.BORROWED && book.borrowerName && (
+                                <div className={styles.bookInfoRow} style={{ color: '#dc3545', fontWeight: 'bold' }}>
+                                    <span className={styles.bookLabel}>Borrowed By:</span>
+                                    <span className={styles.bookValue}>{book.borrowerName}</span>
                                 </div>
                             )}
                         </div>

@@ -18,10 +18,12 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.stream.Collectors;
+
 @Path("/api/books")
 @Produces(MediaType.APPLICATION_JSON)
 public class BookResource {
-    
+
     @Inject
     BookRepository bookRepository;
     
@@ -40,6 +42,16 @@ public class BookResource {
     @Inject
     UserService userService;
     
+    // New endpoint to get detailed book info
+    @GET
+    @Path("/details")
+    public List<BookDetailDTO> getAllBookDetails() {
+        List<Book> books = bookRepository.listAll();
+        return books.stream()
+                    .map(BookDetailDTO::new)
+                    .collect(Collectors.toList());
+    }
+
     // ... (other GET methods remain the same) ...
 
     @GET
@@ -335,5 +347,33 @@ public class BookResource {
         public Integer publicationYear;
         public String genre;
         public Book.BookStatus status;
+    }
+
+    // DTO for returning detailed book info, including borrower
+    public static class BookDetailDTO {
+        public Long id;
+        public String title;
+        public String isbn;
+        public int publicationYear;
+        public String genre;
+        public Book.BookStatus status;
+        public String borrowerName; // Can be null
+
+        public BookDetailDTO(Book book) {
+            this.id = book.getId();
+            this.title = book.getTitle();
+            this.isbn = book.getIsbn();
+            this.publicationYear = book.getPublicationYear();
+            this.genre = book.getGenre();
+            this.status = book.getStatus();
+            
+            if (book.getStatus() == Book.BookStatus.BORROWED && !book.getLoans().isEmpty()) {
+                // Find the active loan to get the borrower's name
+                book.getLoans().stream()
+                    .filter(loan -> loan.getStatus() == com.davon.library.model.Loan.LoanStatus.ACTIVE || loan.getStatus() == com.davon.library.model.Loan.LoanStatus.RENEWED)
+                    .findFirst()
+                    .ifPresent(activeLoan -> this.borrowerName = activeLoan.getMember().getName());
+            }
+        }
     }
 }
