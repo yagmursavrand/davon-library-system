@@ -21,6 +21,9 @@ public class LoanService {
     
     @Inject
     LoanRepository loanRepository;
+
+    @Inject
+    FineCalculationService fineCalculationService;
     
     /**
      * Check if loan is overdue
@@ -38,11 +41,7 @@ public class LoanService {
         Loan loan = loanOpt.get();
         
         if (loan.getDueDate() != null && loan.getReturnDate() == null) {
-            Calendar now = Calendar.getInstance();
-            Calendar dueDate = Calendar.getInstance();
-            dueDate.setTime(loan.getDueDate());
-            
-            return now.after(dueDate);
+            return new Date().after(loan.getDueDate());
         }
         return false;
     }
@@ -67,6 +66,11 @@ public class LoanService {
             return false; // Already returned
         }
         
+        // Check for overdue fine BEFORE marking as returned
+        if (isOverdue(loanId)) {
+            fineCalculationService.calculateOverdueFine(loan);
+        }
+
         // Simply mark as returned
         loan.setReturnDate(new Date());
         loan.setStatus(Loan.LoanStatus.RETURNED);

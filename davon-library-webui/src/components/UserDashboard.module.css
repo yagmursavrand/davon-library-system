@@ -37,6 +37,10 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .statNumber {
     font-size: 2.5rem;
     font-weight: bold;
@@ -57,4 +61,178 @@
 .loading {
     font-style: italic;
     color: #666;
+}
+
+/* Urgent Loans Section */
+.urgentLoansContainer {
+    margin-top: 3rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.urgentLoansTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+}
+
+.urgentLoansList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.urgentLoanItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.urgentBookTitle {
+    font-weight: 500;
+    color: #343a40;
+}
+
+.urgentStatus {
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.urgentOverdue {
+    color: #dc3545;
+    background-color: #f8d7da;
+}
+
+.urgentDueSoon {
+    color: #ffc107;
+    background-color: #fff3cd;
+}
+
+/* Fines Modal Styles */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #718096;
+}
+
+.modalTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2d3748;
+}
+
+.finesList {
+    margin-bottom: 2rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.fineItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.fineDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookTitle {
+    font-weight: 600;
+}
+
+.fineReason {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.fineAmount {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #e53e3e;
+}
+
+.summaryContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #e2e8f0;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 1rem;
+}
+
+.totalLabel {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.totalAmount {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.payButton {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #38a169;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.payButton:hover {
+    background-color: #2f855a;
 }

@@ -16,6 +16,8 @@ import jakarta.transaction.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Comparator;
 import java.util.Calendar;
 import java.util.Optional;
 import jakarta.ws.rs.WebApplicationException;
@@ -302,5 +304,39 @@ public class MemberService {
         System.out.println("Unpaid Fines: $" + totalUnpaidFines + " (" + totalFineCount + " fines)");
         System.out.println("Membership Expires: " + member.getMembershipEnd());
         System.out.println("========================");
+    }
+
+    public com.davon.library.resource.MemberResource.DashboardDTO getDashboardData(Member member) {
+        if (member == null) {
+            throw new IllegalArgumentException("Member cannot be null");
+        }
+
+        List<Loan> allLoans = loanRepository.findByMember(member);
+        
+        long activeLoansCount = allLoans.stream()
+            .filter(loan -> loan.getStatus() == Loan.LoanStatus.ACTIVE || loan.getStatus() == Loan.LoanStatus.RENEWED)
+            .count();
+
+        long overdueLoansCount = allLoans.stream()
+            .filter(loan -> loan.getStatus() == Loan.LoanStatus.OVERDUE || 
+                           (loan.getStatus() == Loan.LoanStatus.ACTIVE && loan.getDueDate().before(new Date())))
+            .count();
+
+        BigDecimal outstandingFines = fineRepository.calculateTotalUnpaidFines(member);
+
+        List<com.davon.library.resource.MemberResource.UrgentLoanDTO> urgentLoans = allLoans.stream()
+            .filter(loan -> loan.getStatus() == Loan.LoanStatus.ACTIVE || loan.getStatus() == Loan.LoanStatus.RENEWED || loan.getStatus() == Loan.LoanStatus.OVERDUE)
+            .sorted(Comparator.comparing(Loan::getDueDate))
+            .limit(3)
+            .map(com.davon.library.resource.MemberResource.UrgentLoanDTO::fromEntity)
+            .collect(java.util.stream.Collectors.toList());
+
+        com.davon.library.resource.MemberResource.DashboardDTO dashboard = new com.davon.library.resource.MemberResource.DashboardDTO();
+        dashboard.activeLoansCount = activeLoansCount;
+        dashboard.overdueLoansCount = overdueLoansCount;
+        dashboard.outstandingFines = outstandingFines.toPlainString();
+        dashboard.urgentLoans = urgentLoans;
+
+        return dashboard;
     }
 }

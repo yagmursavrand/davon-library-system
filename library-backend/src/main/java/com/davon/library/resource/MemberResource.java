@@ -7,14 +7,20 @@ import com.davon.library.repository.MemberRepository;
 import com.davon.library.repository.UserRepository;
 import com.davon.library.service.MemberService;
 import com.davon.library.service.UserService;
+import com.davon.library.service.FineCalculationService;
+import com.davon.library.model.Loan;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.WebApplicationException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/api/members")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,6 +37,21 @@ public class MemberResource {
     
     @Inject
     UserService userService;
+
+    @Inject
+    FineCalculationService fineCalculationService;
+
+    @GET
+    @Path("/{memberId}/dashboard")
+    public Response getMemberDashboard(@PathParam("memberId") Long memberId, @HeaderParam("Authorization") String authHeader) {
+        Member authenticatedMember = getAuthenticatedMember(authHeader, memberId);
+        if (authenticatedMember == null) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized access").build();
+        }
+
+        DashboardDTO dashboard = memberService.getDashboardData(authenticatedMember);
+        return Response.ok(dashboard).build();
+    }
     
     /**
      * Register a new member (public endpoint)
@@ -363,6 +384,37 @@ public class MemberResource {
             dto.bookId = loan.getBook() != null ? loan.getBook().getId() : null;
             if (loan.getMember() != null) {
                 dto.member = MemberDTO.fromEntity(loan.getMember());
+            }
+            return dto;
+        }
+    }
+
+    // DTO for the new User Dashboard
+    public static class DashboardDTO {
+        public long activeLoansCount;
+        public long overdueLoansCount;
+        public String outstandingFines; // Use String for currency
+        public List<UrgentLoanDTO> urgentLoans;
+    }
+
+    public static class UrgentLoanDTO {
+        public String bookTitle;
+        public String dueDate;
+        public long daysUntilDue; // Negative for overdue
+        public String status;
+
+        public static UrgentLoanDTO fromEntity(Loan loan) {
+            UrgentLoanDTO dto = new UrgentLoanDTO();
+            dto.bookTitle = loan.getBook().getTitle();
+            dto.dueDate = loan.getDueDate().toString();
+            
+            LocalDate due = new java.sql.Date(loan.getDueDate().getTime()).toLocalDate();
+            dto.daysUntilDue = ChronoUnit.DAYS.between(LocalDate.now(), due);
+            
+            if (dto.daysUntilDue < 0) {
+                dto.status = "OVERDUE";
+            } else {
+                dto.status = "DUE SOON";
             }
             return dto;
         }

@@ -104,4 +104,38 @@ public class FineCalculationService {
         BigDecimal totalFines = calculateTotalFinesForMember(member);
         return totalFines.compareTo(new BigDecimal("25.00")) > 0; 
     }
+
+    /**
+     * Calculates the current overdue fine for a given loan without persisting it.
+     * This is intended for display purposes before a book is actually returned.
+     * @param loan The loan to check.
+     * @return The calculated fine amount, or BigDecimal.ZERO if not overdue.
+     */
+    public BigDecimal calculateFineAmountForDisplay(Loan loan) {
+        if (loan == null || loan.getDueDate() == null || loan.getStatus() != Loan.LoanStatus.ACTIVE) {
+            return BigDecimal.ZERO;
+        }
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate dueDate = new java.sql.Date(loan.getDueDate().getTime()).toLocalDate();
+
+        if (!currentDate.isAfter(dueDate)) {
+            return BigDecimal.ZERO; // Not overdue
+        }
+
+        long overdueDays = java.time.temporal.ChronoUnit.DAYS.between(dueDate, currentDate);
+
+        if (overdueDays <= 0) {
+            return BigDecimal.ZERO;
+        }
+
+        BigDecimal fineAmount = DAILY_FINE_RATE.multiply(new BigDecimal(overdueDays));
+
+        // Cap the fine at the max amount
+        if (fineAmount.compareTo(MAX_FINE_AMOUNT) > 0) {
+            return MAX_FINE_AMOUNT;
+        }
+
+        return fineAmount;
+    }
 }

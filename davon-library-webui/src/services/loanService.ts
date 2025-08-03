@@ -66,9 +66,19 @@ class LoanService {
       const errorText = await response.text();
       throw new Error(errorText || 'Failed to return book');
     }
-    // PUT requests often don't return a body, so we don't try to parse JSON
+        // PUT requests often don't return a body, so we don't try to parse JSON
   }
   
+  async calculateFine(loanId: number): Promise<{ fineAmount: string }> {
+    const response = await fetch(`${this.API_BASE_URL}/loans/${loanId}/calculate-fine`);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || 'Failed to calculate fine');
+    }
+    return response.json();
+  }
+
     async getAllLoans(adminId: string): Promise<Loan[]> {
     const response = await fetch(`${this.API_BASE_URL}/loans`, {
         headers: {

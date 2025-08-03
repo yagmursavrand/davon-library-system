@@ -9,11 +9,13 @@ import com.davon.library.repository.BookRepository;
 import com.davon.library.repository.BookRepository;
 import com.davon.library.service.LoanService;
 import com.davon.library.service.MemberService;
+import com.davon.library.service.FineCalculationService; // Import the service
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.math.BigDecimal; // Import BigDecimal
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,6 +41,9 @@ public class LoanResource {
     
     @Inject
     MemberService memberService;
+
+    @Inject
+    FineCalculationService fineCalculationService; // Inject the service
     
     /**
      * Get all loans (admin only)
@@ -46,6 +51,18 @@ public class LoanResource {
     @GET
     public List<Loan> getAllLoans() {
         return loanRepository.listAll();
+    }
+
+    @GET
+    @Path("/{loanId}/calculate-fine")
+    public Response calculateFineForLoan(@PathParam("loanId") Long loanId) {
+        Loan loan = loanRepository.findByIdOptional(loanId)
+            .orElseThrow(() -> new WebApplicationException("Loan not found", Response.Status.NOT_FOUND));
+
+        BigDecimal fineAmount = fineCalculationService.calculateFineAmountForDisplay(loan);
+
+        // Return the fine amount in a simple JSON object
+        return Response.ok(java.util.Collections.singletonMap("fineAmount", fineAmount.toPlainString())).build();
     }
     
     /**
