@@ -31,16 +31,16 @@ public class Inventory {
     private Long id;
     
     @Column(name = "total_copies", nullable = false)
-    private int totalCopies = 0;
+    private Integer totalCopies = 0;
     
     @Column(name = "available_copies", nullable = false)
-    private int availableCopies = 0;
+    private Integer availableCopies = 0;
     
     @Column(name = "reserved_copies")
-    private int reservedCopies = 0;
+    private Integer reservedCopies = 0;
     
     @Column(name = "damaged_copies")
-    private int damagedCopies = 0;
+    private Integer damagedCopies = 0;
     
     // One-to-One relationship with Book
     @OneToOne(fetch = FetchType.LAZY)
@@ -53,4 +53,4 @@ public class Inventory {
     @JoinColumn(name = "library_id", nullable = false)
     @JsonIgnore
     private Library library;
-} 
+}

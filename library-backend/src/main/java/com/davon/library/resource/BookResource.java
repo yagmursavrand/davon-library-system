@@ -2,9 +2,11 @@ package com.davon.library.resource;
 
 import com.davon.library.model.Book;
 import com.davon.library.model.Author;
+import com.davon.library.model.Inventory;
 import com.davon.library.model.User;
 import com.davon.library.repository.BookRepository;
 import com.davon.library.repository.AuthorRepository;
+import com.davon.library.repository.InventoryRepository;
 import com.davon.library.repository.UserRepository;
 import com.davon.library.service.BookService;
 import com.davon.library.service.UserService;
@@ -27,6 +29,9 @@ public class BookResource {
     AuthorRepository authorRepository;
     
     @Inject
+    InventoryRepository inventoryRepository;
+
+    @Inject
     UserRepository userRepository;
     
     @Inject
@@ -35,17 +40,13 @@ public class BookResource {
     @Inject
     UserService userService;
     
-    /**
-     * Get all books (public endpoint)
-     */
+    // ... (other GET methods remain the same) ...
+
     @GET
     public List<Book> getAllBooks() {
         return bookRepository.listAll();
     }
     
-    /**
-     * Get book by ID (public endpoint)
-     */
     @GET
     @Path("/{id}")
     public Response getBookById(@PathParam("id") Long id) {
@@ -58,37 +59,25 @@ public class BookResource {
                           .build();
         }
     }
-    
-    /**
-     * Search books by title (public endpoint)
-     */
+
     @GET
     @Path("/search/title/{title}")
     public List<Book> searchBooksByTitle(@PathParam("title") String title) {
         return bookRepository.findByTitle(title);
     }
-    
-    /**
-     * Get books by genre (public endpoint)
-     */
+
     @GET
     @Path("/genre/{genre}")
     public List<Book> getBooksByGenre(@PathParam("genre") String genre) {
         return bookRepository.findByGenre(genre);
     }
-    
-    /**
-     * Get available books (public endpoint)
-     */
+
     @GET
     @Path("/available")
     public List<Book> getAvailableBooks() {
         return bookRepository.findAvailableBooks();
     }
-    
-    /**
-     * Search books (public endpoint)
-     */
+
     @GET
     @Path("/search")
     public List<Book> searchBooks(@QueryParam("q") String searchTerm) {
@@ -97,10 +86,7 @@ public class BookResource {
         }
         return bookRepository.searchBooks(searchTerm);
     }
-    
-    /**
-     * Find book by ISBN (public endpoint)
-     */
+
     @GET
     @Path("/isbn/{isbn}")
     public Response getBookByIsbn(@PathParam("isbn") String isbn) {
@@ -114,16 +100,12 @@ public class BookResource {
         }
     }
     
-    /**
-     * Add new book (admin only)
-     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public Response addBook(@HeaderParam("Authorization") String authHeader, 
                            BookCreateRequest request) {
         try {
-            // Check admin authorization
             User authenticatedUser = getAuthenticatedUser(authHeader);
             if (authenticatedUser == null || !userService.isAdmin(authenticatedUser.getId())) {
                 return Response.status(Response.Status.FORBIDDEN)
@@ -131,7 +113,6 @@ public class BookResource {
                               .build();
             }
             
-            // Create book
             Book book = new Book();
             book.setTitle(request.title);
             book.setIsbn(request.isbn);
@@ -139,19 +120,27 @@ public class BookResource {
             book.setGenre(request.genre);
             book.setStatus(Book.BookStatus.AVAILABLE);
             
-            bookRepository.persist(book);
-            
-            // Add authors if provided
-            if (request.authorIds != null) {
-                for (Long authorId : request.authorIds) {
-                    Optional<Author> authorOpt = authorRepository.findByIdOptional(authorId);
-                    if (authorOpt.isPresent()) {
-                        Author author = authorOpt.get();
-                        book.getAuthors().add(author);
-                        author.getBooks().add(book);
-                    }
+            // Handle Author
+            if (request.authorName != null && !request.authorName.trim().isEmpty()) {
+                // Check if author exists
+                Optional<Author> existingAuthor = authorRepository.find("name", request.authorName).firstResultOptional();
+                
+                Author author;
+                if (existingAuthor.isPresent()) {
+                    author = existingAuthor.get();
+                } else {
+                    // Create new author if not found
+                    author = new Author();
+                    author.setName(request.authorName);
+                    authorRepository.persist(author);
                 }
+                
+                // Link author to book
+                book.getAuthors().add(author);
+                author.getBooks().add(book);
             }
+            
+            bookRepository.persist(book);
             
             return Response.status(Response.Status.CREATED).entity(book).build();
             
@@ -162,9 +151,8 @@ public class BookResource {
         }
     }
     
-    /**
-     * Update book (admin only)
-     */
+    // ... (PUT, DELETE, and other methods remain the same) ...
+
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -173,7 +161,6 @@ public class BookResource {
                               @HeaderParam("Authorization") String authHeader,
                               BookUpdateRequest request) {
         try {
-            // Check admin authorization
             User authenticatedUser = getAuthenticatedUser(authHeader);
             if (authenticatedUser == null || !userService.isAdmin(authenticatedUser.getId())) {
                 return Response.status(Response.Status.FORBIDDEN)
@@ -190,7 +177,6 @@ public class BookResource {
             
             Book book = bookOpt.get();
             
-            // Update fields if provided
             if (request.title != null) book.setTitle(request.title);
             if (request.isbn != null) book.setIsbn(request.isbn);
             if (request.publicationYear != null) book.setPublicationYear(request.publicationYear);
@@ -206,16 +192,12 @@ public class BookResource {
         }
     }
     
-    /**
-     * Delete book (admin only)
-     */
     @DELETE
     @Path("/{id}")
     @Transactional
     public Response deleteBook(@PathParam("id") Long id,
                               @HeaderParam("Authorization") String authHeader) {
         try {
-            // Check admin authorization
             User authenticatedUser = getAuthenticatedUser(authHeader);
             if (authenticatedUser == null || !userService.isAdmin(authenticatedUser.getId())) {
                 return Response.status(Response.Status.FORBIDDEN)
@@ -232,11 +214,15 @@ public class BookResource {
             
             Book book = bookOpt.get();
             
-            // Check if book is currently borrowed
             if (book.getStatus() == Book.BookStatus.BORROWED) {
                 return Response.status(Response.Status.BAD_REQUEST)
                               .entity("Cannot delete book: Currently borrowed")
                               .build();
+            }
+            
+            Inventory inventory = book.getInventory();
+            if (inventory != null) {
+                inventoryRepository.delete(inventory);
             }
             
             bookRepository.delete(book);
@@ -249,9 +235,6 @@ public class BookResource {
         }
     }
     
-    /**
-     * Add author to book (admin only)
-     */
     @POST
     @Path("/{bookId}/authors/{authorId}")
     @Transactional
@@ -259,7 +242,6 @@ public class BookResource {
                                    @PathParam("authorId") Long authorId,
                                    @HeaderParam("Authorization") String authHeader) {
         try {
-            // Check admin authorization
             User authenticatedUser = getAuthenticatedUser(authHeader);
             if (authenticatedUser == null || !userService.isAdmin(authenticatedUser.getId())) {
                 return Response.status(Response.Status.FORBIDDEN)
@@ -289,9 +271,6 @@ public class BookResource {
         }
     }
     
-    /**
-     * Remove author from book (admin only)
-     */
     @DELETE
     @Path("/{bookId}/authors/{authorId}")
     @Transactional
@@ -299,7 +278,6 @@ public class BookResource {
                                         @PathParam("authorId") Long authorId,
                                         @HeaderParam("Authorization") String authHeader) {
         try {
-            // Check admin authorization
             User authenticatedUser = getAuthenticatedUser(authHeader);
             if (authenticatedUser == null || !userService.isAdmin(authenticatedUser.getId())) {
                 return Response.status(Response.Status.FORBIDDEN)
@@ -329,28 +307,26 @@ public class BookResource {
         }
     }
     
-    // Helper method for authentication
     private User getAuthenticatedUser(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return null;
         }
         
         try {
-            String token = authHeader.substring(7); // Remove "Bearer "
-            Long userId = Long.parseLong(token); // In real app, decode JWT
+            String token = authHeader.substring(7);
+            Long userId = Long.parseLong(token);
             return userRepository.findByIdOptional(userId).orElse(null);
         } catch (Exception e) {
             return null;
         }
     }
     
-    // Request DTOs
     public static class BookCreateRequest {
         public String title;
         public String isbn;
         public Integer publicationYear;
         public String genre;
-        public List<Long> authorIds;
+        public String authorName; // Added authorName
     }
     
     public static class BookUpdateRequest {
@@ -360,4 +336,4 @@ public class BookResource {
         public String genre;
         public Book.BookStatus status;
     }
-} 
+}

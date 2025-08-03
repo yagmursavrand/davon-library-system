@@ -7,7 +7,7 @@ import BookCatalog from '../../components/BookCatalog';
 import { useRouter, useSearchParams } from 'next/navigation';
 import LoanManagement from '../../components/LoanManagement';
 import UserDashboard from '../../components/UserDashboard';
-import UserList from '../../components/UserList'; // Import the admin user list
+import AdminDashboard from '../../components/AdminDashboard'; // Import the new AdminDashboard
 import styles from './page.module.css';
 
 // Define the possible tabs for each role
@@ -55,7 +55,7 @@ export default function HomePage() {
         switch (activeTab) {
             // Admin-specific views
             case 'admin_dashboard':
-                return isAdmin ? <UserList /> : null;
+                return isAdmin ? <AdminDashboard /> : null; // Use the new AdminDashboard component
 
             // Member-specific views
             case 'dashboard':

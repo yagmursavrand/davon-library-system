@@ -56,6 +56,30 @@ class LoanService {
     }
     return response.json();
   }
+
+  async returnBook(loanId: number): Promise<void> {
+    const response = await fetch(`${this.API_BASE_URL}/loans/${loanId}/return`, {
+      method: 'PUT',
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || 'Failed to return book');
+    }
+    // PUT requests often don't return a body, so we don't try to parse JSON
+  }
+  
+    async getAllLoans(adminId: string): Promise<Loan[]> {
+    const response = await fetch(`${this.API_BASE_URL}/loans`, {
+        headers: {
+            'Authorization': `Bearer ${adminId}`,
+        },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch all loans');
+    }
+    return response.json();
+  }
 }
 
 const loanService = new LoanService();

@@ -59,7 +59,7 @@ public class Book {
     private List<Author> authors = new ArrayList<>();
     
     // One-to-One relationship with Inventory
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private Inventory inventory;
     

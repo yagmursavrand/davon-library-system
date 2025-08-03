@@ -6,7 +6,7 @@ import loanService, { Loan } from '../services/loanService';
 import styles from './LoanManagement.module.css';
 
 const LoanManagement: React.FC = () => {
-  const { user, token } = useAuth();
+    const { user } = useAuth();
   const [loans, setLoans] = useState<Loan[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +33,21 @@ const LoanManagement: React.FC = () => {
 
     fetchLoans();
   }, [user]);
+
+  const handleReturnBook = async (loanId: number) => {
+    try {
+        await loanService.returnBook(loanId);
+        alert('Book returned successfully!');
+        // Refresh the loans list to show the updated status
+        if (user) {
+            const userLoans = await loanService.getLoansByMember(user.id);
+            setLoans(userLoans);
+        }
+    } catch (err: any) {
+        alert(`Failed to return book. Reason: ${err.message}`);
+        console.error(err);
+    }
+  };
 
   if (loading) {
     return <p className={styles.loading}>Loading your loans...</p>;
@@ -80,9 +95,16 @@ const LoanManagement: React.FC = () => {
               <p className={styles.loanInfo}>
                 Fine: ${parseFloat(loan.fineAmount || '0').toFixed(2)}
               </p>
-              <span className={`${styles.status} ${getStatusClass(loan.status)}`}>
-                {loan.status}
-              </span>
+                            <div className={styles.statusContainer}>
+                <span className={`${styles.status} ${getStatusClass(loan.status)}`}>
+                  {loan.status}
+                </span>
+                {(loan.status === 'ACTIVE' || loan.status === 'RENEWED' || loan.status === 'OVERDUE') && (
+                    <button onClick={() => handleReturnBook(loan.id)} className={styles.returnButton}>
+                        Return Book
+                    </button>
+                )}
+              </div>
             </div>
           ))}
         </div>

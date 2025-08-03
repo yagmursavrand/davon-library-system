@@ -18,7 +18,18 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedGenre, setSelectedGenre] = useState<string>('all');
-    const [selectedStatus, setSelectedStatus] = useState<BookStatus | 'all'>('all');
+        const [selectedStatus, setSelectedStatus] = useState<BookStatus | 'all'>('all');
+    const [editingBook, setEditingBook] = useState<Book | null>(null);
+        const [isDeleting, setIsDeleting] = useState<number | null>(null);
+    const [isAddingBook, setIsAddingBook] = useState<boolean>(false);
+        const [newBook, setNewBook] = useState<Partial<Book> & { authorName?: string }>({
+        title: '',
+        isbn: '',
+        genre: '',
+        publicationYear: new Date().getFullYear(),
+        status: BookStatus.AVAILABLE,
+        authorName: '',
+    });
 
     useEffect(() => {
         loadBooks();
@@ -54,7 +65,7 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
         }
     };
 
-    const handleSearch = async () => {
+        const handleSearch = async () => {
         if (!searchQuery.trim()) {
             loadBooks();
             return;
@@ -70,6 +81,98 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
             console.error('Error searching books:', err);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleEditClick = (book: Book) => {
+        setEditingBook({ ...book });
+    };
+
+    const handleDeleteClick = (bookId: number) => {
+        setIsDeleting(bookId);
+    };
+
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        if (!editingBook) return;
+        setEditingBook({
+            ...editingBook,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleUpdateBook = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!editingBook || !user) {
+            alert('You must be logged in as an admin to perform this action.');
+            return;
+        }
+
+        try {
+            const bookToUpdate = {
+                ...editingBook,
+                publicationYear: Number(editingBook.publicationYear)
+            };
+            await bookService.updateBook(bookToUpdate.id.toString(), bookToUpdate, user.id);
+            setEditingBook(null);
+            loadBooks();
+        } catch (err) {
+            console.error('Failed to update book:', err);
+            alert('Failed to update book. Please try again.');
+        }
+    };
+
+        const handleConfirmDelete = async () => {
+        if (!isDeleting || !user) {
+            alert('You must be logged in as an admin to perform this action.');
+            return;
+        }
+
+        try {
+            await bookService.deleteBook(isDeleting.toString(), user.id);
+            setIsDeleting(null);
+            loadBooks();
+        } catch (err) {
+            console.error('Failed to delete book:', err);
+            alert('Failed to delete book. Please try again.');
+        }
+    };
+
+    const handleAddBookClick = () => {
+        setIsAddingBook(true);
+    };
+
+    const handleNewBookFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setNewBook({
+            ...newBook,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleAddNewBook = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!user) {
+            alert('You must be logged in as an admin to perform this action.');
+            return;
+        }
+        try {
+            const bookToAdd = {
+                ...newBook,
+                publicationYear: Number(newBook.publicationYear)
+            };
+            await bookService.addBook(bookToAdd, user.id);
+            setIsAddingBook(false);
+            setNewBook({
+                title: '',
+                isbn: '',
+                genre: '',
+                publicationYear: new Date().getFullYear(),
+                status: BookStatus.AVAILABLE,
+                authorName: '',
+            });
+            loadBooks();
+        } catch (err) {
+            console.error('Failed to add book:', err);
+            alert('Failed to add book. Please try again.');
         }
     };
 
@@ -124,7 +227,123 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
 
     return (
         <div className={styles.catalogContainer}>
-            {/* Search and Filter Section */}
+            {/* Edit Book Modal */}
+            {editingBook && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h2>Edit Book</h2>
+                        <form onSubmit={handleUpdateBook}>
+                            <div className={styles.formGroup}>
+                                <label>Title</label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value={editingBook.title}
+                                    onChange={handleFormChange}
+                                    required
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>ISBN</label>
+                                <input
+                                    type="text"
+                                    name="isbn"
+                                    value={editingBook.isbn}
+                                    onChange={handleFormChange}
+                                    required
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Genre</label>
+                                <input
+                                    type="text"
+                                    name="genre"
+                                    value={editingBook.genre}
+                                    onChange={handleFormChange}
+                                    required
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Publication Year</label>
+                                <input
+                                    type="number"
+                                    name="publicationYear"
+                                    value={editingBook.publicationYear}
+                                    onChange={handleFormChange}
+                                    required
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Status</label>
+                                <select name="status" value={editingBook.status} onChange={handleFormChange}>
+                                    {Object.values(BookStatus).map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                            <div className={styles.modalActions}>
+                                <button type="submit" className={styles.saveButton}>Save Changes</button>
+                                <button type="button" onClick={() => setEditingBook(null)} className={styles.cancelButton}>Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {isDeleting !== null && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h2>Confirm Deletion</h2>
+                        <p>Are you sure you want to delete this book? This action cannot be undone.</p>
+                        <div className={styles.modalActions}>
+                            <button onClick={handleConfirmDelete} className={styles.deleteConfirmButton}>Yes, Delete</button>
+                            <button onClick={() => setIsDeleting(null)} className={styles.cancelButton}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Add Book Modal */}
+            {isAddingBook && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h2>Add New Book</h2>
+                        <form onSubmit={handleAddNewBook}>
+                            <div className={styles.formGroup}>
+                                <label>Title</label>
+                                <input type="text" name="title" value={newBook.title} onChange={handleNewBookFormChange} required />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>ISBN</label>
+                                <input type="text" name="isbn" value={newBook.isbn} onChange={handleNewBookFormChange} required />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Genre</label>
+                                <input type="text" name="genre" value={newBook.genre} onChange={handleNewBookFormChange} required />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Author Name</label>
+                                <input type="text" name="authorName" value={newBook.authorName} onChange={handleNewBookFormChange} required />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Publication Year</label>
+                                <input type="number" name="publicationYear" value={newBook.publicationYear} onChange={handleNewBookFormChange} required />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Status</label>
+                                <select name="status" value={newBook.status} onChange={handleNewBookFormChange}>
+                                    {Object.values(BookStatus).map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                            <div className={styles.modalActions}>
+                                <button type="submit" className={styles.saveButton}>Add Book</button>
+                                <button type="button" onClick={() => setIsAddingBook(false)} className={styles.cancelButton}>Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+                        {/* Search and Filter Section */}
             <div className={styles.searchSection}>
                 <div className={styles.searchRow}>
                     <input
@@ -140,6 +359,11 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
                     >
                         Search
                     </button>
+                    {showAdminControls && (
+                         <button onClick={handleAddBookClick} className={styles.addButton}>
+                            Add New Book
+                         </button>
+                    )}
                 </div>
 
                 <div className={styles.filterRow}>
@@ -206,11 +430,11 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
                             </span>
 
                             {showAdminControls && (
-                                <div className={styles.adminControls}>
-                                    <button className={`${styles.adminButton} ${styles.editButton}`}>
+                                                                <div className={styles.adminControls}>
+                                    <button onClick={() => handleEditClick(book)} className={`${styles.adminButton} ${styles.editButton}`}>
                                         Edit
                                     </button>
-                                    <button className={`${styles.adminButton} ${styles.deleteButton}`}>
+                                    <button onClick={() => handleDeleteClick(book.id)} className={`${styles.adminButton} ${styles.deleteButton}`}>
                                         Delete
                                     </button>
                                 </div>

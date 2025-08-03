@@ -102,10 +102,18 @@ public class LoanResource {
      */
     @PUT
     @Path("/{loanId}/return")
+    @Transactional
     public Response returnBook(@PathParam("loanId") Long loanId) {
         try {
             boolean success = loanService.markAsReturned(loanId);
             if (success) {
+                // After marking loan as returned, update the book's status
+                Loan loan = loanRepository.findById(loanId);
+                if (loan != null && loan.getBook() != null) {
+                    Book book = loan.getBook();
+                    book.setStatus(Book.BookStatus.AVAILABLE);
+                    bookRepository.persist(book); // Save the updated book status
+                }
                 return Response.ok("Book returned successfully").build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST)
