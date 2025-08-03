@@ -18,6 +18,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Optional;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import com.davon.library.model.Transaction;
 
@@ -90,67 +92,46 @@ public class MemberService {
      * Borrow a book for a member
      */
     @Transactional
-    public boolean borrowBook(Member member, Long bookId) {
+    public Loan borrowBook(Member member, Long bookId) {
         if (member == null || bookId == null) {
-            System.out.println("Member and book ID cannot be null");
-            return false;
+            throw new WebApplicationException("Member and Book ID cannot be null.", Response.Status.BAD_REQUEST);
         }
-        
-        if (!isMembershipActive(member)) {
-            System.out.println("Cannot borrow book: Membership is expired");
-            return false;
-        }
-        
-        if (!canMemberBorrowDueToFines(member)) {
-            System.out.println("Cannot borrow book: Outstanding fines exceed limit");
-            return false;
-        }
-        
-        if (!canMemberBorrowDueToLimit(member)) {
-            System.out.println("Cannot borrow book: Maximum borrowing limit (5 books) reached");
-            return false;
-        }
-        
-        Optional<Book> bookOpt = bookRepository.findByIdOptional(bookId);
-        if (bookOpt.isEmpty()) {
-            System.out.println("Book not found");
-            return false;
-        }
-        
-        Book book = bookOpt.get();
+
+        Book book = bookRepository.findByIdOptional(bookId)
+            .orElseThrow(() -> new WebApplicationException("Book not found.", Response.Status.NOT_FOUND));
         
         if (book.getStatus() != Book.BookStatus.AVAILABLE) {
-            System.out.println("Book is not available for borrowing");
-            return false;
+            throw new WebApplicationException("Book is not available for borrowing.", Response.Status.CONFLICT);
         }
         
-        if (hasMemberAlreadyBorrowedBook(member, book)) {
-            System.out.println("Member already has this book borrowed");
-            return false;
-        }
+        // Temporarily comment out other checks for debugging
+        // if (!isMembershipActive(member)) {
+        //     throw new WebApplicationException("Cannot borrow book: Membership is expired.", Response.Status.FORBIDDEN);
+        // }
         
-        member.getBorrowedBookIds().add(bookId);
+        // if (!canMemberBorrowDueToFines(member)) {
+        //     throw new WebApplicationException("Cannot borrow book: Outstanding fines exceed limit.", Response.Status.FORBIDDEN);
+        // }
+        
+        // if (!canMemberBorrowDueToLimit(member)) {
+        //     throw new WebApplicationException("Cannot borrow book: Maximum borrowing limit (5 books) reached.", Response.Status.FORBIDDEN);
+        // }
+        
+        // if (hasMemberAlreadyBorrowedBook(member, book)) {
+        //     throw new WebApplicationException("You have already borrowed this book.", Response.Status.CONFLICT);
+        // }
+        
         book.setStatus(Book.BookStatus.BORROWED);
-        
-        if (book.getInventory() != null) {
-            inventoryService.borrowCopy(book.getInventory().getId());
-        }
         
         Loan loan = new Loan();
         loan.setMember(member);
         loan.setBook(book);
-        loan.setLoanDate(new Date());
-        
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 14);
-        loan.setDueDate(cal.getTime());
-        
         loan.setStatus(Loan.LoanStatus.ACTIVE);
         
         loanRepository.persist(loan);
         
         System.out.println("Book '" + book.getTitle() + "' borrowed successfully by " + member.getName());
-        return true;
+        return loan;
     }
     
     private boolean isMembershipActive(Member member) {

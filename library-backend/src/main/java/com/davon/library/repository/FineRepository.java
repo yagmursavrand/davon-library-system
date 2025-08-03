@@ -52,15 +52,19 @@ public class FineRepository implements PanacheRepository<Fine> {
     }
 
     public BigDecimal calculateTotalUnpaidFines(Member member) {
-        BigDecimal result = find("SELECT SUM(amount) FROM Fine WHERE user = ?1 AND paid = false", member)
-                .project(BigDecimal.class).firstResult();
-        return result != null ? result : BigDecimal.ZERO;
+        BigDecimal total = getEntityManager().createQuery(
+                "SELECT SUM(f.amount) FROM Fine f WHERE f.user = :user AND f.paid = false", BigDecimal.class)
+                .setParameter("user", member)
+                .getSingleResult();
+        return total != null ? total : BigDecimal.ZERO;
     }
 
     public BigDecimal calculateTotalUnpaidFines(User user) {
-        BigDecimal result = find("SELECT SUM(amount) FROM Fine WHERE user = ?1 AND paid = false", user)
-                .project(BigDecimal.class).firstResult();
-        return result != null ? result : BigDecimal.ZERO;
+        BigDecimal total = getEntityManager().createQuery(
+                "SELECT SUM(f.amount) FROM Fine f WHERE f.user = :user AND f.paid = false", BigDecimal.class)
+                .setParameter("user", user)
+                .getSingleResult();
+        return total != null ? total : BigDecimal.ZERO;
     }
 
     public long countUnpaidFinesByMember(Member member) {

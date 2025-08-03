@@ -17,7 +17,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         user: null,
         isAuthenticated: false,
         isLoading: true,
-        error: null
+        error: null,
     });
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 user: JSON.parse(storedUser),
                 isAuthenticated: true,
                 isLoading: false,
-                error: null
+                error: null,
             });
         } else {
             setState(prev => ({ ...prev, isLoading: false }));
@@ -44,13 +44,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 user,
                 isAuthenticated: true,
                 isLoading: false,
-                error: null
+                error: null,
             });
         } catch (error) {
             setState(prev => ({
                 ...prev,
                 isLoading: false,
-                error: error instanceof Error ? error.message : 'An error occurred'
+                error: error instanceof Error ? error.message : 'An error occurred',
             }));
             throw error;
         }
@@ -65,13 +65,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 user,
                 isAuthenticated: true,
                 isLoading: false,
-                error: null
+                error: null,
             });
         } catch (error) {
             setState(prev => ({
                 ...prev,
                 isLoading: false,
-                error: error instanceof Error ? error.message : 'An error occurred'
+                error: error instanceof Error ? error.message : 'An error occurred',
             }));
             throw error;
         }
@@ -83,7 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             user: null,
             isAuthenticated: false,
             isLoading: false,
-            error: null
+            error: null,
         });
     };
 

@@ -1,17 +1,24 @@
 package com.davon.library.resource;
 
+import com.davon.library.model.Book;
 import com.davon.library.model.Loan;
 import com.davon.library.model.Member;
 import com.davon.library.repository.LoanRepository;
 import com.davon.library.repository.MemberRepository;
+import com.davon.library.repository.BookRepository;
+import com.davon.library.repository.BookRepository;
 import com.davon.library.service.LoanService;
 import com.davon.library.service.MemberService;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import com.davon.library.resource.MemberResource.LoanDTO;
+import jakarta.ws.rs.WebApplicationException;
 
 @Path("/api/loans")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,6 +27,9 @@ public class LoanResource {
     
     @Inject
     LoanRepository loanRepository;
+    
+    @Inject
+    BookRepository bookRepository;
     
     @Inject
     MemberRepository memberRepository;
@@ -60,15 +70,14 @@ public class LoanResource {
     @GET
     @Path("/member/{memberId}")
     public Response getLoansByMember(@PathParam("memberId") Long memberId) {
-        Optional<Member> member = memberRepository.findByIdOptional(memberId);
-        if (member.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND)
-                          .entity("Member not found")
-                          .build();
-        }
+        Member member = memberRepository.findByIdOptional(memberId)
+            .orElseThrow(() -> new WebApplicationException("Member not found", Response.Status.NOT_FOUND));
         
-        List<Loan> loans = loanRepository.findByMember(member.get());
-        return Response.ok(loans).build();
+        List<Loan> loans = loanRepository.findByMember(member);
+        List<LoanDTO> loanDTOs = loans.stream()
+                                      .map(LoanDTO::fromEntity)
+                                      .collect(Collectors.toList());
+        return Response.ok(loanDTOs).build();
     }
     
     /**
@@ -86,37 +95,6 @@ public class LoanResource {
         
         List<Loan> activeLoans = loanRepository.findActiveLoansByMember(member.get());
         return Response.ok(activeLoans).build();
-    }
-    
-    /**
-     * Borrow a book (create new loan)
-     */
-    @POST
-    @Path("/borrow")
-    public Response borrowBook(BorrowRequest request) {
-        try {
-            Optional<Member> member = memberRepository.findByIdOptional(request.memberId);
-            if (member.isEmpty()) {
-                return Response.status(Response.Status.NOT_FOUND)
-                              .entity("Member not found")
-                              .build();
-            }
-            
-            boolean success = memberService.borrowBook(member.get(), request.bookId);
-            if (success) {
-                return Response.status(Response.Status.CREATED)
-                              .entity("Book borrowed successfully")
-                              .build();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST)
-                              .entity("Failed to borrow book")
-                              .build();
-            }
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Error: " + e.getMessage())
-                          .build();
-        }
     }
     
     /**
@@ -190,11 +168,6 @@ public class LoanResource {
     }
     
     // Request DTOs
-    public static class BorrowRequest {
-        public Long memberId;
-        public Long bookId;
-    }
-    
     public static class RenewRequest {
         public Integer additionalDays = 7; // Default 7 days
     }

@@ -5,80 +5,156 @@ import { useAuth } from '../../contexts/AuthContext';
 import UserProfileInfo from '../../components/UserProfileInfo';
 import BookCatalog from '../../components/BookCatalog';
 import { useRouter, useSearchParams } from 'next/navigation';
+import LoanManagement from '../../components/LoanManagement';
+import UserDashboard from '../../components/UserDashboard';
+import UserList from '../../components/UserList'; // Import the admin user list
 import styles from './page.module.css';
+
+// Define the possible tabs for each role
+type MemberTab = 'dashboard' | 'books' | 'loans' | 'profile';
+type AdminTab = 'admin_dashboard' | 'books' | 'profile';
 
 export default function HomePage() {
     const { user, isLoading, error, logout } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [activeTab, setActiveTab] = useState<'profile' | 'books'>('books');
 
-    // Set initial tab based on URL parameter
+    // The active tab state can now hold tabs from either role.
+    const [activeTab, setActiveTab] = useState<MemberTab | AdminTab>('dashboard');
+
+    const isAdmin = user?.role === 'ADMIN';
+
+    // Set initial tab based on URL parameter and user role
     useEffect(() => {
         const tabParam = searchParams.get('tab');
-        if (tabParam === 'profile') {
-            setActiveTab('profile');
+        const defaultTab = isAdmin ? 'admin_dashboard' : 'dashboard';
+        
+        // Validate the tab based on the user's role
+        if (isAdmin) {
+            if (tabParam === 'admin_dashboard' || tabParam === 'books' || tabParam === 'profile') {
+                setActiveTab(tabParam);
+            } else {
+                setActiveTab(defaultTab);
+            }
         } else {
-            setActiveTab('books');
+            if (tabParam === 'dashboard' || tabParam === 'books' || tabParam === 'loans' || tabParam === 'profile') {
+                setActiveTab(tabParam);
+            } else {
+                setActiveTab(defaultTab);
+            }
         }
-    }, [searchParams]);
+    }, [searchParams, isAdmin]);
 
     const handleLogout = () => {
         logout();
         window.location.href = 'http://127.0.0.1:5500/davon-library-landing-page/index.html';
     };
 
-    return (
-        <div className={styles.container}>
-            <div className={styles.headerRow}>
-                <span className={styles.headerText}>Welcome to the Library System!</span>
-                <div className="flex gap-4">
-                    {user?.role === 'admin' && (
-                        <button
-                            onClick={() => router.push('/admin')}
-                            className={styles.logoutButton}
-                            style={{ background: '#2196f3' }}
-                        >
-                            Admin Dashboard
-                        </button>
-                    )}
-                    <button
-                        onClick={handleLogout}
-                        className={styles.logoutButton}
-                    >
-                        Log out
-                    </button>
-                </div>
-            </div>
+    // Render content based on the user's role and the active tab
+    const renderContent = () => {
+        switch (activeTab) {
+            // Admin-specific views
+            case 'admin_dashboard':
+                return isAdmin ? <UserList /> : null;
 
-            {/* Navigation Tabs */}
-            <div className={styles.tabContainer}>
-                <button
-                    onClick={() => setActiveTab('books')}
-                    className={`${styles.tabButton} ${activeTab === 'books' ? styles.active : ''}`}
-                >
-                    Book Catalog
-                </button>
-                <button
-                    onClick={() => setActiveTab('profile')}
-                    className={`${styles.tabButton} ${activeTab === 'profile' ? styles.active : ''}`}
-                >
-                    My Profile
-                </button>
-            </div>
+            // Member-specific views
+            case 'dashboard':
+                return !isAdmin ? <UserDashboard /> : null;
+            case 'loans':
+                return !isAdmin ? <LoanManagement /> : null;
 
-            {/* Content Area */}
-            <div className={styles.contentArea}>
-                {activeTab === 'books' ? (
-                    <BookCatalog showAdminControls={user?.role === 'admin'} />
-                ) : (
+            // Shared views
+            case 'books':
+                return <BookCatalog showAdminControls={isAdmin} />;
+            case 'profile':
+                return (
                     <div className={styles.profileBoxWrapper}>
                         <div className={styles.profileBox}>
                             <UserProfileInfo user={user} isLoading={isLoading} error={error} />
                         </div>
                     </div>
-                )}
+                );
+            default:
+                return null;
+        }
+    };
+
+    // Render navigation tabs based on the user's role
+    const renderTabs = () => {
+        if (isAdmin) {
+            return (
+                <>
+                    <button
+                        onClick={() => setActiveTab('admin_dashboard')}
+                        className={`${styles.tabButton} ${activeTab === 'admin_dashboard' ? styles.active : ''}`}
+                    >
+                        Admin Dashboard
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('books')}
+                        className={`${styles.tabButton} ${activeTab === 'books' ? styles.active : ''}`}
+                    >
+                        Book Catalog
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('profile')}
+                        className={`${styles.tabButton} ${activeTab === 'profile' ? styles.active : ''}`}
+                    >
+                        My Profile
+                    </button>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <button
+                        onClick={() => setActiveTab('dashboard')}
+                        className={`${styles.tabButton} ${activeTab === 'dashboard' ? styles.active : ''}`}
+                    >
+                        Dashboard
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('books')}
+                        className={`${styles.tabButton} ${activeTab === 'books' ? styles.active : ''}`}
+                    >
+                        Book Catalog
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('loans')}
+                        className={`${styles.tabButton} ${activeTab === 'loans' ? styles.active : ''}`}
+                    >
+                        My Loans
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('profile')}
+                        className={`${styles.tabButton} ${activeTab === 'profile' ? styles.active : ''}`}
+                    >
+                        My Profile
+                    </button>
+                </>
+            );
+        }
+    };
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.headerRow}>
+                <span className={styles.headerText}>Welcome to the Library System!</span>
+                <button
+                    onClick={handleLogout}
+                    className={styles.logoutButton}
+                >
+                    Log out
+                </button>
+            </div>
+
+            <div className={styles.tabContainer}>
+                {renderTabs()}
+            </div>
+
+            <div className={styles.contentArea}>
+                {renderContent()}
             </div>
         </div>
     );
-} 
+}

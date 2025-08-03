@@ -1,5 +1,6 @@
 package com.davon.library.resource;
 
+import com.davon.library.model.Loan;
 import com.davon.library.model.Member;
 import com.davon.library.model.User;
 import com.davon.library.repository.MemberRepository;
@@ -10,13 +11,13 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.WebApplicationException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Path("/api/members")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class MemberResource {
     
     @Inject
@@ -36,6 +37,7 @@ public class MemberResource {
      */
     @POST
     @Path("/register")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response registerMember(MemberRegistrationRequest request) {
         try {
             Member member = memberService.registerMember(
@@ -91,26 +93,19 @@ public class MemberResource {
                               @PathParam("bookId") Long bookId,
                               @HeaderParam("Authorization") String authHeader) {
         try {
-            // Authentication check
             Member authenticatedMember = getAuthenticatedMember(authHeader, memberId);
             if (authenticatedMember == null) {
-                return Response.status(Response.Status.UNAUTHORIZED)
-                              .entity("Unauthorized access")
-                              .build();
+                return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized access").build();
             }
-            
-            boolean success = memberService.borrowBook(authenticatedMember, bookId);
-            if (success) {
-                return Response.ok("Book borrowed successfully").build();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST)
-                              .entity("Failed to borrow book")
-                              .build();
-            }
+            Loan newLoan = memberService.borrowBook(authenticatedMember, bookId);
+            LoanDTO dto = LoanDTO.fromEntity(newLoan);
+            return Response.ok(dto).build();
+        } catch (WebApplicationException e) {
+            return Response.status(e.getResponse().getStatus()).entity(e.getMessage()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Error: " + e.getMessage())
-                          .build();
+                         .entity("An unexpected error occurred: " + e.getMessage())
+                         .build();
         }
     }
     
@@ -151,6 +146,7 @@ public class MemberResource {
      */
     @POST
     @Path("/{memberId}/pay-fine/{fineId}")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response payFine(@PathParam("memberId") Long memberId,
                            @PathParam("fineId") Long fineId,
                            @HeaderParam("Authorization") String authHeader,
@@ -185,6 +181,7 @@ public class MemberResource {
      */
     @POST
     @Path("/{memberId}/renew-membership")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response renewMembership(@PathParam("memberId") Long memberId,
                                    @HeaderParam("Authorization") String authHeader,
                                    RenewalRequest request) {
@@ -324,5 +321,50 @@ public class MemberResource {
     
     public static class RenewalRequest {
         public int years;
+    }
+
+    public static class MemberDTO {
+        public Long id;
+        public String name;
+        public String email;
+        public String membershipNumber;
+
+        public static MemberDTO fromEntity(Member member) {
+            MemberDTO dto = new MemberDTO();
+            dto.id = member.getId();
+            dto.name = member.getName();
+            dto.email = member.getEmail();
+            dto.membershipNumber = member.getMembershipNumber();
+            return dto;
+        }
+    }
+    
+    // DTO for Loan
+    public static class LoanDTO {
+        public Long id;
+        public String loanDate;
+        public String dueDate;
+        public String returnDate;
+        public String fineAmount;
+        public String status;
+        public String bookTitle;
+        public Long bookId;
+        public MemberDTO member; // Use MemberDTO instead of memberId
+
+        public static LoanDTO fromEntity(Loan loan) {
+            LoanDTO dto = new LoanDTO();
+            dto.id = loan.getId();
+            dto.loanDate = loan.getLoanDate() != null ? loan.getLoanDate().toString() : null;
+            dto.dueDate = loan.getDueDate() != null ? loan.getDueDate().toString() : null;
+            dto.returnDate = loan.getReturnDate() != null ? loan.getReturnDate().toString() : null;
+            dto.fineAmount = loan.getFineAmount() != null ? loan.getFineAmount().toPlainString() : "0";
+            dto.status = loan.getStatus() != null ? loan.getStatus().name() : null;
+            dto.bookTitle = loan.getBook() != null ? loan.getBook().getTitle() : null;
+            dto.bookId = loan.getBook() != null ? loan.getBook().getId() : null;
+            if (loan.getMember() != null) {
+                dto.member = MemberDTO.fromEntity(loan.getMember());
+            }
+            return dto;
+        }
     }
 } 

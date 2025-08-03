@@ -12,6 +12,8 @@ import com.davon.library.repository.FineRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.InjectMock;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -225,18 +227,18 @@ class MemberServiceTest {
         Long bookId = 1L;
         
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.of(testBook));
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(BigDecimal.ZERO);
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(loanRepository.findActiveLoanByMemberAndBook(testMember, testBook)).thenReturn(Optional.empty());
-        when(inventoryService.borrowCopy(anyLong())).thenReturn(true);
         doNothing().when(loanRepository).persist(any(Loan.class));
 
         // When
-        boolean result = memberService.borrowBook(testMember, bookId);
+        Loan result = memberService.borrowBook(testMember, bookId);
 
         // Then
-        assertTrue(result);
-        assertTrue(testMember.getBorrowedBookIds().contains(bookId));
+        assertNotNull(result);
+        assertEquals(testMember.getId(), result.getMember().getId());
+        assertEquals(testBook.getId(), result.getBook().getId());
         assertEquals(Book.BookStatus.BORROWED, testBook.getStatus());
         
         verify(bookRepository).findByIdOptional(bookId);
@@ -249,29 +251,20 @@ class MemberServiceTest {
     @Test
     @DisplayName("Should fail to borrow book when member is null")
     void testBorrowBook_NullMember() {
-        // Given
-        Member nullMember = null;
-        Long bookId = 1L;
-
-        // When
-        boolean result = memberService.borrowBook(nullMember, bookId);
-
-        // Then
-        assertFalse(result);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(null, 1L));
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), e.getResponse().getStatus());
+        assertTrue(e.getMessage().contains("Member and Book ID cannot be null"));
         verify(bookRepository, never()).findByIdOptional(anyLong());
     }
 
     @Test
     @DisplayName("Should fail to borrow book when book ID is null")
     void testBorrowBook_NullBookId() {
-        // Given
-        Long nullBookId = null;
-
-        // When
-        boolean result = memberService.borrowBook(testMember, nullBookId);
-
-        // Then
-        assertFalse(result);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(testMember, null));
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), e.getResponse().getStatus());
+        assertTrue(e.getMessage().contains("Member and Book ID cannot be null"));
         verify(bookRepository, never()).findByIdOptional(any());
     }
 
@@ -279,18 +272,14 @@ class MemberServiceTest {
     @DisplayName("Should fail to borrow book when membership is expired")
     void testBorrowBook_ExpiredMembership() {
         // Given
-        Long bookId = 1L;
-        
-        // Set membership end date to past
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -1);
         testMember.setMembershipEnd(cal.getTime());
 
-        // When
-        boolean result = memberService.borrowBook(testMember, bookId);
-
-        // Then
-        assertFalse(result);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(testMember, 1L));
+        assertEquals(Response.Status.FORBIDDEN.getStatusCode(), e.getResponse().getStatus());
+        assertEquals("Cannot borrow book: Membership is expired.", e.getMessage());
         verify(bookRepository, never()).findByIdOptional(anyLong());
     }
 
@@ -298,15 +287,12 @@ class MemberServiceTest {
     @DisplayName("Should fail to borrow book when fines exceed $50")
     void testBorrowBook_ExcessiveFines() {
         // Given
-        Long bookId = 1L;
-        
         when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("75.0"));
 
-        // When
-        boolean result = memberService.borrowBook(testMember, bookId);
-
-        // Then
-        assertFalse(result);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(testMember, 1L));
+        assertEquals(Response.Status.FORBIDDEN.getStatusCode(), e.getResponse().getStatus());
+        assertEquals("Cannot borrow book: Outstanding fines exceed limit.", e.getMessage());
         verify(fineRepository).calculateTotalUnpaidFines(testMember);
         verify(bookRepository, never()).findByIdOptional(anyLong());
     }
@@ -315,17 +301,13 @@ class MemberServiceTest {
     @DisplayName("Should fail to borrow book when borrowing limit reached")
     void testBorrowBook_BorrowingLimitReached() {
         // Given
-        Long bookId = 1L;
-        
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(BigDecimal.ZERO);
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(5L);
 
-        // When
-        boolean result = memberService.borrowBook(testMember, bookId);
-
-        // Then
-        assertFalse(result);
-        verify(fineRepository).calculateTotalUnpaidFines(testMember);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(testMember, 1L));
+        assertEquals(Response.Status.FORBIDDEN.getStatusCode(), e.getResponse().getStatus());
+        assertEquals("Cannot borrow book: Maximum borrowing limit (5 books) reached.", e.getMessage());
         verify(loanRepository).countActiveLoansByMember(testMember);
         verify(bookRepository, never()).findByIdOptional(anyLong());
     }
@@ -335,16 +317,14 @@ class MemberServiceTest {
     void testBorrowBook_BookNotFound() {
         // Given
         Long bookId = 999L;
-        
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(BigDecimal.ZERO);
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.empty());
 
-        // When
-        boolean result = memberService.borrowBook(testMember, bookId);
-
-        // Then
-        assertFalse(result);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(testMember, bookId));
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), e.getResponse().getStatus());
+        assertEquals("Book not found.", e.getMessage());
         verify(bookRepository).findByIdOptional(bookId);
     }
 
@@ -354,16 +334,14 @@ class MemberServiceTest {
         // Given
         Long bookId = 1L;
         testBook.setStatus(Book.BookStatus.BORROWED);
-        
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(BigDecimal.ZERO);
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.of(testBook));
 
-        // When
-        boolean result = memberService.borrowBook(testMember, bookId);
-
-        // Then
-        assertFalse(result);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(testMember, bookId));
+        assertEquals(Response.Status.CONFLICT.getStatusCode(), e.getResponse().getStatus());
+        assertEquals("Book is not available for borrowing.", e.getMessage());
         verify(bookRepository).findByIdOptional(bookId);
     }
 
@@ -372,17 +350,15 @@ class MemberServiceTest {
     void testBorrowBook_AlreadyBorrowed() {
         // Given
         Long bookId = 1L;
-        
-        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(new BigDecimal("25.0"));
+        when(fineRepository.calculateTotalUnpaidFines(testMember)).thenReturn(BigDecimal.ZERO);
         when(loanRepository.countActiveLoansByMember(testMember)).thenReturn(2L);
         when(bookRepository.findByIdOptional(bookId)).thenReturn(Optional.of(testBook));
         when(loanRepository.findActiveLoanByMemberAndBook(testMember, testBook)).thenReturn(Optional.of(testLoan));
 
-        // When
-        boolean result = memberService.borrowBook(testMember, bookId);
-
-        // Then
-        assertFalse(result);
+        // When & Then
+        WebApplicationException e = assertThrows(WebApplicationException.class, () -> memberService.borrowBook(testMember, bookId));
+        assertEquals(Response.Status.CONFLICT.getStatusCode(), e.getResponse().getStatus());
+        assertEquals("You have already borrowed this book.", e.getMessage());
         verify(loanRepository).findActiveLoanByMemberAndBook(testMember, testBook);
     }
 

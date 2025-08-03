@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Book, BookStatus } from '../types/book';
 import { bookService } from '../services/bookService';
+import { useAuth } from '../contexts/AuthContext';
+import loanService from '../services/loanService';
 import styles from './BookCatalog.module.css';
 
 interface BookCatalogProps {
@@ -10,6 +12,7 @@ interface BookCatalogProps {
 }
 
 const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) => {
+    const { user } = useAuth();
     const [books, setBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -32,6 +35,22 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
             console.error('Error loading books:', err);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleBorrow = async (bookId: number) => {
+        if (!user) {
+            alert('You must be logged in to borrow a book.');
+            return;
+        }
+
+        try {
+            await loanService.borrowBook(user.id, bookId);
+            alert('Book borrowed successfully!');
+            loadBooks();
+        } catch (err: any) {
+            alert(`Failed to borrow book. Reason: ${err.message}`);
+            console.error(err);
         }
     };
 
@@ -199,7 +218,11 @@ const BookCatalog: React.FC<BookCatalogProps> = ({ showAdminControls = false }) 
                         </div>
 
                         {book.status === BookStatus.AVAILABLE && !showAdminControls && (
-                            <button className={styles.searchButton} style={{ width: '100%', marginTop: '1rem' }}>
+                            <button 
+                                onClick={() => handleBorrow(book.id)}
+                                className={styles.searchButton} 
+                                style={{ width: '100%', marginTop: '1rem' }}
+                            >
                                 Borrow Book
                             </button>
                         )}
