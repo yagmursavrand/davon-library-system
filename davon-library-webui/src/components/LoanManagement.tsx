@@ -19,8 +19,19 @@ const LoanManagement: React.FC = () => {
           // TODO: This assumes user.id is the memberId. This might need adjustment
           // if there's a separate member profile.
           const memberId = user.id;
-          const userLoans = await loanService.getLoansByMember(memberId);
-          setLoans(userLoans);
+                    const userLoans = await loanService.getLoansByMember(memberId);
+          
+          // Sort loans to show active ones first
+          const sortedLoans = userLoans.sort((a, b) => {
+            const isActiveA = a.status === 'ACTIVE' || a.status === 'RENEWED' || a.status === 'OVERDUE';
+            const isActiveB = b.status === 'ACTIVE' || b.status === 'RENEWED' || b.status === 'OVERDUE';
+            
+            if (isActiveA && !isActiveB) return -1; // a comes first
+            if (!isActiveA && isActiveB) return 1;  // b comes first
+            return 0; // a and b are same priority
+          });
+
+          setLoans(sortedLoans);
           setError(null);
         } catch (err) {
           setError('Failed to load loans. Please try again later.');
@@ -38,10 +49,19 @@ const LoanManagement: React.FC = () => {
     try {
         await loanService.returnBook(loanId);
         alert('Book returned successfully!');
-        // Refresh the loans list to show the updated status
+                // Refresh the loans list to show the updated status
         if (user) {
             const userLoans = await loanService.getLoansByMember(user.id);
-            setLoans(userLoans);
+            // Sort loans to show active ones first
+            const sortedLoans = userLoans.sort((a, b) => {
+                const isActiveA = a.status === 'ACTIVE' || a.status === 'RENEWED' || a.status === 'OVERDUE';
+                const isActiveB = b.status === 'ACTIVE' || b.status === 'RENEWED' || b.status === 'OVERDUE';
+                
+                if (isActiveA && !isActiveB) return -1;
+                if (!isActiveA && isActiveB) return 1;
+                return 0;
+            });
+            setLoans(sortedLoans);
         }
     } catch (err: any) {
         alert(`Failed to return book. Reason: ${err.message}`);
