@@ -1,44 +1,55 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { User } from '../types/user';
 import { userService } from '../services/userService';
 import styles from './UserList.module.css';
 
+import { useAuth } from '../contexts/AuthContext';
+
 export default function UserList() {
+    const { user: adminUser } = useAuth();
     const [users, setUsers] = useState<User[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
+        if (!adminUser) return;
         try {
             setIsLoading(true);
             setError(null);
-            const allUsers = await userService.getAllUsers();
+            const allUsers = await userService.getAllUsers(adminUser.id);
             setUsers(allUsers);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch users');
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [adminUser]);
+
+    useEffect(() => {
+        if (adminUser) {
+            fetchUsers();
+        }
+    }, [adminUser, fetchUsers]);
 
     const handleDeleteUser = async (userId: string) => {
+        if (!adminUser) {
+            setError('Admin user not found, cannot delete.');
+            return;
+        }
         if (!confirm('Are you sure you want to delete this user?')) {
             return;
         }
 
         try {
-            await userService.deleteUser(userId);
+            await userService.deleteUser(userId, adminUser.id);
             setUsers(users.filter(user => user.id !== userId));
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to delete user');
         }
     };
+
 
     if (isLoading) {
         return (
@@ -70,8 +81,8 @@ export default function UserList() {
             
             <div className={styles.stats}>
                 <span>Total Users: {users.length}</span>
-                <span>Admins: {users.filter(u => u.role === 'admin').length}</span>
-                <span>Regular Users: {users.filter(u => u.role === 'user').length}</span>
+                <span>Admins: {users.filter(u => u.role.toLowerCase() === 'admin').length}</span>
+                <span>Regular Users: {users.filter(u => u.role.toLowerCase() === 'user' || u.role.toLowerCase() === 'member').length}</span>
             </div>
 
             <div className={styles.tableContainer}>
@@ -107,7 +118,7 @@ export default function UserList() {
                                         <button 
                                             className={styles.deleteButton}
                                             onClick={() => handleDeleteUser(user.id)}
-                                            disabled={user.role === 'admin'}
+                                            disabled={user.role.toLowerCase() === 'admin'}
                                         >
                                             Delete
                                         </button>
