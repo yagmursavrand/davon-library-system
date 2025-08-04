@@ -2,6 +2,8 @@ package com.davon.library.resource;
 
 import com.davon.library.model.Admin;
 import com.davon.library.model.User;
+import com.davon.library.model.Fine;
+import java.math.BigDecimal;
 import com.davon.library.repository.AdminRepository;
 import com.davon.library.repository.UserRepository;
 import com.davon.library.service.AdminService;
@@ -13,6 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/api/admins")
 @Produces(MediaType.APPLICATION_JSON)
@@ -250,6 +253,55 @@ public class AdminResource {
             
             List<Admin> admins = adminRepository.findByAdminLevel(level.toUpperCase());
             return Response.ok(admins).build();
+            
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                          .entity("Error: " + e.getMessage())
+                          .build();
+        }
+    }
+    
+    public static class FineDTO {
+        public Long id;
+        public String userName;
+        public String userEmail;
+        public BigDecimal amount;
+        public String reason;
+        public Date issuedDate;
+
+        public static FineDTO fromEntity(Fine fine) {
+            FineDTO dto = new FineDTO();
+            dto.id = fine.getId();
+            dto.amount = fine.getAmount();
+            dto.reason = fine.getReason();
+            dto.issuedDate = fine.getIssuedDate();
+            if (fine.getUser() != null) {
+                dto.userName = fine.getUser().getName();
+                dto.userEmail = fine.getUser().getEmail();
+            }
+            return dto;
+        }
+    }
+
+    /**
+     * Get all unpaid fines (for admin dashboard)
+     */
+    @GET
+    @Path("/fines/unpaid")
+    public Response getAllUnpaidFines(@HeaderParam("Authorization") String authHeader) {
+        try {
+            User authenticatedUser = getAuthenticatedUser(authHeader);
+            if (authenticatedUser == null || !userService.isAdmin(authenticatedUser.getId())) {
+                return Response.status(Response.Status.FORBIDDEN)
+                              .entity("Admin access required")
+                              .build();
+            }
+            
+            List<Fine> unpaidFines = adminService.getAllUnpaidFines();
+            List<FineDTO> fineDTOs = unpaidFines.stream()
+                                                .map(FineDTO::fromEntity)
+                                                .collect(Collectors.toList());
+            return Response.ok(fineDTOs).build();
             
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

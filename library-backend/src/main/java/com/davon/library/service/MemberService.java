@@ -259,6 +259,12 @@ public class MemberService {
             fine.setPaid(true);
             fine.setPaidDate(new Date());
             transactionService.markAsCompleted(fine.getId());
+
+            // Reset the fine amount on the associated loan upon full payment
+            Loan loan = fine.getLoan();
+            if (loan != null) {
+                loan.setFineAmount(BigDecimal.ZERO);
+            }
         } else {
             fine.setAmount(fine.getAmount().subtract(amount));
         }

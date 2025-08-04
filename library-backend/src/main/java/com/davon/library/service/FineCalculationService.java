@@ -79,6 +79,7 @@ public class FineCalculationService {
         fine.setPaid(false);
         
         fineRepository.persist(fine);
+        loan.setFineAmount(fineAmount);
         log.info("Fine calculated: {} for {} days overdue", fineAmount, overdueDays);
         return fine;
     }

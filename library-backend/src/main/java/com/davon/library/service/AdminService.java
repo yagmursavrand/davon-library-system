@@ -2,6 +2,8 @@ package com.davon.library.service;
 
 import com.davon.library.model.Admin;
 import com.davon.library.model.User;
+import com.davon.library.model.Fine;
+import com.davon.library.repository.FineRepository;
 import com.davon.library.repository.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -10,12 +12,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Date;
 
+
+
 @ApplicationScoped
 public class AdminService {
     
     @Inject
     UserRepository userRepository;
     
+    @Inject
+    FineRepository fineRepository;
+
+    public List<Fine> getAllUnpaidFines() {
+        return fineRepository.findUnpaidFines();
+    }
+
     /**
      * Add a new user to the system (Admin functionality)
      */

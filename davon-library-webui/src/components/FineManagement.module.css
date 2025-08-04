@@ -1,0 +1,119 @@
+/* src/components/FineManagement.module.css */
+
+.fineManagementContainer {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-top: 2rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.refreshButton {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.refreshButton:hover {
+    background-color: #357ABD;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.refreshButton:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+.error {
+    color: #D32F2F;
+    background-color: #FFEBEE;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.tableContainer {
+    overflow-x: auto;
+}
+
+.fineTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.fineTable th,
+.fineTable td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.fineTable th {
+    background-color: #f9fafb;
+    color: #555;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.fineTable tr:hover {
+    background-color: #f5f5f5;
+}
+
+.actionButton {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.actionButton:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+.payButton {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.payButton:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+.noFines {
+    text-align: center;
+    padding: 40px;
+    color: #777;
+    font-style: italic;
+}

@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import adminService, { AdminDashboardStats } from '../services/adminService';
+import FineManagement from './FineManagement';
 import UserList from './UserList';
 import styles from './AdminDashboard.module.css';
 
@@ -63,6 +64,14 @@ const AdminDashboard: React.FC = () => {
       {/* User Management Section */}
       <div className={styles.userManagementSection}>
           <UserList />
+      </div>
+
+      {/* Divider */}
+      <hr className={styles.divider} />
+
+      {/* Fine Management Section */}
+      <div className={styles.fineManagementSection}>
+          <FineManagement />
       </div>
     </div>
   );
