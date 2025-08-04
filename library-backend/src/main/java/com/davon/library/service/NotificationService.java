@@ -185,7 +185,6 @@ public class NotificationService {
             }
         }
     }
-
     /**
      * Clean up old notifications
      */

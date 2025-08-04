@@ -92,11 +92,16 @@ public class BookResource {
 
     @GET
     @Path("/search")
-    public List<Book> searchBooks(@QueryParam("q") String searchTerm) {
+    public List<BookDetailDTO> searchBooks(@QueryParam("q") String searchTerm) {
+        List<Book> books;
         if (searchTerm == null || searchTerm.trim().isEmpty()) {
-            return bookRepository.listAll();
+            books = bookRepository.listAll();
+        } else {
+            books = bookRepository.searchBooks(searchTerm);
         }
-        return bookRepository.searchBooks(searchTerm);
+        return books.stream()
+                .map(BookDetailDTO::new)
+                .collect(Collectors.toList());
     }
 
     @GET

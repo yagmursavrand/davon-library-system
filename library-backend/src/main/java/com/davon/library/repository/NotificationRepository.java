@@ -27,7 +27,6 @@ public class NotificationRepository implements PanacheRepository<Notification> {
         query.setParameter("user", user);
         return query.getResultList();
     }
-
     /**
      * Find notifications by status
      */
