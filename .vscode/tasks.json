@@ -5,7 +5,9 @@
             "label": "mvn test-compile",
             "type": "shell",
             "command": "mvn",
-            "args": ["test-compile"],
+            "args": [
+                "test-compile"
+            ],
             "group": "build",
             "presentation": {
                 "echo": true,
@@ -19,6 +21,76 @@
                 "cwd": "${workspaceFolder}/library-backend"
             },
             "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "isBackground": true,
+            "problemMatcher": [
+                {
+                    "owner": "quarkus",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/src/main/resources/templates"
+                    ],
+                    "pattern": [
+                        {
+                            "regexp": "\\[(\\d+)\\]\\s(.*):(\\d+):(\\d+)\\s\\-\\s{(.*)}:\\s(.*)$",
+                            "file": 2,
+                            "line": 3,
+                            "column": 4,
+                            "message": 6
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "^.*Scanning for projects...",
+                        "endsPattern": "(^.*Quarkus .* started in .*\\.)|(^.* ERROR .* Failed to start)"
+                    }
+                }
+            ],
+            "group": "build",
+            "label": "quarkus:dev (library-backend)",
+            "command": "mvn quarkus:dev ",
+            "windows": {
+                "command": "mvn quarkus:dev "
+            },
+            "options": {
+                "cwd": "library-backend"
+            }
+        },
+        {
+            "type": "shell",
+            "isBackground": true,
+            "problemMatcher": [
+                {
+                    "owner": "quarkus",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/src/main/resources/templates"
+                    ],
+                    "pattern": [
+                        {
+                            "regexp": "\\[(\\d+)\\]\\s(.*):(\\d+):(\\d+)\\s\\-\\s{(.*)}:\\s(.*)$",
+                            "file": 2,
+                            "line": 3,
+                            "column": 4,
+                            "message": 6
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true
+                    }
+                }
+            ],
+            "group": "build",
+            "label": "package -Pnative (library-backend)",
+            "command": "mvn package -Pnative ",
+            "windows": {
+                "command": "mvn package -Pnative "
+            },
+            "options": {
+                "cwd": "library-backend"
+            }
         }
     ]
 } 

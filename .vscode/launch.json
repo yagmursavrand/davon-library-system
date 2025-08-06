@@ -1,7 +1,14 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
+      {
+        "type": "java",
+        "name": "Debug Quarkus",
+        "request": "attach",
+        "hostName": "localhost",
+        "port": 5005,
+        "projectName": "davon-library-backend"
+      },
       {
         "type": "java",
         "name": "Debug TestDebug",
@@ -38,20 +45,20 @@
         "console": "internalConsole",
         "stopOnEntry": false
       },
-        {
-            "type": "java",
+      {
+        "type": "java",
         "name": "Debug SimpleTest",
-            "request": "launch",
+        "request": "launch",
         "mainClass": "com.davon.library.debug.SimpleTest",
         "projectName": "library-backend",
         "console": "internalConsole",
         "stopOnEntry": false
-        },
-        {
-            "type": "java",
+      },
+      {
+        "type": "java",
         "name": "Debug Library Backend (Quarkus)",
-            "request": "launch",
-            "mainClass": "com.davon.library.App",
+        "request": "launch",
+        "mainClass": "com.davon.library.App",
         "projectName": "library-backend",
         "vmArgs": [
           "-Dquarkus.http.port=8080",
@@ -64,11 +71,11 @@
         },
         "console": "internalConsole",
         "stopOnEntry": false
-        },
-        {
-            "type": "java",
+      },
+      {
+        "type": "java",
         "name": "Debug Any Class",
-            "request": "launch",
+        "request": "launch",
         "mainClass": "${input:mainClass}",
         "projectName": "library-backend",
         "console": "internalConsole",
@@ -88,7 +95,7 @@
         "request": "attach",
         "hostName": "localhost",
         "port": 5006,
-            "projectName": "library-backend"
+        "projectName": "library-backend"
       },
       {
         "type": "java",
@@ -105,54 +112,62 @@
         "console": "internalConsole",
         "stopOnEntry": false
       },
-                  {
-                "type": "java",
-                "name": "Debug FineCalculationServiceDebugTest (JUnit) - CONSTANTS",
-                "request": "launch",
-                "mainClass": "org.junit.platform.console.ConsoleLauncher",
-                "args": [
-                    "--class-path",
-                    "${workspaceFolder}/library-backend/target/test-classes",
-                    "--select-class",
-                    "com.davon.library.debug.FineCalculationServiceDebugTest"
-                ],
-                "projectName": "library-backend",
-                "console": "internalConsole",
-                "stopOnEntry": false,
-                "preLaunchTask": "mvn test-compile"
-            },
-            {
-                "type": "java",
-                "name": "Debug FineCalculationLogicDebugTest (JUnit) - LOGIC",
-                "request": "launch",
-                "mainClass": "org.junit.platform.console.ConsoleLauncher",
-                "args": [
-                    "--class-path",
-                    "${workspaceFolder}/library-backend/target/test-classes",
-                    "--select-class",
-                    "com.davon.library.debug.FineCalculationLogicDebugTest"
-                ],
-                "projectName": "library-backend",
-                "console": "internalConsole",
-                "stopOnEntry": false,
-                "preLaunchTask": "mvn test-compile"
-            },
-            {
-                "type": "java",
-                "name": "Debug FineCalculationServiceMockTest (JUnit) - MOCK",
-                "request": "launch",
-                "mainClass": "org.junit.platform.console.ConsoleLauncher",
-                "args": [
-                    "--class-path",
-                    "${workspaceFolder}/library-backend/target/test-classes",
-                    "--select-class",
-                    "com.davon.library.debug.FineCalculationServiceMockTest"
-                ],
-                "projectName": "library-backend",
-                "console": "internalConsole",
-                "stopOnEntry": false,
-                "preLaunchTask": "mvn test-compile"
-            }
+      {
+        "type": "java",
+        "name": "Debug FineCalculationServiceDebugTest (JUnit) - CONSTANTS",
+        "request": "launch",
+        "mainClass": "org.junit.platform.console.ConsoleLauncher",
+        "args": [
+          "--class-path",
+          "${workspaceFolder}/library-backend/target/test-classes",
+          "--select-class",
+          "com.davon.library.debug.FineCalculationServiceDebugTest"
+        ],
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false,
+        "preLaunchTask": "mvn test-compile"
+      },
+      {
+        "type": "java",
+        "name": "Debug FineCalculationLogicDebugTest (JUnit) - LOGIC",
+        "request": "launch",
+        "mainClass": "org.junit.platform.console.ConsoleLauncher",
+        "args": [
+          "--class-path",
+          "${workspaceFolder}/library-backend/target/test-classes",
+          "--select-class",
+          "com.davon.library.debug.FineCalculationLogicDebugTest"
+        ],
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false,
+        "preLaunchTask": "mvn test-compile"
+      },
+      {
+        "type": "java",
+        "name": "Debug FineCalculationServiceMockTest (JUnit) - MOCK",
+        "request": "launch",
+        "mainClass": "org.junit.platform.console.ConsoleLauncher",
+        "args": [
+          "--class-path",
+          "${workspaceFolder}/library-backend/target/test-classes",
+          "--select-class",
+          "com.davon.library.debug.FineCalculationServiceMockTest"
+        ],
+        "projectName": "library-backend",
+        "console": "internalConsole",
+        "stopOnEntry": false,
+        "preLaunchTask": "mvn test-compile"
+      },
+      {
+        "preLaunchTask": "quarkus:dev (library-backend)",
+        "type": "java",
+        "request": "attach",
+        "hostName": "localhost",
+        "name": "Debug Quarkus application (library-backend)",
+        "port": 5005
+      }
     ],
     "inputs": [
       {
